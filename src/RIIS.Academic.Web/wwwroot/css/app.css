@@ -1,0 +1,10 @@
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+}
+
+.riis-page-title:focus {
+    outline: none;
+    box-shadow: none;
+}

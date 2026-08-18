@@ -1,0 +1,235 @@
+@page "/programme/ec"
+@inject IProgrammePedagogiqueService ProgrammeService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Éléments constitutifs" />
+                <RadzenText Text="Gestion des EC/matières qui recevront les notes." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvel EC" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.75rem" Wrap="FlexWrap.Wrap">
+            <RadzenFormField Text="Filtrer par UE" Style="width: min(100%, 520px)">
+                <RadzenDropDown Data="@unitesEnseignement"
+                                TextProperty="Libelle"
+                                ValueProperty="Id"
+                                @bind-Value="@selectedUniteEnseignementId"
+                                Change="@OnUniteEnseignementFilterChanged"
+                                AllowClear="true"
+                                AllowFiltering="true"
+                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                Placeholder="Toutes les UE"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenButton Text="Filtrer" Icon="filter_alt" Click="@Load" />
+            <RadzenButton Text="Réinitialiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@ResetFilter" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="ElementConstitutifDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="UE" Style="width:100%">
+                                <RadzenDropDown Data="@unitesEnseignement" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.UniteEnseignementId" Name="UniteEnseignementId" Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="UniteEnseignementId" Text="UE obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Code" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Libellé" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Type" Style="width:100%">
+                                <RadzenDropDown Data="@types" TextProperty="Text" ValueProperty="Value" @bind-Value="@model.Type" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Crédits" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Credits" Min="0" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Coefficient" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Coefficient" Min="0" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Volume horaire" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.VolumeHoraire" Min="0" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Ordre affichage" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.OrdreAffichage" Min="0" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenStack Gap="0.5rem">
+                                <RadzenLabel Text="Obligatoire" />
+                                <RadzenCheckBox @bind-Value="@model.EstObligatoire" />
+                            </RadzenStack>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenFormField Text="Observation" Style="width:100%">
+                        <RadzenTextArea @bind-Value="@model.Observation" Rows="3" />
+                    </RadzenFormField>
+
+                    <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                        Le coefficient d'un EC reste à 1 par défaut. Les crédits sont ceux qui serviront plus tard à la validation.
+                    </RadzenAlert>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="ElementConstitutifDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Code" Title="Code" Width="120px" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Libelle" Title="EC (Élément constitutif)" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Type" Title="Type" Width="120px" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Credits" Title="Crédits" Width="110px" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Coefficient" Title="Coef." Width="100px" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="VolumeHoraire" Title="VH" Width="90px" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="UniteEnseignementLibelle" Title="UE (Unité d'enseignement)" />
+                <RadzenDataGridColumn TItem="ElementConstitutifDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<ElementConstitutifDto> items = [];
+    private List<LookupDto> unitesEnseignement = [];
+    private ElementConstitutifDto model = new();
+    private long? selectedUniteEnseignementId;
+    private bool showForm;
+
+    private readonly List<EnumOption<TypeElementConstitutif>> types =
+    [
+        new("Cours", TypeElementConstitutif.Cours),
+        new("Stage", TypeElementConstitutif.Stage),
+        new("Projet", TypeElementConstitutif.Projet),
+        new("Mémoire", TypeElementConstitutif.Memoire),
+        new("Autre", TypeElementConstitutif.Autre)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLookups();
+        await Load();
+    }
+
+    private async Task LoadLookups()
+    {
+        unitesEnseignement = await ProgrammeService.GetUnitesEnseignementLookupAsync();
+    }
+
+    private async Task Load()
+    {
+        items = await ProgrammeService.GetElementsConstitutifsAsync(selectedUniteEnseignementId);
+    }
+
+    private async Task OnUniteEnseignementFilterChanged(object? _)
+    {
+        await Load();
+    }
+
+    private async Task ResetFilter()
+    {
+        selectedUniteEnseignementId = null;
+        await Load();
+    }
+
+    private async Task Create()
+    {
+        model = await ProgrammeService.CreateDefaultElementConstitutifAsync(selectedUniteEnseignementId ?? unitesEnseignement.FirstOrDefault()?.Id);
+        showForm = true;
+    }
+
+    private void Edit(ElementConstitutifDto item)
+    {
+        model = new ElementConstitutifDto
+        {
+            Id = item.Id,
+            UniteEnseignementId = item.UniteEnseignementId,
+            UniteEnseignementLibelle = item.UniteEnseignementLibelle,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            Type = item.Type,
+            Credits = item.Credits,
+            Coefficient = item.Coefficient,
+            VolumeHoraire = item.VolumeHoraire,
+            OrdreAffichage = item.OrdreAffichage,
+            EstObligatoire = item.EstObligatoire,
+            Observation = item.Observation
+        };
+        showForm = true;
+    }
+
+    private async Task Save(ElementConstitutifDto _)
+    {
+        try
+        {
+            await ProgrammeService.SaveElementConstitutifAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await LoadLookups();
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(ElementConstitutifDto item)
+    {
+        try
+        {
+            await ProgrammeService.DeleteElementConstitutifAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}

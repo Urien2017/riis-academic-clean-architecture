@@ -1,0 +1,983 @@
+﻿[
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Outils mathématiques 1",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Analyse mathématiques 1",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Outils mathématiques 1",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Algèbre linéaire",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Environnement de Base 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Environnement micro-ordinateur",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Environnement de Base 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Outils bureautique",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Architecture",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Architecture des ordinateurs",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Initiation à l’algorithme",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Algorithme de base",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Initiation au génie logiciel",
+        "UeCredits":  9.00,
+        "EcLibelle":  "Introduction au système d’information",
+        "EcCredits":  5.00,
+        "VolumeHoraire":  75
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Initiation au génie logiciel",
+        "UeCredits":  9.00,
+        "EcLibelle":  "Introduction au génie logiciel",
+        "EcCredits":  4.00,
+        "VolumeHoraire":  60
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Traitement des données multimédia",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Infographie",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Anglais et comptabilité générale",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Expression orale",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  1,
+        "UeLibelle":  "Anglais et comptabilité générale",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Comptabilité générale",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Sciences physiques et industrielles",
+        "UeCredits":  10.00,
+        "EcLibelle":  "Physique 2",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Sciences physiques et industrielles",
+        "UeCredits":  10.00,
+        "EcLibelle":  "Création et organisation des entreprises",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Sciences physiques et industrielles",
+        "UeCredits":  10.00,
+        "EcLibelle":  "Processus industriels",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Sciences physiques et industrielles",
+        "UeCredits":  10.00,
+        "EcLibelle":  "Outils et méthodes de l\u0027ingénieur",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Travaux pratiques et méthodes de l\u0027ingénieur",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Travaux pratiques de physique",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Travaux pratiques et méthodes de l\u0027ingénieur",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Business english",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Travaux pratiques et méthodes de l\u0027ingénieur",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Bases de données",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Mathématiques, statistiques et informatique",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Statistiques et probabilité",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Mathématiques, statistiques et informatique",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Mathématiques appliquées pour l\u0027ingénieur 2",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Mathématiques, statistiques et informatique",
+        "UeCredits":  7.50,
+        "EcLibelle":  "Réglementation",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Entreprise, anglais et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Travaux pratique informatique",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  2,
+        "UeLibelle":  "Entreprise, anglais et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Circuit logique et algèbre de Boole",
+        "EcCredits":  2.50,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Outils mathématiques 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Analyse Mathématiques 2",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Outils mathématiques 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Analyse numérique",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Outils mathématiques 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Probabilité statistique inférentielle",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Outils mathématiques 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Recherche opérationnelle",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "MOO UML",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Introduction à la modélisation objet",
+        "EcCredits":  4.00,
+        "VolumeHoraire":  60
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Structure de données et langage SQL",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Base de données et SQL",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Structure de données et langage SQL",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Structure de données avancées",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Programmation 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Programmation web 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Programmation 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Programmation évènementielle et IMH 2",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Système et réseaux",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Réseaux informatiques et téléinformatique 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Système et réseaux",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Système d’exploitation 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Création d’entreprise et éducation civique et éthique",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Création d’entreprise",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  3,
+        "UeLibelle":  "Création d’entreprise et éducation civique et éthique",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Education civique et éthique",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Terminaux mobiles",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Programmation pour terminaux mobiles",
+        "EcCredits":  5.00,
+        "VolumeHoraire":  75
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Gestion des projets",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Gestion des projets informatiques",
+        "EcCredits":  4.00,
+        "VolumeHoraire":  60
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Réseaux et administration système",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Réseaux informatiques et téléinformatique 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Réseaux et administration système",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Administration des systèmes et réseau Linux",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "POO et base de données Avancées",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Programmation orientée objet",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "POO et base de données Avancées",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Administration des bases de données",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Structure des données et IHM",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Structure de données avancées 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Structure des données et IHM",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Base de données et IHM",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Stage professionnel",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Stage professionnel",
+        "EcCredits":  6.00,
+        "VolumeHoraire":  90
+    },
+    {
+        "Parcours":  "PREPA-INGENIEUR",
+        "Semestre":  4,
+        "UeLibelle":  "Economie générale",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Economie générale",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Mathématiques et informatique 1",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Mathématiques générales 1",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Mathématiques et informatique 1",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Informatique générale 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Techniques quantitatives 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Mathématiques financières 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Techniques quantitatives 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Statistiques 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Comptabilité générale 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Ethique et déontologie bancaires",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Règlementation bancaire",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Techniques bancaires et marché des particuliers",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Opérations bancaires transfrontières 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Comptabilité 1, éthique, déontologie et réglementation",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Stratégie et marketing bancaires",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Finance 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Systèmes financiers décentralisés 1",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Finance 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Finance islamique 1",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Finance 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Marchés des capitaux 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Economie monétaire et bancaire 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Economie monétaire 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Economie monétaire et bancaire 1",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Economie bancaire 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Formation bilingue et environnement économique 1",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Expression française",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  1,
+        "UeLibelle":  "Formation bilingue et environnement économique 1",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Economie générale",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Comptabilité, économie et droit",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Comptabilité Financière",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Comptabilité, économie et droit",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Statistique descriptive et probabilité",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Comptabilité, économie et droit",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Business English",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Comptabilité, économie et droit",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Macroéconomie",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Langues, informatique et compétences digitales",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Business computer 2",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Langues, informatique et compétences digitales",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Compétences linguistiques",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Langues, informatique et compétences digitales",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Général Accounting/Comptabilité",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Langues, informatique et compétences digitales",
+        "UeCredits":  8.56,
+        "EcLibelle":  "Elément de Droit des affaires/Droit des sociétés commerciales",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Management et administration",
+        "UeCredits":  6.42,
+        "EcLibelle":  "Concepts et actualités économiques",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Management et administration",
+        "UeCredits":  6.42,
+        "EcLibelle":  "Administration",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Management et administration",
+        "UeCredits":  6.42,
+        "EcLibelle":  "Management des organisations",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Outils quantitatifs et marketing digital",
+        "UeCredits":  6.46,
+        "EcLibelle":  "Outils d\u0027analyse quantitatifs de gestion",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Outils quantitatifs et marketing digital",
+        "UeCredits":  6.46,
+        "EcLibelle":  "Identité numérique/Compétences digitales",
+        "EcCredits":  2.14,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  2,
+        "UeLibelle":  "Outils quantitatifs et marketing digital",
+        "UeCredits":  6.46,
+        "EcLibelle":  "Initiation au marketing digital",
+        "EcCredits":  2.18,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Techniques quantitatives 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Recherche opérationnelle 1",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Techniques quantitatives 3",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Probabilité 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Mathématiques et informatique 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Mathématiques financières 3",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Mathématiques et informatique 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Informatique appliquée 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Comptabilité 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Comptabilité des opérations de banque 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Comptabilité 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Analyse financière 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Opérations et techniques bancaires 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Techniques bancaires marchés des entreprises 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Opérations et techniques bancaires 3",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Opérations bancaires transfrontières 3",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Finances et travaux de synthèse 1",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Systèmes financiers décentralisés 3",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Finances et travaux de synthèse 1",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Travaux de synthèse 1",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Finances et travaux de synthèse 1",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Marchés des capitaux 3",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Economie monétaire et bancaire 3 et 4",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Economie monétaire 3",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Economie monétaire et bancaire 3 et 4",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Economie bancaire 3",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Economie monétaire et bancaire 3 et 4",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Economie monétaire 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Economie monétaire et bancaire 3 et 4",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Economie bancaire 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Environnement juridique et éducation civique 1",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Droit des sociétés commerciales",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  3,
+        "UeLibelle":  "Environnement juridique et éducation civique 1",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Droit civil",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Techniques quantitatives 4",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Recherche opérationnelle 2",
+        "EcCredits":  3.00,
+        "VolumeHoraire":  45
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Techniques quantitatives 4",
+        "UeCredits":  5.00,
+        "EcLibelle":  "Probabilité 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Mathématiques et informatique 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Mathématiques financières 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Mathématiques et informatique 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Informatique appliquée 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Comptabilité 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Comptabilité des opérations de banque 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Comptabilité 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Analyse financière 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Opérations et techniques bancaires 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Techniques bancaires marchés des entreprises 3",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Opérations et techniques bancaires 4",
+        "UeCredits":  4.00,
+        "EcLibelle":  "Opérations bancaires transfrontières 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Finances et travaux de synthèse 2",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Systèmes financiers décentralisés 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Finances et travaux de synthèse 2",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Travaux de synthèse 2",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Finances et travaux de synthèse 2",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Marchés des capitaux 4",
+        "EcCredits":  2.00,
+        "VolumeHoraire":  30
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Stage professionnel",
+        "UeCredits":  6.00,
+        "EcLibelle":  "Le stage professionnel",
+        "EcCredits":  6.00,
+        "VolumeHoraire":  90
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Environnement juridique et éducation civique 2",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Droit des sociétés commerciales 2",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Environnement juridique et éducation civique 2",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Droit du travail",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    },
+    {
+        "Parcours":  "PREPA-MANAGEMENT-ECONOMIE",
+        "Semestre":  4,
+        "UeLibelle":  "Environnement juridique et éducation civique 2",
+        "UeCredits":  3.00,
+        "EcLibelle":  "Education civique et éthique",
+        "EcCredits":  1.00,
+        "VolumeHoraire":  15
+    }
+]

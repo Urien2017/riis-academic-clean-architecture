@@ -1,0 +1,199 @@
+@page "/releves/{InscriptionId:long}"
+@inject IRelevesNotesService RelevesNotesService
+@inject NavigationManager Navigation
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Aperçu du relevé de notes" />
+                <RadzenText Text="Consultation détaillée avant export Word." />
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+                <RadzenButton Text="Retour"
+                              Icon="arrow_back"
+                              ButtonStyle="ButtonStyle.Light"
+                              Click="@BackToList" />
+
+                @if (releve is not null)
+                {
+                    <RadzenButton Text="Exporter Word"
+                                  Icon="download"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Click="@ExportWord" />
+                    <RadzenButton Text="Word Modèle"
+                                  Icon="article"
+                                  ButtonStyle="ButtonStyle.Secondary"
+                                  Click="@ExportTemplateWord" />
+                }
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (isLoading)
+    {
+        <RadzenCard>
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                <RadzenText Text="Chargement du relevé..." />
+            </RadzenStack>
+        </RadzenCard>
+    }
+    else if (releve is null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Flat" ShowIcon="true">
+            Aucun relevé n'a été trouvé pour cette inscription.
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenCard>
+            <RadzenStack Gap="1rem">
+                <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                    <RadzenStack Gap="0">
+                        <RadzenText TextStyle="TextStyle.H5" class="rz-m-0" Text="@releve.Titre" />
+                        <RadzenText Text="@($"{releve.EtudiantNomComplet} - {releve.Matricule}")" />
+                    </RadzenStack>
+
+                    <RadzenBadge Text="@releve.DecisionMention" BadgeStyle="@GetDecisionBadgeStyle(releve.Decision)" />
+                </RadzenStack>
+
+                <RadzenRow>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Année académique" />
+                        <RadzenText Text="@releve.AnneeAcademiqueLibelle" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Cycle" />
+                        <RadzenText Text="@releve.CycleFormationLibelle" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Filière" />
+                        <RadzenText Text="@releve.FiliereLibelle" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Spécialité" />
+                        <RadzenText Text="@(releve.SpecialiteLibelle ?? "-")" />
+                    </RadzenColumn>
+                </RadzenRow>
+
+                <RadzenRow>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Niveau" />
+                        <RadzenText Text="@releve.NiveauLibelle" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Né(e) le" />
+                        <RadzenText Text="@(releve.DateNaissance == default ? "-" : releve.DateNaissance.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture))" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Lieu de naissance" />
+                        <RadzenText Text="@releve.LieuNaissance" />
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenText TextStyle="TextStyle.Subtitle2" Text="Moyenne annuelle" />
+                        <RadzenText Text="@FormatNote(releve.MoyenneAnnuelle)" />
+                    </RadzenColumn>
+                </RadzenRow>
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenCard>
+            <RadzenStack Gap="1rem">
+                <RadzenText TextStyle="TextStyle.H6" Text="Récapitulatif annuel" />
+
+                <RadzenDataGrid Data="@releve.Resume" TItem="ReleveNoteResumeDto" AllowPaging="false" AllowSorting="false">
+                    <Columns>
+                        <RadzenDataGridColumn TItem="ReleveNoteResumeDto" Property="Libelle" Title="Période" />
+                        <RadzenDataGridColumn TItem="ReleveNoteResumeDto" Title="Moyenne" Width="160px">
+                            <Template Context="item">@FormatNote(item.Moyenne)</Template>
+                        </RadzenDataGridColumn>
+                        <RadzenDataGridColumn TItem="ReleveNoteResumeDto" Title="Crédits capitalisés" Width="190px">
+                            <Template Context="item">@FormatCredit(item.CreditsCapitalises)</Template>
+                        </RadzenDataGridColumn>
+                    </Columns>
+                </RadzenDataGrid>
+            </RadzenStack>
+        </RadzenCard>
+
+        @foreach (var semestre in releve.Semestres.OrderBy(x => x.Numero))
+        {
+            <RadzenCard>
+                <RadzenStack Gap="0.75rem">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                        <RadzenText TextStyle="TextStyle.H6" class="rz-m-0" Text="@semestre.Libelle" />
+                        <RadzenText Text="@($"Moyenne : {FormatNote(semestre.Moyenne)} | Crédits : {FormatCredit(semestre.CreditsCapitalises)}/{FormatCredit(semestre.CreditsAttendus)} | Grade : {semestre.Grade}")" />
+                    </RadzenStack>
+
+                    <RadzenDataGrid Data="@semestre.Lignes" TItem="ReleveNoteLigneDto" AllowPaging="true" PageSize="10" AllowSorting="true">
+                        <Columns>
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="UniteEnseignementLibelle" Title="UE (Unité d'enseignement)" />
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="ElementConstitutifCode" Title="Code" Width="110px" />
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="ElementConstitutifLibelle" Title="EC (Élément constitutif)" />
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="Session" Title="Session" Width="100px" />
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Title="Note/20" Width="110px">
+                                <Template Context="ligne">@FormatNote(ligne.NoteSur20)</Template>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="Decision" Title="Décision" Width="110px" />
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Title="Crédit" Width="110px">
+                                <Template Context="ligne">@FormatCredit(ligne.CreditsCapitalises)</Template>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="ReleveNoteLigneDto" Property="Grade" Title="Grade" Width="90px" />
+                        </Columns>
+                    </RadzenDataGrid>
+                </RadzenStack>
+            </RadzenCard>
+        }
+    }
+</RadzenStack>
+
+@code {
+    [Parameter]
+    public long InscriptionId { get; set; }
+
+    private ReleveNoteAnnuelDto? releve;
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+
+        try
+        {
+            releve = await RelevesNotesService.GenererReleveAnnuelAsync(InscriptionId);
+        }
+        catch (Exception ex)
+        {
+            releve = null;
+            NotificationService.Notify(NotificationSeverity.Error, "Erreur", ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void BackToList()
+        => Navigation.NavigateTo("/releves");
+
+    private void ExportWord()
+        => Navigation.NavigateTo($"/exports/releves/{InscriptionId}.docx", forceLoad: true);
+
+    private void ExportTemplateWord()
+        => Navigation.NavigateTo($"/exports/releves/{InscriptionId}.modele.docx", forceLoad: true);
+
+    private static string FormatNote(decimal? value)
+        => value is null ? "-" : value.Value.ToString("0.##", CultureInfo.InvariantCulture);
+
+    private static string FormatCredit(decimal value)
+        => value == decimal.Truncate(value)
+            ? value.ToString("00", CultureInfo.InvariantCulture)
+            : value.ToString("0.##", CultureInfo.InvariantCulture);
+
+    private static BadgeStyle GetDecisionBadgeStyle(string decision)
+        => string.Equals(decision, "ADMIS", StringComparison.OrdinalIgnoreCase)
+            ? BadgeStyle.Success
+            : BadgeStyle.Warning;
+}

@@ -1,0 +1,403 @@
+@page "/pv/{ProcesVerbalId:long}"
+@inject IProcesVerbauxService ProcesVerbauxService
+@inject NavigationManager Navigation
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Aperçu du procès-verbal" />
+                <RadzenText Text="Affichage détaillé du PV dans une page dédiée." />
+            </RadzenStack>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem">
+                @if (procesVerbal is not null)
+                {
+                    <RadzenButton Text="Exporter Word"
+                                  Icon="download"
+                                  ButtonStyle="ButtonStyle.Primary"
+                                  Click="@ExportWord" />
+                    <RadzenButton Text="Exporter Excel"
+                                  Icon="table_view"
+                                  ButtonStyle="ButtonStyle.Success"
+                                  Click="@ExportExcel" />
+                    <RadzenButton Text="Word Modèle"
+                                  Icon="article"
+                                  ButtonStyle="ButtonStyle.Secondary"
+                                  Click="@ExportTemplateWord" />
+                }
+                <RadzenButton Text="Retour"
+                              Icon="arrow_back"
+                              ButtonStyle="ButtonStyle.Light"
+                              Click="@BackToList" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (isLoading)
+    {
+        <RadzenCard>
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                <RadzenText Text="Chargement du PV..." />
+            </RadzenStack>
+        </RadzenCard>
+    }
+    else if (procesVerbal is null)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" ShowIcon="true">
+            Le procès-verbal demandé est introuvable.
+        </RadzenAlert>
+    }
+    else
+    {
+        <RadzenCard class="pv-document">
+            <RadzenStack Gap="1rem">
+                <div class="pv-header">
+                    <div class="pv-school-block">
+                        <div class="pv-small-title">RIIS Academic</div>
+                        <div>Gestion des notes, PV et relevés</div>
+                    </div>
+
+                    <div class="pv-title-block">
+                        <div class="pv-main-title">@procesVerbal.Titre</div>
+                        <div class="pv-subtitle">@procesVerbal.TypeLibelle - @procesVerbal.SemestrePedagogiqueLibelle</div>
+                    </div>
+                </div>
+
+                <div class="pv-meta-grid">
+                    <div><span>Cycle :</span> @procesVerbal.CycleFormationLibelle</div>
+                    <div><span>Parcours :</span> @procesVerbal.ParcoursLibelle</div>
+                    <div><span>Classe :</span> @procesVerbal.ClassePedagogiqueLibelle</div>
+                    <div><span>Année académique :</span> @procesVerbal.AnneeAcademiqueLibelle</div>
+                    <div><span>Session :</span> @(procesVerbal.CodeSession ?? "-")</div>
+                    <div><span>Statut :</span> @procesVerbal.StatutLibelle</div>
+                </div>
+
+                <RadzenRow>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenCard Variant="Variant.Outlined">
+                            <RadzenText TextStyle="TextStyle.Caption" Text="Étudiants" />
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0" Text="@procesVerbal.NombreLignes.ToString(CultureInfo.InvariantCulture)" />
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenCard Variant="Variant.Outlined">
+                            <RadzenText TextStyle="TextStyle.Caption" Text="Validés" />
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0" Text="@procesVerbal.NombreValides.ToString(CultureInfo.InvariantCulture)" />
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenCard Variant="Variant.Outlined">
+                            <RadzenText TextStyle="TextStyle.Caption" Text="Rattrapage" />
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0" Text="@procesVerbal.NombreRattrapage.ToString(CultureInfo.InvariantCulture)" />
+                        </RadzenCard>
+                    </RadzenColumn>
+                    <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenCard Variant="Variant.Outlined">
+                            <RadzenText TextStyle="TextStyle.Caption" Text="Moyenne min/max" />
+                            <RadzenText TextStyle="TextStyle.H5" class="rz-m-0" Text="@($"{FormatNote(procesVerbal.MoyenneMin)} / {FormatNote(procesVerbal.MoyenneMax)}")" />
+                        </RadzenCard>
+                    </RadzenColumn>
+                </RadzenRow>
+
+                @if (ecHeaders.Count == 0)
+                {
+                    <RadzenAlert AlertStyle="AlertStyle.Info" ShowIcon="true">
+                        Ce PV ne contient pas encore de détails EC dans les lignes. Seules les moyennes générales peuvent être affichées.
+                    </RadzenAlert>
+
+                    <RadzenDataGrid Data="@procesVerbal.Lignes" TItem="ProcesVerbalLigneDto" AllowPaging="true" AllowSorting="true" PageSize="20">
+                        <Columns>
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="Rang" Title="Rang" Width="90px" />
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="Matricule" Title="Matricule" Width="150px" />
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="EtudiantNomComplet" Title="Noms et prénoms" />
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Title="Moy Gle" Width="110px">
+                                <Template Context="ligne">@FormatNote(ligne.MoyenneGenerale)</Template>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Title="Crédits" Width="110px">
+                                <Template Context="ligne">@FormatCredit(ligne.CreditsAcquis)</Template>
+                            </RadzenDataGridColumn>
+                            <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="DecisionJuryLibelle" Title="Décision" Width="140px" />
+                        </Columns>
+                    </RadzenDataGrid>
+                }
+                else
+                {
+                    <div class="pv-table-wrapper">
+                        <table class="pv-preview-table">
+                            <thead>
+                                <tr>
+                                    <th rowspan="2">Matricules</th>
+                                    <th rowspan="2">Noms et prénoms</th>
+                                    @foreach (var ec in ecHeaders)
+                                    {
+                                        <th colspan="4">@ec.ElementConstitutifLibelle</th>
+                                    }
+                                    <th rowspan="2">Crédits</th>
+                                    <th rowspan="2">Moy Gle</th>
+                                    <th rowspan="2">Rang</th>
+                                    <th rowspan="2">Décision</th>
+                                </tr>
+                                <tr>
+                                    @foreach (var _ in ecHeaders)
+                                    {
+                                        <th>CCON</th>
+                                        <th>CC</th>
+                                        <th>SN</th>
+                                        <th>MOY</th>
+                                    }
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var ligne in procesVerbal.Lignes.OrderBy(x => x.Rang ?? int.MaxValue).ThenBy(x => x.EtudiantNomComplet))
+                                {
+                                    <tr>
+                                        <td>@ligne.Matricule</td>
+                                        <td class="pv-student-name">@ligne.EtudiantNomComplet</td>
+                                        @foreach (var ec in ecHeaders)
+                                        {
+                                            var detail = GetDetail(ligne, ec);
+                                            <td>@FormatNote(detail?.MoyenneCcon)</td>
+                                            <td>@FormatNote(detail?.MoyenneCc)</td>
+                                            <td>@FormatNote(detail?.MoyenneSn)</td>
+                                            <td class="@GetNoteCssClass(detail?.MoyenneFinale)">@FormatNote(detail?.MoyenneFinale)</td>
+                                        }
+                                        <td>@FormatCredit(ligne.CreditsAcquis)</td>
+                                        <td class="@GetNoteCssClass(ligne.MoyenneGenerale)">@FormatNote(ligne.MoyenneGenerale)</td>
+                                        <td>@(ligne.Rang?.ToString(CultureInfo.InvariantCulture) ?? "-")</td>
+                                        <td>@ligne.DecisionJuryLibelle</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+                <div class="pv-signature-grid">
+                    <div>
+                        <div class="pv-signature-title">Le responsable académique</div>
+                        <div class="pv-signature-line"></div>
+                    </div>
+                    <div>
+                        <div class="pv-signature-title">Le jury</div>
+                        <div class="pv-signature-line"></div>
+                    </div>
+                </div>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</RadzenStack>
+
+<style>
+    .pv-document {
+        background: white;
+    }
+
+    .pv-header {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 1rem;
+        align-items: center;
+        border-bottom: 2px solid var(--rz-primary);
+        padding-bottom: 0.75rem;
+    }
+
+    .pv-small-title {
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .pv-title-block {
+        text-align: center;
+    }
+
+    .pv-main-title {
+        font-size: 1.35rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .pv-subtitle {
+        font-weight: 600;
+    }
+
+    .pv-meta-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.5rem 1rem;
+        padding: 0.75rem;
+        border: 1px solid var(--rz-base-300);
+        border-radius: var(--rz-border-radius);
+        background: var(--rz-base-50);
+    }
+
+    .pv-meta-grid span {
+        font-weight: 700;
+    }
+
+    .pv-table-wrapper {
+        width: 100%;
+        overflow: auto;
+        border: 1px solid var(--rz-base-300);
+        border-radius: var(--rz-border-radius);
+    }
+
+    .pv-preview-table {
+        border-collapse: collapse;
+        width: max-content;
+        min-width: 100%;
+        font-size: 0.78rem;
+    }
+
+    .pv-preview-table th,
+    .pv-preview-table td {
+        border: 1px solid var(--rz-base-300);
+        padding: 0.35rem 0.45rem;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    .pv-preview-table th {
+        background: var(--rz-primary);
+        color: var(--rz-on-primary);
+        font-weight: 700;
+    }
+
+    .pv-preview-table tbody tr:nth-child(even) {
+        background: var(--rz-base-50);
+    }
+
+    .pv-student-name {
+        min-width: 230px;
+        text-align: left !important;
+        font-weight: 600;
+    }
+
+    .pv-note-low {
+        color: var(--rz-danger);
+        font-weight: 700;
+    }
+
+    .pv-note-ok {
+        color: var(--rz-success);
+        font-weight: 700;
+    }
+
+    .pv-signature-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4rem;
+        margin-top: 2rem;
+    }
+
+    .pv-signature-title {
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .pv-signature-line {
+        margin-top: 3rem;
+        border-top: 1px solid var(--rz-text-color);
+    }
+
+    @@media (max-width: 768px) {
+        .pv-header,
+        .pv-meta-grid,
+        .pv-signature-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .pv-title-block {
+            text-align: left;
+        }
+    }
+</style>
+
+@code {
+    [Parameter]
+    public long ProcesVerbalId { get; set; }
+
+    private ProcesVerbalDto? procesVerbal;
+    private List<ProcesVerbalElementConstitutifLigneDto> ecHeaders = [];
+    private bool isLoading = true;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        isLoading = true;
+
+        try
+        {
+            procesVerbal = await ProcesVerbauxService.GetProcesVerbalAsync(ProcesVerbalId);
+            ecHeaders = BuildEcHeaders(procesVerbal);
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private static List<ProcesVerbalElementConstitutifLigneDto> BuildEcHeaders(ProcesVerbalDto? pv)
+    {
+        if (pv is null)
+        {
+            return [];
+        }
+
+        return pv.Lignes
+            .SelectMany(x => x.ElementsConstitutifs)
+            .GroupBy(x => x.Key)
+            .Select(x => x.First())
+            .ToList();
+    }
+
+    private static ProcesVerbalElementConstitutifLigneDto? GetDetail(
+        ProcesVerbalLigneDto ligne,
+        ProcesVerbalElementConstitutifLigneDto ec)
+        => ligne.ElementsConstitutifs.FirstOrDefault(x => x.Key == ec.Key);
+
+    private void BackToList()
+        => Navigation.NavigateTo("/pv");
+
+    private void ExportWord()
+        => Navigation.NavigateTo($"/exports/pv/{ProcesVerbalId}.docx", forceLoad: true);
+
+    private void ExportExcel()
+        => Navigation.NavigateTo($"/exports/pv/{ProcesVerbalId}.xlsx", forceLoad: true);
+
+    private void ExportTemplateWord()
+        => Navigation.NavigateTo($"/exports/pv/{ProcesVerbalId}.modele.docx", forceLoad: true);
+
+    private static string FormatNote(decimal? value)
+        => value is null ? "-" : value.Value.ToString("0.##", CultureInfo.InvariantCulture);
+
+    private static string FormatCredit(decimal? value)
+    {
+        if (value is null)
+        {
+            return "-";
+        }
+
+        return value.Value == decimal.Truncate(value.Value)
+            ? value.Value.ToString("0", CultureInfo.InvariantCulture)
+            : value.Value.ToString("0.##", CultureInfo.InvariantCulture);
+    }
+
+    private static string GetNoteCssClass(decimal? value)
+    {
+        if (value is null)
+        {
+            return string.Empty;
+        }
+
+        return value.Value >= 10m ? "pv-note-ok" : "pv-note-low";
+    }
+
+    private void NotifyError(string message)
+        => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+}

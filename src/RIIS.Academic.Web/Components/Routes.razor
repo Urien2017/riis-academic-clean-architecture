@@ -1,0 +1,14 @@
+<Router AppAssembly="@typeof(Program).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(DashboardLayout)" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(DashboardLayout)">
+            <RadzenCard>
+                <RadzenText TextStyle="TextStyle.H5" Text="Page introuvable" />
+                <RadzenText Text="Le module demandé n'est pas encore disponible." />
+            </RadzenCard>
+        </LayoutView>
+    </NotFound>
+</Router>

@@ -1,0 +1,583 @@
+@page "/evaluations"
+@inject IEvaluationsService EvaluationsService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Évaluations" />
+                <RadzenText Text="Création et gestion des CCON, CC, SN et SR par EC." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvelle évaluation" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.H6" Text="Filtres de recherche" />
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@anneesAcademiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedAnneeAcademiqueId"
+                                        Change="@OnHierarchyFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les années"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="Cycle formation" Style="width:100%">
+                        <RadzenDropDown Data="@cyclesFormation"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedCycleFormationId"
+                                        Change="@OnHierarchyFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Tous les cycles"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="Semestre" Style="width:100%">
+                        <RadzenDropDown Data="@semestres"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedSemestrePedagogiqueId"
+                                        Change="@OnSemestreFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Tous les semestres"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="UE" Style="width:100%">
+                        <RadzenDropDown Data="@unitesEnseignement"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedUniteEnseignementId"
+                                        Change="@OnUniteEnseignementFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les UE"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="EC" Style="width:100%">
+                        <RadzenDropDown Data="@elementsConstitutifs"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedElementConstitutifId"
+                                        Change="@OnFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Tous les EC"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenFormField Text="Type" Style="width:100%">
+                        <RadzenDropDown Data="@typesEvaluation"
+                                        TextProperty="Text"
+                                        ValueProperty="Value"
+                                        @bind-Value="@selectedTypeEvaluation"
+                                        Change="@OnFilterChanged"
+                                        AllowClear="true"
+                                        Placeholder="Tous les types"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenButton Text="Réinitialiser" Icon="restart_alt" ButtonStyle="ButtonStyle.Light" Click="@ResetFilters" />
+                <RadzenButton Text="Appliquer" Icon="filter_alt" ButtonStyle="ButtonStyle.Primary" Click="@Load" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="EvaluationAcademiqueDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenText TextStyle="TextStyle.H6" Text="Formulaire évaluation" />
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Année académique" Style="width:100%">
+                                <RadzenDropDown Data="@anneesAcademiques"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@model.AnneeAcademiqueId"
+                                                Change="@OnFormAnneeAcademiqueChanged"
+                                                Name="AnneeAcademiqueId"
+                                                AllowFiltering="true"
+                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="AnneeAcademiqueId" Text="Année obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="UE" Style="width:100%">
+                                <RadzenDropDown Data="@unitesEnseignement"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@formUniteEnseignementId"
+                                                Change="@OnFormUniteEnseignementChanged"
+                                                AllowClear="true"
+                                                AllowFiltering="true"
+                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                Placeholder="Filtrer les EC"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="EC" Style="width:100%">
+                                <RadzenDropDown Data="@formElementsConstitutifs"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@model.ElementConstitutifId"
+                                                Change="@OnFormElementConstitutifChanged"
+                                                Name="ElementConstitutifId"
+                                                AllowFiltering="true"
+                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="ElementConstitutifId" Text="EC obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Type" Style="width:100%">
+                                <RadzenDropDown Data="@typesEvaluation"
+                                                TextProperty="Text"
+                                                ValueProperty="Value"
+                                                @bind-Value="@model.Type"
+                                                Change="@OnFormTypeChanged"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Numéro" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Numero" Min="1" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Libellé" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Barème" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Bareme" Min="1" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Pondération %" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.PonderationPourcentage" Min="0" Max="100" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Date" Style="width:100%">
+                                <RadzenDatePicker @bind-Value="@model.DateEvaluation" DateFormat="dd/MM/yyyy" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        @if (model.Type == TypeEvaluation.SessionRattrapage)
+                        {
+                            <RadzenColumn Size="12" SizeMD="5">
+                                <RadzenFormField Text="Session normale remplacée" Style="width:100%">
+                                    <RadzenDropDown Data="@sessionsNormales"
+                                                    TextProperty="Libelle"
+                                                    ValueProperty="Id"
+                                                    @bind-Value="@model.EvaluationRemplaceeId"
+                                                    AllowClear="true"
+                                                    AllowFiltering="true"
+                                                    FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                    Placeholder="SN remplacée par ce SR"
+                                                    Style="width:100%" />
+                                </RadzenFormField>
+                            </RadzenColumn>
+                        }
+                    </RadzenRow>
+
+                    <RadzenFormField Text="Observation" Style="width:100%">
+                        <RadzenTextArea @bind-Value="@model.Observation" Rows="3" />
+                    </RadzenFormField>
+
+                    <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                        CCON = 20 %, CC = 10 %, SN = 70 %. Le SR remplace seulement la composante SN dans le calcul final de l'EC.
+                    </RadzenAlert>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="EvaluationAcademiqueDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="AnneeAcademiqueLibelle" Title="Année" Width="130px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="CycleFormationLibelle" Title="Cycle formation" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="SemestrePedagogiqueLibelle" Title="Semestre" Width="140px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="ElementConstitutifLibelle" Title="EC (Élément constitutif)" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="TypeLibelle" Title="Type" Width="210px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="Numero" Title="N°" Width="80px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="Code" Title="Code" Width="120px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="Libelle" Title="Libellé" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="Bareme" Title="Barème" Width="110px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="PonderationPourcentage" Title="Pond. %" Width="110px" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="DateEvaluation" Title="Date" Width="130px" FormatString="{0:dd/MM/yyyy}" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="UniteEnseignementLibelle" Title="UE (Unité d'enseignement)" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Property="EvaluationRemplaceeLibelle" Title="SN remplacée" />
+                <RadzenDataGridColumn TItem="EvaluationAcademiqueDto" Title="Actions" Width="150px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<EvaluationAcademiqueDto> items = [];
+    private List<LookupDto> anneesAcademiques = [];
+    private List<LookupDto> cyclesFormation = [];
+    private List<LookupDto> semestres = [];
+    private List<LookupDto> unitesEnseignement = [];
+    private List<LookupDto> elementsConstitutifs = [];
+    private List<LookupDto> formElementsConstitutifs = [];
+    private List<LookupDto> sessionsNormales = [];
+    private EvaluationAcademiqueDto model = new();
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedCycleFormationId;
+    private long? selectedSemestrePedagogiqueId;
+    private long? selectedUniteEnseignementId;
+    private long? selectedElementConstitutifId;
+    private long? formUniteEnseignementId;
+    private TypeEvaluation? selectedTypeEvaluation;
+    private bool showForm;
+
+    private readonly List<EnumOption<TypeEvaluation>> typesEvaluation =
+    [
+        new("CCON - Contrôle continu", TypeEvaluation.ControleContinu),
+        new("CC - Contrôle de connaissance", TypeEvaluation.ControleConnaissance),
+        new("SN - Session normale", TypeEvaluation.SessionNormale),
+        new("SR - Session de rattrapage", TypeEvaluation.SessionRattrapage)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        anneesAcademiques = await EvaluationsService.GetAnneesAcademiquesLookupAsync();
+        cyclesFormation = await EvaluationsService.GetCyclesFormationLookupAsync();
+        await RefreshSemestresAsync();
+        await Load();
+    }
+
+    private async Task Load()
+    {
+        items = await EvaluationsService.GetEvaluationsAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedSemestrePedagogiqueId,
+            selectedUniteEnseignementId,
+            selectedElementConstitutifId,
+            selectedTypeEvaluation);
+    }
+
+    private async Task OnFilterChanged(object? _)
+    {
+        await Load();
+    }
+
+    private async Task OnHierarchyFilterChanged(object? _)
+    {
+        await RefreshSemestresAsync();
+        await Load();
+    }
+
+    private async Task OnSemestreFilterChanged(object? _)
+    {
+        await RefreshUnitesEnseignementAsync();
+        await Load();
+    }
+
+    private async Task OnUniteEnseignementFilterChanged(object? _)
+    {
+        await RefreshElementsConstitutifsAsync();
+        await Load();
+    }
+
+    private async Task RefreshSemestresAsync()
+    {
+        semestres = await EvaluationsService.GetSemestresLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId);
+
+        EnsureSelectedValueIsAvailable(semestres, ref selectedSemestrePedagogiqueId);
+
+        await RefreshUnitesEnseignementAsync();
+    }
+
+    private async Task RefreshUnitesEnseignementAsync()
+    {
+        unitesEnseignement = await EvaluationsService.GetUnitesEnseignementLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedSemestrePedagogiqueId);
+
+        EnsureSelectedValueIsAvailable(unitesEnseignement, ref selectedUniteEnseignementId);
+
+        await RefreshElementsConstitutifsAsync();
+    }
+
+    private async Task RefreshElementsConstitutifsAsync()
+    {
+        elementsConstitutifs = await EvaluationsService.GetElementsConstitutifsLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedSemestrePedagogiqueId,
+            selectedUniteEnseignementId);
+
+        EnsureSelectedValueIsAvailable(elementsConstitutifs, ref selectedElementConstitutifId);
+    }
+
+    private async Task ResetFilters()
+    {
+        selectedAnneeAcademiqueId = null;
+        selectedCycleFormationId = null;
+        selectedSemestrePedagogiqueId = null;
+        selectedUniteEnseignementId = null;
+        selectedElementConstitutifId = null;
+        selectedTypeEvaluation = null;
+        showForm = false;
+
+        await RefreshSemestresAsync();
+        await Load();
+    }
+
+    private async Task Create()
+    {
+        model = await EvaluationsService.CreateDefaultEvaluationAsync(
+            selectedAnneeAcademiqueId,
+            selectedElementConstitutifId,
+            selectedTypeEvaluation ?? TypeEvaluation.ControleContinu);
+
+        formUniteEnseignementId = selectedUniteEnseignementId;
+        await RefreshFormElementsConstitutifsAsync();
+        await RefreshSessionsNormalesAsync();
+        showForm = true;
+    }
+
+    private async Task Edit(EvaluationAcademiqueDto item)
+    {
+        model = new EvaluationAcademiqueDto
+        {
+            Id = item.Id,
+            AnneeAcademiqueId = item.AnneeAcademiqueId,
+            AnneeAcademiqueLibelle = item.AnneeAcademiqueLibelle,
+            ElementConstitutifId = item.ElementConstitutifId,
+            ElementConstitutifLibelle = item.ElementConstitutifLibelle,
+            UniteEnseignementId = item.UniteEnseignementId,
+            UniteEnseignementLibelle = item.UniteEnseignementLibelle,
+            SemestrePedagogiqueId = item.SemestrePedagogiqueId,
+            SemestrePedagogiqueLibelle = item.SemestrePedagogiqueLibelle,
+            CycleFormationId = item.CycleFormationId,
+            CycleFormationLibelle = item.CycleFormationLibelle,
+            Type = item.Type,
+            TypeLibelle = item.TypeLibelle,
+            Numero = item.Numero,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            Bareme = item.Bareme,
+            PonderationPourcentage = item.PonderationPourcentage,
+            DateEvaluation = item.DateEvaluation,
+            EvaluationRemplaceeId = item.EvaluationRemplaceeId,
+            EvaluationRemplaceeLibelle = item.EvaluationRemplaceeLibelle,
+            Observation = item.Observation
+        };
+
+        formUniteEnseignementId = item.UniteEnseignementId == 0 ? null : item.UniteEnseignementId;
+        await RefreshFormElementsConstitutifsAsync();
+        await RefreshSessionsNormalesAsync();
+        showForm = true;
+    }
+
+    private async Task OnFormAnneeAcademiqueChanged(object? _)
+    {
+        await RefreshSessionsNormalesAsync();
+    }
+
+    private async Task OnFormUniteEnseignementChanged(object? _)
+    {
+        await RefreshFormElementsConstitutifsAsync();
+        await RefreshSessionsNormalesAsync();
+    }
+
+    private async Task OnFormElementConstitutifChanged(object? _)
+    {
+        await RefreshSessionsNormalesAsync();
+    }
+
+    private async Task OnFormTypeChanged(object? _)
+    {
+        if (model.Id == 0)
+        {
+            model.PonderationPourcentage = GetDefaultPonderation(model.Type);
+            model.Code = $"{GetTypeCode(model.Type)}{model.Numero}";
+            model.Libelle = $"{GetShortTypeLibelle(model.Type)} {model.Numero}";
+        }
+
+        if (model.Type != TypeEvaluation.SessionRattrapage)
+        {
+            model.EvaluationRemplaceeId = null;
+        }
+
+        await RefreshSessionsNormalesAsync();
+    }
+
+    private async Task RefreshFormElementsConstitutifsAsync()
+    {
+        formElementsConstitutifs = await EvaluationsService.GetElementsConstitutifsLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedSemestrePedagogiqueId,
+            formUniteEnseignementId);
+
+        if (model.ElementConstitutifId != 0 && formElementsConstitutifs.All(x => x.Id != model.ElementConstitutifId))
+        {
+            model.ElementConstitutifId = formElementsConstitutifs.FirstOrDefault()?.Id ?? 0;
+        }
+    }
+
+    private async Task RefreshSessionsNormalesAsync()
+    {
+        sessionsNormales = await EvaluationsService.GetSessionsNormalesLookupAsync(
+            model.AnneeAcademiqueId == 0 ? null : model.AnneeAcademiqueId,
+            model.ElementConstitutifId == 0 ? null : model.ElementConstitutifId);
+
+        if (model.EvaluationRemplaceeId is not null && sessionsNormales.All(x => x.Id != model.EvaluationRemplaceeId))
+        {
+            model.EvaluationRemplaceeId = null;
+        }
+    }
+
+    private async Task Save(EvaluationAcademiqueDto _)
+    {
+        try
+        {
+            await EvaluationsService.SaveEvaluationAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(EvaluationAcademiqueDto item)
+    {
+        try
+        {
+            await EvaluationsService.DeleteEvaluationAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private static void EnsureSelectedValueIsAvailable(IReadOnlyCollection<LookupDto> options, ref long? selectedValue)
+    {
+        var value = selectedValue;
+
+        if (value is not null && options.All(x => x.Id != value))
+        {
+            selectedValue = null;
+        }
+    }
+
+    private static decimal GetDefaultPonderation(TypeEvaluation type)
+        => type switch
+        {
+            TypeEvaluation.ControleContinu => 20m,
+            TypeEvaluation.ControleConnaissance => 10m,
+            TypeEvaluation.SessionNormale => 70m,
+            TypeEvaluation.SessionRattrapage => 70m,
+            _ => 0m
+        };
+
+    private static string GetTypeCode(TypeEvaluation type)
+        => type switch
+        {
+            TypeEvaluation.ControleContinu => "CCON",
+            TypeEvaluation.ControleConnaissance => "CC",
+            TypeEvaluation.SessionNormale => "SN",
+            TypeEvaluation.SessionRattrapage => "SR",
+            _ => "EV"
+        };
+
+    private static string GetShortTypeLibelle(TypeEvaluation type)
+        => type switch
+        {
+            TypeEvaluation.ControleContinu => "CCON",
+            TypeEvaluation.ControleConnaissance => "CC",
+            TypeEvaluation.SessionNormale => "SN",
+            TypeEvaluation.SessionRattrapage => "SR",
+            _ => "Évaluation"
+        };
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}

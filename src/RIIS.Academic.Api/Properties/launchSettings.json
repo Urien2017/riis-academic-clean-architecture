@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RIIS.Academic.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:12110;http://localhost:12111"
+    }
+  }
+}

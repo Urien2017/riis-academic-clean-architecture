@@ -1,0 +1,389 @@
+@page "/programme/maquettes"
+@inject IProgrammePedagogiqueService ProgrammeService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Maquettes pédagogiques" />
+                <RadzenText Text="Gestion des versions de programmes par parcours." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvelle maquette" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="1rem">
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@annees"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedAnneeAcademiqueId"
+                                        AllowClear="true"
+                                        Placeholder="Toutes les années"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Cycle de formation" Style="width:100%">
+                        <RadzenDropDown Data="@cycles"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedCycleFormationId"
+                                        AllowClear="true"
+                                        Placeholder="Tous les cycles"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4">
+                    <RadzenFormField Text="Maquette" Style="width:100%">
+                        <RadzenDropDown Data="@maquettesFilter"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedMaquettePedagogiqueId"
+                                        AllowClear="true"
+                                        Placeholder="Toutes les maquettes"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.5rem" Style="height:100%">
+                        <RadzenButton Text="Filtrer" Icon="filter_alt" Click="@ApplyFilter" />
+                        <RadzenButton Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@ResetFilter" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                Le filtre par année académique affiche les maquettes valides sur cette période ou affectées aux classes pédagogiques de cette année.
+            </RadzenAlert>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="MaquettePedagogiqueDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Parcours" Style="width:100%">
+                                <RadzenDropDown Data="@parcours" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.ParcoursAcademiqueId" Name="ParcoursAcademiqueId" Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="ParcoursAcademiqueId" Text="Parcours obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Libellé" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Version" Style="width:100%">
+                                <RadzenDropDown Data="@versions"
+                                                @bind-Value="@model.Version"
+                                                Name="Version"
+                                                AllowClear="false"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Version" Text="Version obligatoire." />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Statut" Style="width:100%">
+                                <RadzenDropDown Data="@statuts" TextProperty="Text" ValueProperty="Value" @bind-Value="@model.Statut" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Début validité" Style="width:100%">
+                                <RadzenDatePicker TValue="DateTime?" Value="@DateDebutValiditeValue" Change="@OnDateDebutValiditeChanged" DateFormat="dd/MM/yyyy" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Fin validité" Style="width:100%">
+                                <RadzenDatePicker TValue="DateTime?" Value="@DateFinValiditeValue" Change="@OnDateFinValiditeChanged" DateFormat="dd/MM/yyyy" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Source document" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.SourceDocument" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenFormField Text="Observation" Style="width:100%">
+                        <RadzenTextArea @bind-Value="@model.Observation" Rows="3" />
+                    </RadzenFormField>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="MaquettePedagogiqueHierarchyDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Property="ParcoursAcademiqueLibelle" Title="Parcours" />
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Property="Code" Title="Code" Width="140px" />
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Property="Libelle" Title="Libellé" />
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Property="Version" Title="Version" Width="110px" />
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Property="Statut" Title="Statut" Width="130px" />
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Title="Semestres" Width="120px">
+                    <Template Context="item">@item.Semestres.Count</Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="MaquettePedagogiqueHierarchyDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+            <Template Context="maquette">
+                <RadzenCard class="rz-m-2">
+                    <RadzenText TextStyle="TextStyle.Subtitle1" Text="@($"Semestres de {maquette.Code} - {maquette.Libelle}")" />
+
+                    @if (maquette.Semestres.Count == 0)
+                    {
+                        <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                            Aucun semestre n'est encore rattaché à cette maquette.
+                        </RadzenAlert>
+                    }
+                    else
+                    {
+                        <RadzenDataGrid Data="@maquette.Semestres" TItem="SemestrePedagogiqueHierarchyDto" AllowPaging="false" AllowSorting="true">
+                            <Columns>
+                                <RadzenDataGridColumn TItem="SemestrePedagogiqueHierarchyDto" Property="Numero" Title="N°" Width="80px" />
+                                <RadzenDataGridColumn TItem="SemestrePedagogiqueHierarchyDto" Property="Libelle" Title="Semestre" />
+                                <RadzenDataGridColumn TItem="SemestrePedagogiqueHierarchyDto" Property="NiveauEtudeLibelle" Title="Niveau" Width="140px" />
+                                <RadzenDataGridColumn TItem="SemestrePedagogiqueHierarchyDto" Property="CreditsAttendus" Title="Crédits attendus" Width="150px" />
+                                <RadzenDataGridColumn TItem="SemestrePedagogiqueHierarchyDto" Title="UE" Width="90px">
+                                    <Template Context="semestre">@semestre.UnitesEnseignement.Count</Template>
+                                </RadzenDataGridColumn>
+                            </Columns>
+                            <Template Context="semestre">
+                                <RadzenCard class="rz-m-2">
+                                    @if (semestre.UnitesEnseignement.Count == 0)
+                                    {
+                                        <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                                            Aucune UE n'est encore rattachée à ce semestre.
+                                        </RadzenAlert>
+                                    }
+                                    else
+                                    {
+                                        <RadzenDataGrid Data="@semestre.UnitesEnseignement" TItem="UniteEnseignementHierarchyDto" AllowPaging="false" AllowSorting="true">
+                                            <Columns>
+                                                <RadzenDataGridColumn TItem="UniteEnseignementHierarchyDto" Property="Code" Title="Code" Width="120px" />
+                                                <RadzenDataGridColumn TItem="UniteEnseignementHierarchyDto" Property="Libelle" Title="UE" />
+                                                <RadzenDataGridColumn TItem="UniteEnseignementHierarchyDto" Property="Credits" Title="Crédits" Width="110px" />
+                                                <RadzenDataGridColumn TItem="UniteEnseignementHierarchyDto" Property="VolumeHoraire" Title="VH" Width="90px" />
+                                                <RadzenDataGridColumn TItem="UniteEnseignementHierarchyDto" Title="EC" Width="90px">
+                                                    <Template Context="ue">@ue.ElementsConstitutifs.Count</Template>
+                                                </RadzenDataGridColumn>
+                                            </Columns>
+                                            <Template Context="ue">
+                                                <RadzenCard class="rz-m-2">
+                                                    @if (ue.ElementsConstitutifs.Count == 0)
+                                                    {
+                                                        <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                                                            Aucun EC n'est encore rattaché à cette UE.
+                                                        </RadzenAlert>
+                                                    }
+                                                    else
+                                                    {
+                                                        <RadzenDataGrid Data="@ue.ElementsConstitutifs" TItem="ElementConstitutifHierarchyDto" AllowPaging="false" AllowSorting="true">
+                                                            <Columns>
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="Code" Title="Code" Width="120px" />
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="Libelle" Title="EC / Matière" />
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="Type" Title="Type" Width="120px" />
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="Credits" Title="Crédits" Width="110px" />
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="Coefficient" Title="Coef." Width="100px" />
+                                                                <RadzenDataGridColumn TItem="ElementConstitutifHierarchyDto" Property="VolumeHoraire" Title="VH" Width="90px" />
+                                                            </Columns>
+                                                        </RadzenDataGrid>
+                                                    }
+                                                </RadzenCard>
+                                            </Template>
+                                        </RadzenDataGrid>
+                                    }
+                                </RadzenCard>
+                            </Template>
+                        </RadzenDataGrid>
+                    }
+                </RadzenCard>
+            </Template>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<MaquettePedagogiqueHierarchyDto> items = [];
+    private List<LookupDto> annees = [];
+    private List<LookupDto> cycles = [];
+    private List<LookupDto> parcours = [];
+    private List<LookupDto> maquettesFilter = [];
+    private List<string> versions = [];
+    private MaquettePedagogiqueDto model = new();
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedCycleFormationId;
+    private long? selectedMaquettePedagogiqueId;
+    private bool showForm;
+
+    private DateTime? DateDebutValiditeValue => model.DateDebutValidite?.ToDateTime(TimeOnly.MinValue);
+    private DateTime? DateFinValiditeValue => model.DateFinValidite?.ToDateTime(TimeOnly.MinValue);
+
+    private readonly List<EnumOption<StatutMaquettePedagogique>> statuts =
+    [
+        new("Brouillon", StatutMaquettePedagogique.Brouillon),
+        new("Active", StatutMaquettePedagogique.Active),
+        new("Archivée", StatutMaquettePedagogique.Archivee)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLookups();
+        await Load();
+    }
+
+    private async Task LoadLookups()
+    {
+        annees = await ProgrammeService.GetAnneesAcademiquesLookupAsync();
+        cycles = await ProgrammeService.GetCyclesFormationLookupAsync();
+        parcours = await ProgrammeService.GetParcoursAcademiquesLookupAsync();
+        versions = BuildVersionOptions(annees);
+        await RefreshMaquettesFilter();
+    }
+
+    private async Task RefreshMaquettesFilter()
+    {
+        maquettesFilter = await ProgrammeService.GetMaquettesLookupAsync(selectedAnneeAcademiqueId, selectedCycleFormationId);
+
+        if (selectedMaquettePedagogiqueId is not null && maquettesFilter.All(x => x.Id != selectedMaquettePedagogiqueId))
+        {
+            selectedMaquettePedagogiqueId = null;
+        }
+    }
+
+    private async Task Load()
+    {
+        items = await ProgrammeService.GetMaquettesHierarchyAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedMaquettePedagogiqueId);
+    }
+
+    private async Task ApplyFilter()
+    {
+        await RefreshMaquettesFilter();
+        await Load();
+    }
+
+    private async Task ResetFilter()
+    {
+        selectedAnneeAcademiqueId = null;
+        selectedCycleFormationId = null;
+        selectedMaquettePedagogiqueId = null;
+        await RefreshMaquettesFilter();
+        await Load();
+    }
+
+    private void Create()
+    {
+        model = ProgrammeService.CreateDefaultMaquette(parcours.FirstOrDefault()?.Id);
+        model.Version = versions.FirstOrDefault() ?? model.Version;
+        showForm = true;
+    }
+
+    private void Edit(MaquettePedagogiqueHierarchyDto item)
+    {
+        model = new MaquettePedagogiqueDto
+        {
+            Id = item.Id,
+            ParcoursAcademiqueId = item.ParcoursAcademiqueId,
+            ParcoursAcademiqueLibelle = item.ParcoursAcademiqueLibelle,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            Version = item.Version,
+            Statut = item.Statut,
+            DateDebutValidite = item.DateDebutValidite,
+            DateFinValidite = item.DateFinValidite,
+            SourceDocument = item.SourceDocument,
+            Observation = item.Observation,
+            NombreSemestres = item.Semestres.Count
+        };
+        showForm = true;
+    }
+
+    private async Task Save(MaquettePedagogiqueDto _)
+    {
+        try
+        {
+            await ProgrammeService.SaveMaquetteAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await LoadLookups();
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(MaquettePedagogiqueHierarchyDto item)
+    {
+        try
+        {
+            await ProgrammeService.DeleteMaquetteAsync(item.Id);
+            await LoadLookups();
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void OnDateDebutValiditeChanged(DateTime? value)
+        => model.DateDebutValidite = value is null ? null : DateOnly.FromDateTime(value.Value);
+
+    private void OnDateFinValiditeChanged(DateTime? value)
+        => model.DateFinValidite = value is null ? null : DateOnly.FromDateTime(value.Value);
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+
+    private static List<string> BuildVersionOptions(IEnumerable<LookupDto> anneesAcademiques)
+    {
+        var currentYear = DateTime.Today.Month >= 9
+            ? DateTime.Today.Year
+            : DateTime.Today.Year - 1;
+
+        var versions = Enumerable.Range(currentYear - 2, 8)
+            .Select(year => $"{year}-{year + 1}")
+            .Concat(anneesAcademiques.Select(x => x.Libelle))
+            .Where(x => !string.IsNullOrWhiteSpace(x))
+            .Distinct(StringComparer.OrdinalIgnoreCase)
+            .OrderBy(x => x)
+            .ToList();
+
+        return versions;
+    }
+}

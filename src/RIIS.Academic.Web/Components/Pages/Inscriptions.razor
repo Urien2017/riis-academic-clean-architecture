@@ -1,0 +1,350 @@
+@page "/inscriptions"
+@inject IInscriptionsService InscriptionsService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Inscriptions" />
+                <RadzenText Text="Gestion de l'inscription annuelle des étudiants." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvelle inscription" Icon="assignment_ind" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.75rem" Wrap="FlexWrap.Wrap">
+            <RadzenFormField Text="Année académique" Style="width: min(100%, 320px)">
+                <RadzenDropDown Data="@annees"
+                                TextProperty="Libelle"
+                                ValueProperty="Id"
+                                @bind-Value="@selectedAnneeAcademiqueId"
+                                AllowClear="true"
+                                Placeholder="Toutes les années"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenFormField Text="Cycle formation" Style="width: min(100%, 320px)">
+                <RadzenDropDown Data="@cyclesFormation"
+                                TextProperty="Libelle"
+                                ValueProperty="Id"
+                                @bind-Value="@selectedCycleFormationId"
+                                AllowClear="true"
+                                Placeholder="Tous les cycles"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenFormField Text="Niveau" Style="width: min(100%, 260px)">
+                <RadzenDropDown Data="@niveaux"
+                                TextProperty="Libelle"
+                                ValueProperty="Id"
+                                @bind-Value="@selectedNiveauEtudeId"
+                                AllowClear="true"
+                                Placeholder="Tous les niveaux"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenFormField Text="Classe" Style="width: min(100%, 420px)">
+                <RadzenDropDown Data="@filterClasses"
+                                TextProperty="Libelle"
+                                ValueProperty="Id"
+                                @bind-Value="@selectedClassePedagogiqueId"
+                                AllowClear="true"
+                                Placeholder="Toutes les classes"
+                                Style="width:100%" />
+            </RadzenFormField>
+            <RadzenButton Text="Filtrer" Icon="filter_alt" Click="@ApplyFilter" />
+            <RadzenButton Text="Réinitialiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@ResetFilter" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="InscriptionDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Année académique" Style="width:100%">
+                                <RadzenDropDown Data="@annees" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.AnneeAcademiqueId" Name="AnneeAcademiqueId" Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="AnneeAcademiqueId" Text="Année obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="5">
+                            <RadzenFormField Text="Étudiant" Style="width:100%">
+                                <RadzenDropDown Data="@etudiants"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@model.EtudiantId"
+                                                Name="EtudiantId"
+                                                AllowFiltering="true"
+                                                FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="EtudiantId" Text="Étudiant obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Date" Style="width:100%">
+                                <RadzenDatePicker TValue="DateTime?" Value="@DateInscriptionValue" Change="@OnDateInscriptionChanged" DateFormat="dd/MM/yyyy" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Statut" Style="width:100%">
+                                <RadzenDropDown Data="@statuts" TextProperty="Text" ValueProperty="Value" @bind-Value="@model.Statut" Name="Statut" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Parcours" Style="width:100%">
+                                <RadzenDropDown Data="@parcours" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.ParcoursAcademiqueId" Name="ParcoursAcademiqueId" Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="ParcoursAcademiqueId" Text="Parcours obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Niveau" Style="width:100%">
+                                <RadzenDropDown Data="@niveaux" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.NiveauEtudeId" Name="NiveauEtudeId" Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="NiveauEtudeId" Text="Niveau obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Classe" Style="width:100%">
+                                <RadzenDropDown Data="@classes"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@model.ClassePedagogiqueId"
+                                                AllowClear="true"
+                                                Placeholder="Non affecté"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Maquette" Style="width:100%">
+                                <RadzenDropDown Data="@maquettes"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                @bind-Value="@model.MaquettePedagogiqueId"
+                                                AllowClear="true"
+                                                Placeholder="Aucune maquette"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Code administration" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.CodeAdministration" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Mention spéciale" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.MentionSpeciale" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="5">
+                            <RadzenFormField Text="Tutelle académique" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.TutelleAcademique" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenFormField Text="Observation" Style="width:100%">
+                        <RadzenTextArea @bind-Value="@model.Observation" Rows="3" />
+                    </RadzenFormField>
+
+                    <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                        Une inscription au statut <strong>Validée</strong> doit être affectée à une classe pédagogique.
+                    </RadzenAlert>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="InscriptionDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="AnneeAcademiqueLibelle" Title="Année" Width="140px" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="EtudiantMatricule" Title="Matricule" Width="140px" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="EtudiantNomComplet" Title="Étudiant" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="ParcoursAcademiqueLibelle" Title="Parcours" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="ClassePedagogiqueLibelle" Title="Classe" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="NiveauEtudeLibelle" Title="Niveau" Width="140px" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Property="Statut" Title="Statut" Width="130px" />
+                <RadzenDataGridColumn TItem="InscriptionDto" Title="Date" Width="130px">
+                    <Template Context="item">@item.DateInscription.ToString("dd/MM/yyyy")</Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="InscriptionDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<InscriptionDto> items = [];
+    private List<LookupDto> annees = [];
+    private List<LookupDto> etudiants = [];
+    private List<LookupDto> cyclesFormation = [];
+    private List<LookupDto> parcours = [];
+    private List<LookupDto> niveaux = [];
+    private List<LookupDto> classes = [];
+    private List<LookupDto> filterClasses = [];
+    private List<LookupDto> maquettes = [];
+    private InscriptionDto model = new();
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedCycleFormationId;
+    private long? selectedNiveauEtudeId;
+    private long? selectedClassePedagogiqueId;
+    private bool showForm;
+
+    private DateTime? DateInscriptionValue => model.DateInscription.ToDateTime(TimeOnly.MinValue);
+
+    private readonly List<EnumOption<StatutInscription>> statuts =
+    [
+        new("En attente", StatutInscription.EnAttente),
+        new("Validée", StatutInscription.Validee),
+        new("Suspendue", StatutInscription.Suspendue),
+        new("Annulée", StatutInscription.Annulee)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLookups();
+        await Load();
+    }
+
+    private async Task LoadLookups()
+    {
+        annees = await InscriptionsService.GetAnneesAcademiquesLookupAsync();
+        etudiants = await InscriptionsService.GetEtudiantsLookupAsync();
+        cyclesFormation = await InscriptionsService.GetCyclesFormationLookupAsync();
+        parcours = await InscriptionsService.GetParcoursAcademiquesLookupAsync();
+        niveaux = await InscriptionsService.GetNiveauxEtudeLookupAsync();
+        classes = await InscriptionsService.GetClassesPedagogiquesLookupAsync();
+        filterClasses = await InscriptionsService.GetClassesPedagogiquesLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedNiveauEtudeId);
+        maquettes = await InscriptionsService.GetMaquettesPedagogiquesLookupAsync();
+    }
+
+    private async Task Load()
+    {
+        items = await InscriptionsService.GetInscriptionsAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedNiveauEtudeId,
+            selectedClassePedagogiqueId);
+    }
+
+    private async Task ApplyFilter()
+    {
+        filterClasses = await InscriptionsService.GetClassesPedagogiquesLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedNiveauEtudeId);
+
+        if (selectedClassePedagogiqueId is not null && filterClasses.All(x => x.Id != selectedClassePedagogiqueId))
+        {
+            selectedClassePedagogiqueId = null;
+        }
+
+        await Load();
+    }
+
+    private async Task ResetFilter()
+    {
+        selectedAnneeAcademiqueId = null;
+        selectedCycleFormationId = null;
+        selectedNiveauEtudeId = null;
+        selectedClassePedagogiqueId = null;
+        await LoadLookups();
+        await Load();
+    }
+
+    private async Task Create()
+    {
+        model = await InscriptionsService.CreateDefaultInscriptionAsync();
+        showForm = true;
+    }
+
+    private void Edit(InscriptionDto item)
+    {
+        model = new InscriptionDto
+        {
+            Id = item.Id,
+            AnneeAcademiqueId = item.AnneeAcademiqueId,
+            AnneeAcademiqueLibelle = item.AnneeAcademiqueLibelle,
+            EtudiantId = item.EtudiantId,
+            EtudiantMatricule = item.EtudiantMatricule,
+            EtudiantNomComplet = item.EtudiantNomComplet,
+            ParcoursAcademiqueId = item.ParcoursAcademiqueId,
+            ParcoursAcademiqueLibelle = item.ParcoursAcademiqueLibelle,
+            NiveauEtudeId = item.NiveauEtudeId,
+            NiveauEtudeLibelle = item.NiveauEtudeLibelle,
+            MaquettePedagogiqueId = item.MaquettePedagogiqueId,
+            MaquettePedagogiqueLibelle = item.MaquettePedagogiqueLibelle,
+            ClassePedagogiqueId = item.ClassePedagogiqueId,
+            ClassePedagogiqueLibelle = item.ClassePedagogiqueLibelle,
+            DateInscription = item.DateInscription,
+            Statut = item.Statut,
+            MentionSpeciale = item.MentionSpeciale,
+            TutelleAcademique = item.TutelleAcademique,
+            Observation = item.Observation,
+            CodeAdministration = item.CodeAdministration
+        };
+        showForm = true;
+    }
+
+    private async Task Save(InscriptionDto _)
+    {
+        try
+        {
+            await InscriptionsService.SaveInscriptionAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await LoadLookups();
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(InscriptionDto item)
+    {
+        try
+        {
+            await InscriptionsService.DeleteInscriptionAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void OnDateInscriptionChanged(DateTime? value)
+    {
+        if (value is not null)
+        {
+            model.DateInscription = DateOnly.FromDateTime(value.Value);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}

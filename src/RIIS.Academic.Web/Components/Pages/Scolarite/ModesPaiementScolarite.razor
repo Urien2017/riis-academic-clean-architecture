@@ -1,0 +1,147 @@
+@page "/scolarite/modes-paiement"
+@inject IModesPaiementScolariteService ModesPaiementScolariteService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Modes de paiement" />
+                <RadzenText Text="Configuration des modes utilises lors de l'encaissement des paiements scolarite." />
+            </RadzenStack>
+            <RadzenButton Text="Nouveau mode" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenCheckBox @bind-Value="@inclureInactifs" />
+                <RadzenText Text="Afficher les modes inactifs" />
+            </RadzenStack>
+            <RadzenButton Text="Actualiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@Load" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="ModePaiementScolariteDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="5">
+                            <RadzenFormField Text="Libelle" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libelle obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Ordre d'affichage" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.OrdreAffichage" Name="OrdreAffichage" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Actif" />
+                            <RadzenCheckBox @bind-Value="@model.EstActif" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="ModePaiementScolariteDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="ModePaiementScolariteDto" Property="Code" Title="Code" Width="120px" />
+                <RadzenDataGridColumn TItem="ModePaiementScolariteDto" Property="Libelle" Title="Libelle" />
+                <RadzenDataGridColumn TItem="ModePaiementScolariteDto" Property="OrdreAffichage" Title="Ordre" Width="100px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="ModePaiementScolariteDto" Property="EstActif" Title="Actif" Width="100px">
+                    <Template Context="item"><RadzenCheckBox Value="@item.EstActif" Disabled="true" /></Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="ModePaiementScolariteDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<ModePaiementScolariteDto> items = [];
+    private ModePaiementScolariteDto model = new();
+    private bool inclureInactifs;
+    private bool showForm;
+
+    protected override async Task OnInitializedAsync() => await Load();
+
+    private async Task Load()
+    {
+        items = await ModesPaiementScolariteService.GetModesPaiementScolariteAsync(inclureInactifs);
+    }
+
+    private void Create()
+    {
+        model = ModesPaiementScolariteService.CreateDefaultModePaiementScolarite();
+        showForm = true;
+    }
+
+    private void Edit(ModePaiementScolariteDto item)
+    {
+        model = new ModePaiementScolariteDto
+        {
+            Id = item.Id,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            OrdreAffichage = item.OrdreAffichage,
+            EstActif = item.EstActif
+        };
+        showForm = true;
+    }
+
+    private async Task Save(ModePaiementScolariteDto _)
+    {
+        try
+        {
+            await ModesPaiementScolariteService.SaveModePaiementScolariteAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(ModePaiementScolariteDto item)
+    {
+        try
+        {
+            await ModesPaiementScolariteService.DeleteModePaiementScolariteAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succes", "Donnees enregistrees.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+}

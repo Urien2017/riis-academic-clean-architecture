@@ -1,0 +1,113 @@
+@page "/"
+@inject NavigationManager Navigation
+
+<RadzenStack Gap="1.5rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0.25rem">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Tableau de bord" />
+                <RadzenText Text="Bienvenue dans RIIS Academic. Choisis un module ou un groupe de travail pour commencer." />
+            </RadzenStack>
+            <RadzenIcon Icon="dashboard_customize" Style="font-size: 3rem" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenRow>
+        @foreach (var section in sections)
+        {
+            <RadzenColumn Size="12" SizeLG="6">
+                <RadzenCard class="riis-dashboard-card">
+                    <RadzenStack Gap="1rem">
+                        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+                            <RadzenIcon Icon="@section.Icon" Style="font-size: 2rem" />
+                            <RadzenStack Gap="0">
+                                <RadzenText TextStyle="TextStyle.H6" class="rz-m-0" Text="@section.Title" />
+                                <RadzenText TextStyle="TextStyle.Caption" Text="@section.Description" />
+                            </RadzenStack>
+                        </RadzenStack>
+
+                        <RadzenRow>
+                            @foreach (var item in section.Items)
+                            {
+                                <RadzenColumn Size="12" SizeMD="6">
+                                    <RadzenCard Variant="Variant.Outlined">
+                                        <RadzenStack Gap="0.75rem">
+                                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                                                <RadzenIcon Icon="@item.Icon" />
+                                                <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0" Text="@item.Title" />
+                                            </RadzenStack>
+
+                                            <RadzenText TextStyle="TextStyle.Body2" Text="@item.Description" />
+
+                                            <RadzenButton Text="Ouvrir"
+                                                          Icon="arrow_forward"
+                                                          ButtonStyle="ButtonStyle.Primary"
+                                                          Variant="Variant.Flat"
+                                                          Click="@(() => Open(item.Path))" />
+                                        </RadzenStack>
+                                    </RadzenCard>
+                                </RadzenColumn>
+                            }
+                        </RadzenRow>
+                    </RadzenStack>
+                </RadzenCard>
+            </RadzenColumn>
+        }
+    </RadzenRow>
+</RadzenStack>
+
+@code {
+    private readonly DashboardSection[] sections =
+    [
+        new(
+            "Référentiels",
+            "Paramètres de base utilisés par toute l'application.",
+            "settings",
+            [
+                new("Année académique", "Ouverture et activation des années académiques.", "calendar_month", "/referentiels/annees"),
+                new("Cycle", "Cycles de formation : PREPA, BTS, LMD, etc.", "account_tree", "/referentiels/cycles"),
+                new("Filière", "Filières ou grands domaines de formation.", "category", "/referentiels/filieres"),
+                new("Spécialité", "Spécialités rattachées aux filières.", "workspace_premium", "/referentiels/specialites"),
+                new("Niveau", "Niveaux d'étude utilisés dans les classes et maquettes.", "stairs", "/referentiels/niveaux")
+            ]),
+
+        new(
+            "Programme pédagogique",
+            "Structure académique : maquette, semestres, UE et EC.",
+            "menu_book",
+            [
+                new("Maquette", "Programmes pédagogiques par cycle, filière/spécialité et version.", "schema", "/programme/maquettes"),
+                new("Semestre", "Organisation des semestres d'une maquette.", "view_timeline", "/programme/semestres"),
+                new("UE", "Unités d'enseignement et leurs EC.", "view_module", "/programme/ue"),
+                new("EC", "Éléments constitutifs, crédits et détails pédagogiques.", "article", "/programme/ec")
+            ]),
+
+        new(
+            "Académique",
+            "Gestion administrative des étudiants, inscriptions et classes.",
+            "school",
+            [
+                new("Étudiants", "Dossiers étudiants et informations personnelles.", "groups", "/etudiants"),
+                new("Inscriptions", "Inscriptions administratives par année académique.", "assignment_ind", "/inscriptions"),
+                new("Classes pédagogiques", "Organisation des groupes par parcours et niveau.", "co_present", "/classes-pedagogiques")
+            ]),
+
+        new(
+            "Évaluations",
+            "Notes, calculs, PV et relevés académiques.",
+            "fact_check",
+            [
+                new("Saisie des notes", "Saisie des CCON, CC, SN et SR par évaluation.", "edit_note", "/saisie-notes"),
+                new("Résultats", "Consultation des évaluations et résultats préparatoires.", "analytics", "/evaluations"),
+                new("Calcul des résultats", "Calcul des moyennes, crédits et décisions.", "calculate", "/calcul-resultats"),
+                new("PV", "Préparation des procès-verbaux détaillés par classe.", "article", "/pv"),
+                new("Relevés", "Préparation des relevés individuels de notes.", "description", "/releves")
+            ])
+    ];
+
+    private record DashboardSection(string Title, string Description, string Icon, DashboardShortcut[] Items);
+
+    private record DashboardShortcut(string Title, string Description, string Icon, string Path);
+
+    private void Open(string path) => Navigation.NavigateTo(path);
+}

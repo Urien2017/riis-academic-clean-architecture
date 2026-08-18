@@ -1,0 +1,397 @@
+@page "/pv"
+@inject IProcesVerbauxService ProcesVerbauxService
+@inject NavigationManager Navigation
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Procès-verbaux" />
+                <RadzenText Text="Liste des PV générés par année académique, classe, semestre et session." />
+            </RadzenStack>
+            <RadzenIcon Icon="article" Style="font-size: 2.75rem" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.H6" Text="Filtres de recherche" />
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@anneesAcademiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedAnneeAcademiqueId"
+                                        Change="@OnHierarchyFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les années"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Cycle formation" Style="width:100%">
+                        <RadzenDropDown Data="@cyclesFormation"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedCycleFormationId"
+                                        Change="@OnHierarchyFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Tous les cycles"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Classe pédagogique" Style="width:100%">
+                        <RadzenDropDown Data="@classesPedagogiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedClassePedagogiqueId"
+                                        Change="@OnHierarchyFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les classes"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Semestre" Style="width:100%">
+                        <RadzenDropDown Data="@semestres"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedSemestreNumero"
+                                        Change="@OnFilterChanged"
+                                        AllowClear="true"
+                                        Placeholder="Tous les semestres"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Type de PV" Style="width:100%">
+                        <RadzenDropDown Data="@typesProcesVerbal"
+                                        TextProperty="Text"
+                                        ValueProperty="Value"
+                                        @bind-Value="@selectedTypeProcesVerbal"
+                                        Change="@OnFilterChanged"
+                                        AllowClear="true"
+                                        Placeholder="Tous les types"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="6">
+                    <RadzenFormField Text="Recherche" Style="width:100%">
+                        <RadzenTextBox @bind-Value="@searchText"
+                                       Change="@OnSearchChanged"
+                                       Placeholder="Titre, parcours, classe ou session"
+                                       Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End" Gap="0.5rem" Style="height:100%">
+                        <RadzenButton Text="Actualiser" Icon="refresh" ButtonStyle="ButtonStyle.Primary" Click="@Load" />
+                        <RadzenButton Text="Réinitialiser" Icon="restart_alt" ButtonStyle="ButtonStyle.Light" Click="@ResetFilters" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="0.75rem">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                <RadzenText TextStyle="TextStyle.H6" class="rz-m-0" Text="@($"PV trouvés : {filteredItems.Count}")" />
+                <RadzenText TextStyle="TextStyle.Caption" Text="Ouvre une ligne de PV pour consulter les étudiants, moyennes, crédits et décisions." />
+            </RadzenStack>
+
+            <RadzenDataGrid Data="@filteredItems" TItem="ProcesVerbalDto" AllowPaging="true" AllowSorting="true" PageSize="10">
+                <Columns>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="AnneeAcademiqueLibelle" Title="Année" Width="130px" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="CycleFormationLibelle" Title="Cycle" Width="170px" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="ParcoursLibelle" Title="Parcours" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="ClassePedagogiqueLibelle" Title="Classe" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="SemestrePedagogiqueLibelle" Title="Semestre" Width="120px" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="TypeLibelle" Title="Type" Width="160px" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Property="CodeSession" Title="Session" Width="110px" />
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Lignes" Width="90px">
+                        <Template Context="pv">@pv.NombreLignes</Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Moy. min" Width="110px">
+                        <Template Context="pv">@FormatNote(pv.MoyenneMin)</Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Moy. max" Width="110px">
+                        <Template Context="pv">@FormatNote(pv.MoyenneMax)</Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Statut" Width="130px">
+                        <Template Context="pv">
+                            <RadzenBadge Text="@pv.StatutLibelle" BadgeStyle="@(pv.EstDefinitif ? BadgeStyle.Success : BadgeStyle.Info)" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Décisions" Width="210px" Sortable="false">
+                        <Template Context="pv">
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.35rem">
+                                <RadzenBadge Text="@($"V: {pv.NombreValides}")" BadgeStyle="BadgeStyle.Success" />
+                                <RadzenBadge Text="@($"R: {pv.NombreRattrapage}")" BadgeStyle="BadgeStyle.Warning" />
+                                <RadzenBadge Text="@($"ND: {pv.NombreNonDeliberes}")" BadgeStyle="BadgeStyle.Light" />
+                            </RadzenStack>
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Édité le" Width="155px">
+                        <Template Context="pv">@pv.DateEditionUtc.ToLocalTime().ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture)</Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ProcesVerbalDto" Title="Actions" Width="350px" Sortable="false" Filterable="false">
+                        <Template Context="pv">
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.35rem">
+                                <RadzenButton Text="Aperçu"
+                                              Icon="visibility"
+                                              Size="ButtonSize.Small"
+                                              ButtonStyle="ButtonStyle.Light"
+                                              Click="@(() => Preview(pv))" />
+                                <RadzenButton Text="Word"
+                                              Icon="download"
+                                              Size="ButtonSize.Small"
+                                              ButtonStyle="ButtonStyle.Primary"
+                                              Click="@(() => ExportWord(pv))" />
+                                <RadzenButton Text="Excel"
+                                              Icon="table_view"
+                                              Size="ButtonSize.Small"
+                                              ButtonStyle="ButtonStyle.Success"
+                                              Click="@(() => ExportExcel(pv))" />
+                                <RadzenButton Text="Modèle"
+                                              Icon="article"
+                                              Size="ButtonSize.Small"
+                                              ButtonStyle="ButtonStyle.Secondary"
+                                              Click="@(() => ExportTemplateWord(pv))" />
+                            </RadzenStack>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+
+                <Template Context="pv">
+                    <RadzenCard Variant="Variant.Outlined" class="rz-m-2">
+                        <RadzenStack Gap="0.75rem">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                                <RadzenStack Gap="0">
+                                    <RadzenText TextStyle="TextStyle.Subtitle1" class="rz-m-0" Text="@pv.Titre" />
+                                    <RadzenText TextStyle="TextStyle.Caption" Text="Détail des lignes du PV : rang, étudiant, moyenne, crédits et décision." />
+                                </RadzenStack>
+                                @if (!string.IsNullOrWhiteSpace(pv.Observation))
+                                {
+                                    <RadzenText TextStyle="TextStyle.Caption" Text="@pv.Observation" />
+                                }
+                            </RadzenStack>
+
+                            <RadzenDataGrid Data="@pv.Lignes" TItem="ProcesVerbalLigneDto" AllowPaging="true" AllowSorting="true" PageSize="10">
+                                <Columns>
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="Rang" Title="Rang" Width="90px" />
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="Matricule" Title="Matricule" Width="150px" />
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Property="EtudiantNomComplet" Title="Étudiant" />
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Title="Moyenne" Width="120px">
+                                        <Template Context="ligne">@FormatNote(ligne.MoyenneGenerale)</Template>
+                                    </RadzenDataGridColumn>
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Title="Crédits" Width="120px">
+                                        <Template Context="ligne">@FormatCredit(ligne.CreditsAcquis)</Template>
+                                    </RadzenDataGridColumn>
+                                    <RadzenDataGridColumn TItem="ProcesVerbalLigneDto" Title="Décision" Width="150px">
+                                        <Template Context="ligne">
+                                            <RadzenBadge Text="@ligne.DecisionJuryLibelle" BadgeStyle="@GetDecisionBadgeStyle(ligne.DecisionJury)" />
+                                        </Template>
+                                    </RadzenDataGridColumn>
+                                </Columns>
+                            </RadzenDataGrid>
+                        </RadzenStack>
+                    </RadzenCard>
+                </Template>
+            </RadzenDataGrid>
+        </RadzenStack>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<ProcesVerbalDto> items = [];
+    private List<ProcesVerbalDto> filteredItems = [];
+    private List<LookupDto> anneesAcademiques = [];
+    private List<LookupDto> cyclesFormation = [];
+    private List<LookupDto> classesPedagogiques = [];
+    private List<LookupDto> semestres = [];
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedCycleFormationId;
+    private long? selectedClassePedagogiqueId;
+    private long? selectedSemestreNumero;
+    private TypeProcesVerbal? selectedTypeProcesVerbal;
+    private string? searchText;
+
+    private readonly List<EnumOption<TypeProcesVerbal>> typesProcesVerbal =
+    [
+        new("Contrôle continu", TypeProcesVerbal.ControleContinu),
+        new("Session normale", TypeProcesVerbal.SessionNormale),
+        new("Session de rattrapage", TypeProcesVerbal.SessionRattrapage),
+        new("Définitif", TypeProcesVerbal.Definitif)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLookups();
+        await Load();
+    }
+
+    private async Task LoadLookups()
+    {
+        anneesAcademiques = await ProcesVerbauxService.GetAnneesAcademiquesLookupAsync();
+        cyclesFormation = await ProcesVerbauxService.GetCyclesFormationLookupAsync();
+        await RefreshDependentLookups();
+    }
+
+    private async Task RefreshDependentLookups()
+    {
+        classesPedagogiques = await ProcesVerbauxService.GetClassesPedagogiquesLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId);
+
+        EnsureSelectedValueIsAvailable(classesPedagogiques, ref selectedClassePedagogiqueId);
+
+        semestres = await ProcesVerbauxService.GetSemestresLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedCycleFormationId,
+            selectedClassePedagogiqueId);
+
+        EnsureSelectedValueIsAvailable(semestres, ref selectedSemestreNumero);
+    }
+
+    private async Task Load()
+    {
+        try
+        {
+            items = await ProcesVerbauxService.GetProcesVerbauxAsync(
+                selectedAnneeAcademiqueId,
+                selectedCycleFormationId,
+                selectedClassePedagogiqueId,
+                GetSelectedSemestreNumero(),
+                selectedTypeProcesVerbal);
+
+            ApplySearch();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task OnHierarchyFilterChanged(object? _)
+    {
+        await RefreshDependentLookups();
+        await Load();
+    }
+
+    private async Task OnFilterChanged(object? _)
+    {
+        await Load();
+    }
+
+    private async Task OnSearchChanged(object? _)
+    {
+        ApplySearch();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private void Preview(ProcesVerbalDto pv)
+        => Navigation.NavigateTo($"/pv/{pv.Id}");
+
+    private void ExportWord(ProcesVerbalDto pv)
+        => Navigation.NavigateTo($"/exports/pv/{pv.Id}.docx", forceLoad: true);
+
+    private void ExportExcel(ProcesVerbalDto pv)
+        => Navigation.NavigateTo($"/exports/pv/{pv.Id}.xlsx", forceLoad: true);
+
+    private void ExportTemplateWord(ProcesVerbalDto pv)
+        => Navigation.NavigateTo($"/exports/pv/{pv.Id}.modele.docx", forceLoad: true);
+
+    private async Task ResetFilters()
+    {
+        selectedAnneeAcademiqueId = null;
+        selectedCycleFormationId = null;
+        selectedClassePedagogiqueId = null;
+        selectedSemestreNumero = null;
+        selectedTypeProcesVerbal = null;
+        searchText = null;
+
+        await LoadLookups();
+        await Load();
+    }
+
+    private void ApplySearch()
+    {
+        if (string.IsNullOrWhiteSpace(searchText))
+        {
+            filteredItems = items;
+            return;
+        }
+
+        var term = searchText.Trim();
+        filteredItems = items
+            .Where(x => Contains(x.Titre, term)
+                || Contains(x.ParcoursLibelle, term)
+                || Contains(x.ClassePedagogiqueLibelle, term)
+                || Contains(x.CodeSession ?? string.Empty, term))
+            .ToList();
+    }
+
+    private byte? GetSelectedSemestreNumero()
+        => selectedSemestreNumero is null ? null : (byte)selectedSemestreNumero.Value;
+
+    private static bool Contains(string value, string term)
+        => value.Contains(term, StringComparison.OrdinalIgnoreCase);
+
+    private static void EnsureSelectedValueIsAvailable(IReadOnlyCollection<LookupDto> options, ref long? selectedValue)
+    {
+        var value = selectedValue;
+
+        if (value is not null && options.All(x => x.Id != value))
+        {
+            selectedValue = null;
+        }
+    }
+
+    private static string FormatNote(decimal? value)
+        => value is null ? "-" : value.Value.ToString("0.##", CultureInfo.InvariantCulture);
+
+    private static string FormatCredit(decimal? value)
+    {
+        if (value is null)
+        {
+            return "-";
+        }
+
+        return value.Value == decimal.Truncate(value.Value)
+            ? value.Value.ToString("0", CultureInfo.InvariantCulture)
+            : value.Value.ToString("0.##", CultureInfo.InvariantCulture);
+    }
+
+    private static BadgeStyle GetDecisionBadgeStyle(DecisionAcademique decision)
+        => decision switch
+        {
+            DecisionAcademique.Valide => BadgeStyle.Success,
+            DecisionAcademique.AutoriseRattrapage => BadgeStyle.Warning,
+            DecisionAcademique.Ajoune => BadgeStyle.Danger,
+            _ => BadgeStyle.Light
+        };
+
+    private void NotifyError(string message)
+        => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}

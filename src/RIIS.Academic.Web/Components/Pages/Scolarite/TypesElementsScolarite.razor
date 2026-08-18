@@ -1,0 +1,264 @@
+@page "/scolarite/types-elements"
+@inject ITypesElementsScolariteService TypesElementsScolariteService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Types d'éléments scolarité" />
+                <RadzenText Text="Configuration des frais, documents, validations et services administratifs." />
+            </RadzenStack>
+            <RadzenButton Text="Nouveau type" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                <RadzenCheckBox @bind-Value="@inclureInactifs" />
+                <RadzenText Text="Afficher les types inactifs" />
+            </RadzenStack>
+            <RadzenButton Text="Actualiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@Load" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="TypeElementScolariteDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox Value="@model.Code" Name="Code" ReadOnly="true" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Libellé" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@ModelLibelle" Name="Libelle" @oninput="@OnLibelleInput" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Catégorie" Style="width:100%">
+                                <RadzenDropDown Data="@categorieOptions"
+                                                @bind-Value="@model.Categorie"
+                                                TextProperty="Text"
+                                                ValueProperty="Value"
+                                                TValue="CategorieTypeElementScolarite"
+                                                Name="Categorie"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Ordre d'affichage" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.OrdreAffichage" Name="OrdreAffichage" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Payable" />
+                            <RadzenCheckBox @bind-Value="@model.EstPayable" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Documentaire" />
+                            <RadzenCheckBox @bind-Value="@model.EstDocumentaire" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenLabel Text="Soumis validation" />
+                            <RadzenCheckBox @bind-Value="@model.EstSoumisValidation" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Obligatoire" />
+                            <RadzenCheckBox @bind-Value="@model.EstObligatoire" />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Actif" />
+                            <RadzenCheckBox @bind-Value="@model.EstActif" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="TypeElementScolariteDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Property="Code" Title="Code" Width="120px" />
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Property="Libelle" Title="Libellé" />
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Title="Catégorie" Width="150px">
+                    <Template Context="item">
+                        <RadzenBadge Text="@DisplayCategorie(item.Categorie)" BadgeStyle="BadgeStyle.Info" Variant="Variant.Flat" Shade="Shade.Light" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Title="Comportement" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenStack Orientation="Orientation.Horizontal" Gap="0.35rem">
+                            @if (item.EstPayable)
+                            {
+                                <RadzenBadge Text="Payable" BadgeStyle="BadgeStyle.Success" Variant="Variant.Flat" Shade="Shade.Light" />
+                            }
+                            @if (item.EstDocumentaire)
+                            {
+                                <RadzenBadge Text="Document" BadgeStyle="BadgeStyle.Warning" Variant="Variant.Flat" Shade="Shade.Light" />
+                            }
+                            @if (item.EstSoumisValidation)
+                            {
+                                <RadzenBadge Text="Validation" BadgeStyle="BadgeStyle.Secondary" Variant="Variant.Flat" Shade="Shade.Light" />
+                            }
+                        </RadzenStack>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Property="OrdreAffichage" Title="Ordre" Width="100px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Property="EstObligatoire" Title="Obligatoire" Width="130px">
+                    <Template Context="item"><RadzenCheckBox Value="@item.EstObligatoire" Disabled="true" /></Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Property="EstActif" Title="Actif" Width="100px">
+                    <Template Context="item"><RadzenCheckBox Value="@item.EstActif" Disabled="true" /></Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TypeElementScolariteDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private readonly List<CategorieOption> categorieOptions =
+    [
+        new("Frais", CategorieTypeElementScolarite.Frais),
+        new("Document", CategorieTypeElementScolarite.Document),
+        new("Validation", CategorieTypeElementScolarite.Validation),
+        new("Service", CategorieTypeElementScolarite.Service),
+        new("Autre", CategorieTypeElementScolarite.Autre)
+    ];
+
+    private List<TypeElementScolariteDto> items = [];
+    private TypeElementScolariteDto model = new();
+    private bool inclureInactifs;
+    private bool showForm;
+
+    protected override async Task OnInitializedAsync() => await Load();
+
+    private async Task Load()
+    {
+        items = await TypesElementsScolariteService.GetTypesElementsScolariteAsync(inclureInactifs);
+    }
+
+    private void Create()
+    {
+        model = TypesElementsScolariteService.CreateDefaultTypeElementScolarite();
+        UpdateGeneratedCode();
+        showForm = true;
+    }
+
+    private void Edit(TypeElementScolariteDto item)
+    {
+        model = new TypeElementScolariteDto
+        {
+            Id = item.Id,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            Categorie = item.Categorie,
+            EstPayable = item.EstPayable,
+            EstDocumentaire = item.EstDocumentaire,
+            EstSoumisValidation = item.EstSoumisValidation,
+            EstObligatoire = item.EstObligatoire,
+            OrdreAffichage = item.OrdreAffichage,
+            EstActif = item.EstActif
+        };
+        UpdateGeneratedCode();
+        showForm = true;
+    }
+
+    private async Task Save(TypeElementScolariteDto _)
+    {
+        try
+        {
+            await TypesElementsScolariteService.SaveTypeElementScolariteAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(TypeElementScolariteDto item)
+    {
+        try
+        {
+            await TypesElementsScolariteService.DeleteTypeElementScolariteAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+
+    private string ModelLibelle
+    {
+        get => model.Libelle;
+        set
+        {
+            model.Libelle = value;
+            UpdateGeneratedCode();
+        }
+    }
+
+    private void OnLibelleInput(ChangeEventArgs args)
+    {
+        model.Libelle = args.Value?.ToString() ?? string.Empty;
+        UpdateGeneratedCode();
+    }
+
+    private void UpdateGeneratedCode()
+    {
+        try
+        {
+            model.Code = string.IsNullOrWhiteSpace(model.Libelle)
+                ? string.Empty
+                : TypesElementsScolariteService.GenerateCodeFromLibelle(model.Libelle);
+        }
+        catch (InvalidOperationException)
+        {
+            model.Code = string.Empty;
+        }
+    }
+
+    private static string DisplayCategorie(CategorieTypeElementScolarite categorie) => categorie switch
+    {
+        CategorieTypeElementScolarite.Frais => "Frais",
+        CategorieTypeElementScolarite.Document => "Document",
+        CategorieTypeElementScolarite.Validation => "Validation",
+        CategorieTypeElementScolarite.Service => "Service",
+        _ => "Autre"
+    };
+
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private sealed record CategorieOption(string Text, CategorieTypeElementScolarite Value);
+}

@@ -1,0 +1,271 @@
+@page "/etudiants"
+@inject IEtudiantsService EtudiantsService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Étudiants" />
+                <RadzenText Text="Gestion du dossier permanent des étudiants." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvel étudiant" Icon="person_add" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.75rem">
+            <RadzenFormField Text="Recherche" Style="width: min(100%, 520px)">
+                <RadzenTextBox @bind-Value="@searchText" Placeholder="Matricule, nom, téléphone, email..." />
+            </RadzenFormField>
+            <RadzenButton Text="Rechercher" Icon="search" Click="@Search" />
+            <RadzenButton Text="Réinitialiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@ResetSearch" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="EtudiantDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Matricule" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Matricule" Name="Matricule" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Nom" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Nom" Name="Nom" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Nom" Text="Nom obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="Prénoms" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Prenoms" Name="Prenoms" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Prenoms" Text="Prénoms obligatoires." />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Date de naissance" Style="width:100%">
+                                <RadzenDatePicker TValue="DateTime?" Value="@DateNaissanceValue" Change="@OnDateNaissanceChanged" DateFormat="dd/MM/yyyy" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Lieu de naissance" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.LieuNaissance" Name="LieuNaissance" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="LieuNaissance" Text="Lieu obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Sexe" Style="width:100%">
+                                <RadzenDropDown Data="@sexes" TextProperty="Text" ValueProperty="Value" @bind-Value="@model.Sexe" Name="Sexe" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Aptitude médicale" Style="width:100%">
+                                <RadzenDropDown Data="@aptitudes" TextProperty="Text" ValueProperty="Value" @bind-Value="@model.AptitudeMedicale" Name="AptitudeMedicale" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Nationalité" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Nationalite" Name="Nationalite" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Nationalite" Text="Nationalité obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Région d'origine" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.RegionOrigine" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Téléphone principal" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.TelephonePrincipal" Name="TelephonePrincipal" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="TelephonePrincipal" Text="Téléphone obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Téléphone secondaire" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.TelephoneSecondaire" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Email" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Email" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Lieu de résidence" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.LieuResidence" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Photo URL" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.PhotoUrl" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="Nom du père" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.NomPere" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="6">
+                            <RadzenFormField Text="Nom de la mère" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.NomMere" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="EtudiantDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="EtudiantDto" Property="Matricule" Title="Matricule" Width="140px" />
+                <RadzenDataGridColumn TItem="EtudiantDto" Property="Nom" Title="Nom" />
+                <RadzenDataGridColumn TItem="EtudiantDto" Property="Prenoms" Title="Prénoms" />
+                <RadzenDataGridColumn TItem="EtudiantDto" Property="Sexe" Title="Sexe" Width="120px" />
+                <RadzenDataGridColumn TItem="EtudiantDto" Title="Naissance" Width="140px">
+                    <Template Context="item">@item.DateNaissance.ToString("dd/MM/yyyy")</Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="EtudiantDto" Property="TelephonePrincipal" Title="Téléphone" Width="160px" />
+                <RadzenDataGridColumn TItem="EtudiantDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<EtudiantDto> items = [];
+    private EtudiantDto model = new();
+    private string? searchText;
+    private bool showForm;
+
+    private DateTime? DateNaissanceValue => model.DateNaissance.ToDateTime(TimeOnly.MinValue);
+
+    private readonly List<EnumOption<Sexe>> sexes =
+    [
+        new("Non renseigné", Sexe.NonRenseigne),
+        new("Masculin", Sexe.Masculin),
+        new("Féminin", Sexe.Feminin)
+    ];
+
+    private readonly List<EnumOption<AptitudeMedicale>> aptitudes =
+    [
+        new("Non renseignée", AptitudeMedicale.NonRenseignee),
+        new("Apte", AptitudeMedicale.Apte),
+        new("Inapte", AptitudeMedicale.Inapte)
+    ];
+
+    protected override async Task OnInitializedAsync() => await Load();
+
+    private async Task Load()
+    {
+        items = await EtudiantsService.GetEtudiantsAsync(searchText);
+    }
+
+    private async Task Search() => await Load();
+
+    private async Task ResetSearch()
+    {
+        searchText = null;
+        await Load();
+    }
+
+    private void Create()
+    {
+        model = EtudiantsService.CreateDefaultEtudiant();
+        showForm = true;
+    }
+
+    private void Edit(EtudiantDto item)
+    {
+        model = new EtudiantDto
+        {
+            Id = item.Id,
+            Matricule = item.Matricule,
+            Nom = item.Nom,
+            Prenoms = item.Prenoms,
+            DateNaissance = item.DateNaissance,
+            LieuNaissance = item.LieuNaissance,
+            Sexe = item.Sexe,
+            AptitudeMedicale = item.AptitudeMedicale,
+            Nationalite = item.Nationalite,
+            RegionOrigine = item.RegionOrigine,
+            TelephonePrincipal = item.TelephonePrincipal,
+            TelephoneSecondaire = item.TelephoneSecondaire,
+            Email = item.Email,
+            NomPere = item.NomPere,
+            NomMere = item.NomMere,
+            LieuResidence = item.LieuResidence,
+            PhotoUrl = item.PhotoUrl
+        };
+        showForm = true;
+    }
+
+    private async Task Save(EtudiantDto _)
+    {
+        try
+        {
+            await EtudiantsService.SaveEtudiantAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(EtudiantDto item)
+    {
+        try
+        {
+            await EtudiantsService.DeleteEtudiantAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void OnDateNaissanceChanged(DateTime? value)
+    {
+        if (value is not null)
+        {
+            model.DateNaissance = DateOnly.FromDateTime(value.Value);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}

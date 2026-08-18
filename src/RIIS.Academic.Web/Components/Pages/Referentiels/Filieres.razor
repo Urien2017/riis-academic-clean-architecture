@@ -1,0 +1,128 @@
+@page "/referentiels/filieres"
+@inject IReferentielsService ReferentielsService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Filières" />
+                <RadzenText Text="Gestion des grands domaines de formation." />
+            </RadzenStack>
+            <RadzenButton Text="Nouvelle filière" Icon="add_circle" Click="@Create" />
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="FiliereDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="7">
+                            <RadzenFormField Text="Libellé" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
+                        </RadzenColumn>
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Active" />
+                            <RadzenCheckBox @bind-Value="@model.EstActive" />
+                        </RadzenColumn>
+                    </RadzenRow>
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="FiliereDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="FiliereDto" Property="Code" Title="Code" />
+                <RadzenDataGridColumn TItem="FiliereDto" Property="Libelle" Title="Libellé" />
+                <RadzenDataGridColumn TItem="FiliereDto" Property="EstActive" Title="Active">
+                    <Template Context="item"><RadzenCheckBox Value="@item.EstActive" Disabled="true" /></Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="FiliereDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<FiliereDto> items = [];
+    private FiliereDto model = new();
+    private bool showForm;
+
+    protected override async Task OnInitializedAsync() => await Load();
+
+    private async Task Load()
+    {
+        items = await ReferentielsService.GetFilieresAsync();
+    }
+
+    private void Create()
+    {
+        model = ReferentielsService.CreateDefaultFiliere();
+        showForm = true;
+    }
+
+    private void Edit(FiliereDto item)
+    {
+        model = new FiliereDto
+        {
+            Id = item.Id,
+            Code = item.Code,
+            Libelle = item.Libelle,
+            EstActive = item.EstActive
+        };
+        showForm = true;
+    }
+
+    private async Task Save(FiliereDto _)
+    {
+        try
+        {
+            await ReferentielsService.SaveFiliereAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(FiliereDto item)
+    {
+        try
+        {
+            await ReferentielsService.DeleteFiliereAsync(item.Id);
+            await Load();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+}

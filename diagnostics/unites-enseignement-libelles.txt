@@ -1,0 +1,512 @@
+Id Code Libelle
+-- ---- -------
+1 BQF111 Mathématiques et informatique 1
+2 BQF112 Techniques quantitatives 1
+3 BQF113 Comptabilité 1, éthique, déontologie et réglementation
+4 BQF114 Comptabilité 1, éthique, déontologie et réglementation
+5 BQF115 Finance 1
+6 BQF116 Economie monétaire et bancaire 1
+7 BQF117 Formation bilingue et environnement économique 1
+8 BQF121 Mathématiques et informatique 2
+9 BQF122 Techniques quantitatives 2
+10 BQF123 Comptabilité 2 et méthodologie
+11 BQF124 Opérations et Techniques bancaires 2
+12 BQF125 Finance 2
+13 BQF126 Economie monétaire et bancaire 2
+14 BQF127 Formation bilingue et environnement économique 2
+15 BQF231 Techniques quantitatives 3
+16 BQF232 Mathématiques et informatique 3
+17 BQF233 Comptabilité 3
+18 BQF234 Opérations et techniques bancaires 3
+19 BQF235 Finances et travaux de synthèse 1
+20 BQF236 Economie monétaire et bancaire 3 et 4
+21 BQF237 Environnement juridique et éducation civique 1
+22 BQF241 Techniques quantitatives 4
+23 BQF242 Mathématiques et informatique 4
+24 BQF243 Comptabilité 4
+25 BQF244 Opérations et techniques bancaires 4
+26 BQF245 Finances et travaux de synthèse 2
+27 BQF246 Stage professionnel
+28 BQF247 Environnement juridique et éducation civique 2
+29 CGE111 Mathématiques et informatique 1
+30 CGE112 Techniques quantitatives de gestion 1
+31 CGE113 Comptabilité générale 1
+32 CGE114 Comptabilité analytique 1
+33 CGE115 Fiscalité 1
+34 CGE116 Introduction à l’analyse financière et comptabilité assistée par ordinateur 1
+35 CGE117 Formation bilingue 1 et environnement
+36 CGE121 Mathématiques et informatique 2
+37 CGE122 Techniques quantitatives de gestion 2
+38 CGE123 Comptabilité générale 2
+39 CGE124 Comptabilité analytique 2
+40 CGE125 Méthodologie fiscale2
+41 CGE126 Introduction à l’analyse financière et comptabilité a l’ordinateur 2
+42 CGE127 Formation bilingue 2 et Environnement
+43 CGE231 Techniques quantitatives de gestion3
+44 CGE232 Mathématiques et informatique 3
+45 CGE233 Comptabilité des sociétés 1
+46 CGE234 Analyse financiere1
+47 CGE235 Gestion prévisionnelle 1 et 2
+48 CGE236 Fiscalité et travaux de synthèse 1
+49 CGE237 Environnement juridique et éthique 1
+50 CGE241 Techniques quantitatives 4
+51 CGE242 Mathématiques et informatique 4
+52 CGE243 Comptabilité des sociétés 2
+53 CGE244 Analyse financière 2
+54 CGE245 Fiscalité et travaux de synthèse 2
+55 CGE246 Stage professionnel
+56 CGE247 Environnement juridique et éthique 1
+57 GRH111 Mathématiques et informatique 1
+58 GRH112 Techniques quantitatives de gestion 1
+59 GRH113 Environnement juridique et comptable 1
+60 GRH114 Relation humaine 1
+61 GRH115 Relation humaine 1
+62 GRH116 Organisation 1
+63 GRH117 Formation Bilingue 1 et environnement économique 1
+64 GRH121 Mathématiques et informatique 2
+65 GRH122 Techniques quantitatives de gestion 2
+66 GRH123 Environnement juridique et comptable 2
+67 GRH124 Relation humaine 2
+68 GRH125 Relation professionnelles 2
+69 GRH126 Méthodologie et Organisation 2
+70 GRH127 Formation Bilingue 2 et environnement économique 2
+71 GRH231 Techniques quantitatives et informatique 1
+72 GRH232 Finance et TIC 1
+73 GRH233 Valorisation des RH 1
+74 GRH234 Techniques de gestion des RH 1
+75 GRH235 Environnement sociale 1
+76 GRH236 Organisation et gestion 1et 2
+77 GRH237 Environnement juridique et création d’entreprise
+78 GRH241 Techniques quantitatives et informatique 2
+79 GRH242 Finance et TIC 2
+80 GRH243 Valorisation des RH 2
+81 GRH244 Techniques de gestion de RH 2
+82 GRH245 Environnement sociale 2
+83 GRH246 Stage professionnel
+84 GRH247 Environnement juridique et éducation civique
+85 IGL111 Outils mathématiques 1
+86 IGL112 Environnement de Base 1
+87 IGL113 Architecture
+88 IGL114 Initiation à l’algorithme
+89 IGL115 Initiation au génie logiciel
+90 IGL116 Traitement des données multimédia
+91 IGL117 Anglais et comptabilité générale
+92 IGL121 Outils mathématiques 2
+93 IGL122 Environnement de Base 2
+94 IGL123 Programmation 1
+95 IGL124 Base de données et MERISE 1
+96 IGL125 Programmation 2
+97 IGL126 Maintenance et négociation informatique
+98 IGL127 EOE et Techniques d’expression
+99 IGL231 Outils mathématiques 3
+100 IGL232 Outils mathématiques 4
+101 IGL233 MOO UML
+102 IGL234 Structure de données et langage SQL
+103 IGL235 Programmation 3
+104 IGL236 Système et réseaux
+105 IGL237 Création d’entreprise et éducation civique et éthique
+106 IGL241 Terminaux mobiles
+107 IGL242 Gestion des projets
+108 IGL243 Réseaux et administration système
+109 IGL244 POO et base de données Avancées
+110 IGL245 Structure des données et IHM
+111 IGL246 Stage professionnel
+112 IGL247 Economie générale
+113 RES111 Outils scientifiques de base 1
+114 RES112 Informatique et physique 1
+115 RES113 Télécoms 1
+116 RES114 Electronique 1
+117 RES115 Electronique de Base 1
+118 RES116 Réseaux 1
+119 RES117 Anglais et comptabilité générale
+120 RES121 Outils scientifiques de base 2
+121 RES122 Informatique et physique 2
+122 RES123 Télécoms 2
+123 RES124 Electronique 2
+124 RES125 Administration et sécurité réseaux
+125 RES126 Technologie web 2
+126 RES127 EOE et Techniques d’expression
+127 RES231 Outils scientifiques de base 3
+128 RES232 Informatique et physique 3
+129 RES233 Téléphonie
+130 RES234 Télécoms 3
+131 RES235 Réseaux et Technologies
+132 RES236 Administration et sécurité 2
+133 RES237 Création d’entreprise
+134 RES241 Outils scientifiques de base 4
+135 RES242 Informatique et physique 4
+136 RES243 Télécoms- Réseaux et veille technologique
+137 RES244 Réseaux et Applications
+138 RES245 Réseaux mobiles et sécurité
+139 RES246 Stage professionnel
+140 RES247 Economie générale
+141 BAT111 Mathématiques 1
+142 BAT112 Physiques et chimie
+143 BAT113 Procédés généraux de construction
+144 BAT114 Dessin et technologie de Bâtiment
+145 BAT115 Organisation des chantiers
+146 BAT116 Architecture et résistance des matériaux
+147 BAT117 Formation bilingue
+148 BAT121 Mathématiques 2
+149 BAT122 Physiques et Informatique
+150 BAT123 Bureau d’étude et projets
+151 BAT124 Topographie 1
+152 BAT125 Béton armé 1
+153 BAT126 Géotechnique et Résistance des matériaux 2
+154 BAT127 Création d’entreprise et Education civique et éthique
+155 BAT231 Mathématiques 3
+156 BAT232 Physiques et chimie
+157 BAT233 Equipements et Matériaux
+158 BAT234 Résistance 3
+159 BAT235 Béton Armé 2 et Dessin assisté par ordinateur
+160 BAT236 Procédés et techniques de réalisation
+161 BAT237 Comptabilité et Droit du travail
+162 BAT241 Mathématiques 4
+163 BAT242 Informatique 2
+164 BAT243 Bureau d’étude 2 et dessin assisté par ordinateur
+165 BAT244 Fondations et soutènements
+166 BAT245 Topographie 2 et Essais
+167 BAT246 Stage professionnel
+168 BAT247 Economie
+169 TPU111 Mathématiques 1
+170 TPU112 Physiques et chimie 1
+171 TPU113 Technique d’aménagement et équipement
+172 TPU114 Route 1 et Organisation des chantiers
+173 TPU115 Introduction à l’architecture
+174 TPU116 Mécanique théorique
+175 TPU117 Expression écrite et formation bilingue
+176 TPU121 Mathématiques 2
+177 TPU122 Physique et Informatique
+178 TPU123 Bureau d’étude et projets
+179 TPU124 Topographie 1 et Béton armé 1
+180 TPU125 Géotechnique
+181 TPU126 Résistance des matériaux
+182 TPU127 Création d’entreprise et éducation civique et éthique
+183 TPU231 Mathématiques 3
+184 TPU232 Physique et chimie 2
+185 TPU233 Topographie 2 et Matériaux
+186 TPU234 Résistances des matériaux 2 et Béton armé 2
+187 TPU235 Dessin assisté par ordinateur
+188 TPU236 Voiries, Réseaux et Divers (VRD)
+189 TPU237 Méthodologie de rédaction du rapport de stage
+190 TPU241 Mathématiques 4
+191 TPU242 Informatique 2
+192 TPU243 Bureau d’étude 2 et Dessin assisté par ordinateur (DAO)
+193 TPU244 Fondations et soutènements
+194 TPU245 Route 2 et Essaie en laboratoire
+195 TPU246 Stage professionnel
+196 TPU247 Comptabilité et Economie
+197 GTO111 Mathématiques 1
+198 GTO112 Physique et chimie 1
+199 GTO113 Topométrie 1
+200 GTO114 Dessin Technique et Cartographie 1
+201 GTO115 Système géographie 1
+202 GTO116 Géologie de l’ingénieur /topologie
+203 GTO117 Expression écrite et Formation bilingue
+204 GTO121 Mathématiques 2
+205 GTO122 Physique et Informatique
+206 GTO123 Système géographique 2
+207 GTO124 Dessin Technique et cartographie 2
+208 GTO125 Régime Foncier et Domanial
+209 GTO126 Calculs Topométriques 2 et Technologie Topométrique 2
+210 GTO127 Création d’entreprise, Education civique et éthique
+211 GTO231 Mathématiques 3
+212 GTO232 Physique et chimie 2
+213 GTO233 Système géographie 3 et Télédétecteur
+214 GTO234 Calculs Topométriques 3
+215 GTO235 Technologie Topométrique 3
+216 GTO236 Urbanisme et Dessin Assisté par Ordinateur
+217 GTO237 Méthodologie de rédaction du RDS
+218 GTO241 Mathématiques 4
+219 GTO242 Informatique 2
+220 GTO243 Topométrie 4
+221 GTO244 Géodésie et Télédétection
+222 GTO245 Voiries et Réseaux et Divers
+223 GTO246 Stage Professionnel
+224 GTO247 Comptabilité et Economie
+225 ELT111 Mathématiques 1
+226 ELT112 Physique et Chimie
+227 ELT113 Electricité générale et Circuits électriques
+228 ELT114 Machine électrique 1
+229 ELT115 Electronique et automatisme
+230 ELT116 Technologie de construction
+231 ELT117 Expression écrite et formation bilingue
+232 ELT121 Mathématiques 2
+233 ELT122 Physique et Informatique
+234 ELT123 Machines électriques et Techniques de mesures
+235 ELT124 Electronique et traitement du Signal
+236 ELT125 Electronique de puissance
+237 ELT126 CAO en génie électrique
+238 ELT127 Création d’entreprise et Education civique et éthique
+239 ELT231 Mathématiques 3
+240 ELT232 Physique et Chimie
+241 ELT233 Production et schémas
+242 ELT234 Asservissement et communication des données
+243 ELT235 Electronique 3
+244 ELT236 TP Machines électrique 1
+245 ELT237 Comptabilité et Droit du travail
+246 ELT241 Mathématiques 4
+247 ELT242 Informatique 4
+248 ELT243 Maintenance et réseaux industriels
+249 ELT244 Installations électriques et appareillages
+250 ELT245 TP Machines électriques2
+251 ELT246 Stage professionnel
+252 ELT247 Economie
+253 BQF111 Mathématiques et informatique 1
+254 BQF112 Techniques quantitatives 1
+255 BQF113 Comptabilité 1, éthique, déontologie et réglementation
+256 BQF114 Comptabilité 1, éthique, déontologie et réglementation
+257 BQF115 Finance 1
+258 BQF116 Economie monétaire et bancaire 1
+259 BQF117 Formation bilingue et environnement économique 1
+260 BQF121 Mathématiques et informatique 2
+261 BQF122 Techniques quantitatives 2
+262 BQF123 Comptabilité 2 et méthodologie
+263 BQF124 Opérations et Techniques bancaires 2
+264 BQF125 Finance 2
+265 BQF126 Economie monétaire et bancaire 2
+266 BQF127 Formation bilingue et environnement économique 2
+267 BQF231 Techniques quantitatives 3
+268 BQF232 Mathématiques et informatique 3
+269 BQF233 Comptabilité 3
+270 BQF234 Opérations et techniques bancaires 3
+271 BQF235 Finances et travaux de synthèse 1
+272 BQF236 Economie monétaire et bancaire 3 et 4
+273 BQF237 Environnement juridique et éducation civique 1
+274 BQF241 Techniques quantitatives 4
+275 BQF242 Mathématiques et informatique 4
+276 BQF243 Comptabilité 4
+277 BQF244 Opérations et techniques bancaires 4
+278 BQF245 Finances et travaux de synthèse 2
+279 BQF246 Stage professionnel
+280 BQF247 Environnement juridique et éducation civique 2
+281 CGE111 Mathématiques et informatique 1
+282 CGE112 Techniques quantitatives de gestion 1
+283 CGE113 Comptabilité générale 1
+284 CGE114 Comptabilité analytique 1
+285 CGE115 Fiscalité 1
+286 CGE116 Introduction à l’analyse financière et comptabilité assistée par ordinateur 1
+287 CGE117 Formation bilingue 1 et environnement
+288 CGE121 Mathématiques et informatique 2
+289 CGE122 Techniques quantitatives de gestion 2
+290 CGE123 Comptabilité générale 2
+291 CGE124 Comptabilité analytique 2
+292 CGE125 Méthodologie fiscale2
+293 CGE126 Introduction à l’analyse financière et comptabilité a l’ordinateur 2
+294 CGE127 Formation bilingue 2 et Environnement
+295 CGE231 Techniques quantitatives de gestion3
+296 CGE232 Mathématiques et informatique 3
+297 CGE233 Comptabilité des sociétés 1
+298 CGE234 Analyse financiere1
+299 CGE235 Gestion prévisionnelle 1 et 2
+300 CGE236 Fiscalité et travaux de synthèse 1
+301 CGE237 Environnement juridique et éthique 1
+302 CGE241 Techniques quantitatives 4
+303 CGE242 Mathématiques et informatique 4
+304 CGE243 Comptabilité des sociétés 2
+305 CGE244 Analyse financière 2
+306 CGE245 Fiscalité et travaux de synthèse 2
+307 CGE246 Stage professionnel
+308 CGE247 Environnement juridique et éthique 1
+309 GRH111 Mathématiques et informatique 1
+310 GRH112 Techniques quantitatives de gestion 1
+311 GRH113 Environnement juridique et comptable 1
+312 GRH114 Relation humaine 1
+313 GRH115 Relation humaine 1
+314 GRH116 Organisation 1
+315 GRH117 Formation Bilingue 1 et environnement économique 1
+316 GRH121 Mathématiques et informatique 2
+317 GRH122 Techniques quantitatives de gestion 2
+318 GRH123 Environnement juridique et comptable 2
+319 GRH124 Relation humaine 2
+320 GRH125 Relation professionnelles 2
+321 GRH126 Méthodologie et Organisation 2
+322 GRH127 Formation Bilingue 2 et environnement économique 2
+323 GRH231 Techniques quantitatives et informatique 1
+324 GRH232 Finance et TIC 1
+325 GRH233 Valorisation des RH 1
+326 GRH234 Techniques de gestion des RH 1
+327 GRH235 Environnement sociale 1
+328 GRH236 Organisation et gestion 1et 2
+329 GRH237 Environnement juridique et création d’entreprise
+330 GRH241 Techniques quantitatives et informatique 2
+331 GRH242 Finance et TIC 2
+332 GRH243 Valorisation des RH 2
+333 GRH244 Techniques de gestion de RH 2
+334 GRH245 Environnement sociale 2
+335 GRH246 Stage professionnel
+336 GRH247 Environnement juridique et éducation civique
+337 IGL111 Outils mathématiques 1
+338 IGL112 Environnement de Base 1
+339 IGL113 Architecture
+340 IGL114 Initiation à l’algorithme
+341 IGL115 Initiation au génie logiciel
+342 IGL116 Traitement des données multimédia
+343 IGL117 Anglais et comptabilité générale
+344 IGL121 Outils mathématiques 2
+345 IGL122 Environnement de Base 2
+346 IGL123 Programmation 1
+347 IGL124 Base de données et MERISE 1
+348 IGL125 Programmation 2
+349 IGL126 Maintenance et négociation informatique
+350 IGL127 EOE et Techniques d’expression
+351 IGL231 Outils mathématiques 3
+352 IGL232 Outils mathématiques 4
+353 IGL233 MOO UML
+354 IGL234 Structure de données et langage SQL
+355 IGL235 Programmation 3
+356 IGL236 Système et réseaux
+357 IGL237 Création d’entreprise et éducation civique et éthique
+358 IGL241 Terminaux mobiles
+359 IGL242 Gestion des projets
+360 IGL243 Réseaux et administration système
+361 IGL244 POO et base de données Avancées
+362 IGL245 Structure des données et IHM
+363 IGL246 Stage professionnel
+364 IGL247 Economie générale
+365 RES111 Outils scientifiques de base 1
+366 RES112 Informatique et physique 1
+367 RES113 Télécoms 1
+368 RES114 Electronique 1
+369 RES115 Electronique de Base 1
+370 RES116 Réseaux 1
+371 RES117 Anglais et comptabilité générale
+372 RES121 Outils scientifiques de base 2
+373 RES122 Informatique et physique 2
+374 RES123 Télécoms 2
+375 RES124 Electronique 2
+376 RES125 Administration et sécurité réseaux
+377 RES126 Technologie web 2
+378 RES127 EOE et Techniques d’expression
+379 RES231 Outils scientifiques de base 3
+380 RES232 Informatique et physique 3
+381 RES233 Téléphonie
+382 RES234 Télécoms 3
+383 RES235 Réseaux et Technologies
+384 RES236 Administration et sécurité 2
+385 RES237 Création d’entreprise
+386 RES241 Outils scientifiques de base 4
+387 RES242 Informatique et physique 4
+388 RES243 Télécoms- Réseaux et veille technologique
+389 RES244 Réseaux et Applications
+390 RES245 Réseaux mobiles et sécurité
+391 RES246 Stage professionnel
+392 RES247 Economie générale
+393 BAT111 Mathématiques 1
+394 BAT112 Physiques et chimie
+395 BAT113 Procédés généraux de construction
+396 BAT114 Dessin et technologie de Bâtiment
+397 BAT115 Organisation des chantiers
+398 BAT116 Architecture et résistance des matériaux
+399 BAT117 Formation bilingue
+400 BAT121 Mathématiques 2
+401 BAT122 Physiques et Informatique
+402 BAT123 Bureau d’étude et projets
+403 BAT124 Topographie 1
+404 BAT125 Béton armé 1
+405 BAT126 Géotechnique et Résistance des matériaux 2
+406 BAT127 Création d’entreprise et Education civique et éthique
+407 BAT231 Mathématiques 3
+408 BAT232 Physiques et chimie
+409 BAT233 Equipements et Matériaux
+410 BAT234 Résistance 3
+411 BAT235 Béton Armé 2 et Dessin assisté par ordinateur
+412 BAT236 Procédés et techniques de réalisation
+413 BAT237 Comptabilité et Droit du travail
+414 BAT241 Mathématiques 4
+415 BAT242 Informatique 2
+416 BAT243 Bureau d’étude 2 et dessin assisté par ordinateur
+417 BAT244 Fondations et soutènements
+418 BAT245 Topographie 2 et Essais
+419 BAT246 Stage professionnel
+420 BAT247 Economie
+421 TPU111 Mathématiques 1
+422 TPU112 Physiques et chimie 1
+423 TPU113 Technique d’aménagement et équipement
+424 TPU114 Route 1 et Organisation des chantiers
+425 TPU115 Introduction à l’architecture
+426 TPU116 Mécanique théorique
+427 TPU117 Expression écrite et formation bilingue
+428 TPU121 Mathématiques 2
+429 TPU122 Physique et Informatique
+430 TPU123 Bureau d’étude et projets
+431 TPU124 Topographie 1 et Béton armé 1
+432 TPU125 Géotechnique
+433 TPU126 Résistance des matériaux
+434 TPU127 Création d’entreprise et éducation civique et éthique
+435 TPU231 Mathématiques 3
+436 TPU232 Physique et chimie 2
+437 TPU233 Topographie 2 et Matériaux
+438 TPU234 Résistances des matériaux 2 et Béton armé 2
+439 TPU235 Dessin assisté par ordinateur
+440 TPU236 Voiries, Réseaux et Divers (VRD)
+441 TPU237 Méthodologie de rédaction du rapport de stage
+442 TPU241 Mathématiques 4
+443 TPU242 Informatique 2
+444 TPU243 Bureau d’étude 2 et Dessin assisté par ordinateur (DAO)
+445 TPU244 Fondations et soutènements
+446 TPU245 Route 2 et Essaie en laboratoire
+447 TPU246 Stage professionnel
+448 TPU247 Comptabilité et Economie
+449 GTO111 Mathématiques 1
+450 GTO112 Physique et chimie 1
+451 GTO113 Topométrie 1
+452 GTO114 Dessin Technique et Cartographie 1
+453 GTO115 Système géographie 1
+454 GTO116 Géologie de l’ingénieur /topologie
+455 GTO117 Expression écrite et Formation bilingue
+456 GTO121 Mathématiques 2
+457 GTO122 Physique et Informatique
+458 GTO123 Système géographique 2
+459 GTO124 Dessin Technique et cartographie 2
+460 GTO125 Régime Foncier et Domanial
+461 GTO126 Calculs Topométriques 2 et Technologie Topométrique 2
+462 GTO127 Création d’entreprise, Education civique et éthique
+463 GTO231 Mathématiques 3
+464 GTO232 Physique et chimie 2
+465 GTO233 Système géographie 3 et Télédétecteur
+466 GTO234 Calculs Topométriques 3
+467 GTO235 Technologie Topométrique 3
+468 GTO236 Urbanisme et Dessin Assisté par Ordinateur
+469 GTO237 Méthodologie de rédaction du RDS
+470 GTO241 Mathématiques 4
+471 GTO242 Informatique 2
+472 GTO243 Topométrie 4
+473 GTO244 Géodésie et Télédétection
+474 GTO245 Voiries et Réseaux et Divers
+475 GTO246 Stage Professionnel
+476 GTO247 Comptabilité et Economie
+477 ELT111 Mathématiques 1
+478 ELT112 Physique et Chimie
+479 ELT113 Electricité générale et Circuits électriques
+480 ELT114 Machine électrique 1
+481 ELT115 Electronique et automatisme
+482 ELT116 Technologie de construction
+483 ELT117 Expression écrite et formation bilingue
+484 ELT121 Mathématiques 2
+485 ELT122 Physique et Informatique
+486 ELT123 Machines électriques et Techniques de mesures
+487 ELT124 Electronique et traitement du Signal
+488 ELT125 Electronique de puissance
+489 ELT126 CAO en génie électrique
+490 ELT127 Création d’entreprise et Education civique et éthique
+491 ELT231 Mathématiques 3
+492 ELT232 Physique et Chimie
+493 ELT233 Production et schémas
+494 ELT234 Asservissement et communication des données
+495 ELT235 Electronique 3
+496 ELT236 TP Machines électrique 1
+497 ELT237 Comptabilité et Droit du travail
+498 ELT241 Mathématiques 4
+499 ELT242 Informatique 4
+500 ELT243 Maintenance et réseaux industriels
+501 ELT244 Installations électriques et appareillages
+502 ELT245 TP Machines électriques2
+503 ELT246 Stage professionnel
+504 ELT247 Economie
+505 UE-NOTES-MANECO-S2 Notes CC/CCON Management/Economie - Semestre 2
+506 UE-NOTES-MANECO-S2 Notes CC/CCON Management/Economie - Semestre 2
+507 UE-NOTES-ING-S2 Notes CC/CCON Ingénierie - Semestre 2
+508 UE-NOTES-ING-S2 Notes CC/CCON Ingénierie - Semestre 2
+509 UE-TEST-MANECO-S1 UE test PREPA MANECO - Semestre 1
+510 UE-TEST-ING-S1 UE test PREPA ING - Semestre 1

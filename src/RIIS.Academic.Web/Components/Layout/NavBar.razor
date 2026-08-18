@@ -1,0 +1,54 @@
+<RadzenStack Gap="1rem" class="rz-p-4">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+            <RadzenIcon Icon="school" Style="font-size: 2rem" />
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.Subtitle1" class="rz-m-0" Text="Menu principal" />
+                <RadzenText TextStyle="TextStyle.Caption" Text="Navigation académique" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Text="Tableau de bord" Icon="dashboard" Path="/" />
+        <RadzenPanelMenuItem Text="Dashboard académique" Icon="insights" Path="/dashboard-academique" />
+
+        <RadzenPanelMenuItem Text="Référentiels" Icon="settings">
+            <RadzenPanelMenuItem Text="Année académique" Icon="calendar_month" Path="/referentiels/annees" />
+            <RadzenPanelMenuItem Text="Cycle" Icon="account_tree" Path="/referentiels/cycles" />
+            <RadzenPanelMenuItem Text="Filière" Icon="category" Path="/referentiels/filieres" />
+            <RadzenPanelMenuItem Text="Spécialité" Icon="workspace_premium" Path="/referentiels/specialites" />
+            <RadzenPanelMenuItem Text="Niveau" Icon="stairs" Path="/referentiels/niveaux" />
+            <RadzenPanelMenuItem Text="Parcours académiques" Icon="route" Path="/referentiels/parcours-academiques" />
+        </RadzenPanelMenuItem>
+
+        <RadzenPanelMenuItem Text="Programme pédagogique" Icon="menu_book">
+            <RadzenPanelMenuItem Text="Maquette" Icon="schema" Path="/programme/maquettes" />
+            <RadzenPanelMenuItem Text="Semestre" Icon="view_timeline" Path="/programme/semestres" />
+            <RadzenPanelMenuItem Text="UE" Icon="view_module" Path="/programme/ue" />
+            <RadzenPanelMenuItem Text="EC" Icon="article" Path="/programme/ec" />
+        </RadzenPanelMenuItem>
+
+        <RadzenPanelMenuItem Text="Académique" Icon="school">
+            <RadzenPanelMenuItem Text="Étudiants" Icon="groups" Path="/etudiants" />
+            <RadzenPanelMenuItem Text="Inscriptions" Icon="assignment_ind" Path="/inscriptions" />
+            <RadzenPanelMenuItem Text="Classes pédagogiques" Icon="co_present" Path="/classes-pedagogiques" />
+        </RadzenPanelMenuItem>
+
+        <RadzenPanelMenuItem Text="Scolarité" Icon="payments">
+            <RadzenPanelMenuItem Text="Types d'éléments" Icon="tune" Path="/scolarite/types-elements" />
+            <RadzenPanelMenuItem Text="Tarifs" Icon="price_change" Path="/scolarite/tarifs" />
+            <RadzenPanelMenuItem Text="Dossiers" Icon="folder_open" Path="/scolarite/dossiers" />
+            <RadzenPanelMenuItem Text="Finances" Icon="payments" Path="/scolarite/finances" />
+            <RadzenPanelMenuItem Text="Modes de paiement" Icon="account_balance_wallet" Path="/scolarite/modes-paiement" />
+        </RadzenPanelMenuItem>
+
+        <RadzenPanelMenuItem Text="Évaluations" Icon="fact_check">
+            <RadzenPanelMenuItem Text="Saisie des notes" Icon="edit_note" Path="/saisie-notes" />
+            <RadzenPanelMenuItem Text="Résultats" Icon="analytics" Path="/evaluations" />
+            <RadzenPanelMenuItem Text="Calcul des résultats" Icon="calculate" Path="/calcul-resultats" />
+            <RadzenPanelMenuItem Text="PV" Icon="article" Path="/pv" />
+            <RadzenPanelMenuItem Text="Relevés" Icon="description" Path="/releves" />
+        </RadzenPanelMenuItem>
+    </RadzenPanelMenu>
+</RadzenStack>

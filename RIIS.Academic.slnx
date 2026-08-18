@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/RIIS.Academic.Api/RIIS.Academic.Api.csproj" />
+    <Project Path="src/RIIS.Academic.Application/RIIS.Academic.Application.csproj" />
+    <Project Path="src/RIIS.Academic.Domain/RIIS.Academic.Domain.csproj" />
+    <Project Path="src/RIIS.Academic.Infrastructure/RIIS.Academic.Infrastructure.csproj" />
+    <Project Path="src/RIIS.Academic.Web/RIIS.Academic.Web.csproj" />
+  </Folder>
+</Solution>

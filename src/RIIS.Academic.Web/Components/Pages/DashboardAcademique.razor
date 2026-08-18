@@ -1,0 +1,658 @@
+@page "/dashboard-academique"
+@inject IDashboardAcademiqueService DashboardAcademiqueService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem" Style="position: relative">
+    <RadzenRow JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center" class="rz-mb-4">
+        <RadzenColumn Size="12" SizeLG="7">
+            <RadzenStack Gap="0.25rem">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0 riis-page-title" Text="Dashboard académique" />
+                <RadzenText TextStyle="TextStyle.Subtitle1" TagName="TagName.P" class="rz-m-0">
+                    Suivi synthétique des inscriptions, notes, taux de réussite, rattrapages, PV et relevés.
+                </RadzenText>
+            </RadzenStack>
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeLG="5">
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" AlignItems="AlignItems.Center" Gap="0.5rem" Wrap="FlexWrap.Wrap">
+                <RadzenBadge Text="Données Application" BadgeStyle="BadgeStyle.Info" Variant="Variant.Flat" Shade="Shade.Light" />
+                <RadzenBadge Text="@($"Généré le {dashboard.DateGenerationUtc.ToLocalTime():dd/MM/yyyy HH:mm}")" BadgeStyle="BadgeStyle.Secondary" Variant="Variant.Flat" Shade="Shade.Light" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+
+    @if (!string.IsNullOrWhiteSpace(loadError))
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" ShowIcon="true">
+            @loadError
+        </RadzenAlert>
+    }
+
+    <RadzenCard Variant="Variant.Outlined">
+        <RadzenStack Gap="1rem">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+                <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2" class="rz-m-0">Filtres de pilotage</RadzenText>
+                @if (isLoading)
+                {
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem">
+                        <RadzenProgressBarCircular Mode="ProgressBarMode.Indeterminate" Size="ProgressBarCircularSize.Small" />
+                        <RadzenText TextStyle="TextStyle.Caption" Text="Chargement..." />
+                    </RadzenStack>
+                }
+            </RadzenStack>
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="2">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@anneesAcademiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedAnneeAcademiqueId"
+                                        AllowClear="true"
+                                        Placeholder="Toutes"
+                                        Change="@OnFiltersChanged"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="2">
+                    <RadzenFormField Text="Cycle" Style="width:100%">
+                        <RadzenDropDown Data="@cycles"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedCycleFormationId"
+                                        AllowClear="true"
+                                        Placeholder="Tous"
+                                        Change="@OnFiltersChanged"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="4" SizeXL="2">
+                    <RadzenFormField Text="Niveau" Style="width:100%">
+                        <RadzenDropDown Data="@niveaux"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedNiveauEtudeId"
+                                        AllowClear="true"
+                                        Placeholder="Tous"
+                                        Change="@OnFiltersChanged"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6" SizeXL="3">
+                    <RadzenFormField Text="Filière / spécialité" Style="width:100%">
+                        <RadzenDropDown Data="@parcours"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Key"
+                                        @bind-Value="@selectedParcoursKey"
+                                        AllowClear="true"
+                                        Placeholder="Toutes"
+                                        Change="@OnFiltersChanged"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+                <RadzenColumn Size="12" SizeMD="6" SizeXL="3">
+                    <RadzenFormField Text="Semestre" Style="width:100%">
+                        <RadzenDropDown Data="@semestres"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedSemestrePedagogiqueId"
+                                        AllowClear="true"
+                                        Placeholder="Tous"
+                                        Change="@OnFiltersChanged"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenRow Style="--rz-text-h2-line-height: 1; --rz-text-h2-font-weight: 200;">
+        <RadzenColumn Size="12" SizeMD="12" SizeXL="2">
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack JustifyContent="JustifyContent.SpaceBetween" Style="height: 100%;">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2">Réussite</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" TagName="TagName.P" class="rz-color-success rz-m-0">@($"{Math.Round(kpi.TauxReussite)}%")</RadzenText>
+                            </RadzenStack>
+                            <RadzenProgressBar ProgressBarStyle="ProgressBarStyle.Success"
+                                               Value="@kpi.TauxReussite"
+                                               ShowValue="false"
+                                               Style="--rz-progressbar-background-color: var(--rz-success-lighter); --rz-progressbar-height: 1rem;" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack Gap="0">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2">Inscrits</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" TagName="TagName.P" class="rz-color-info rz-m-0">@kpi.NombreInscrits</RadzenText>
+                            </RadzenStack>
+                            <RadzenSparkline Style="width: 100%; height: 80px;">
+                                <RadzenColumnSeries FillMode="FillMode.Gradient" Data="@inscriptionsParMois" ValueProperty="Nombre" CategoryProperty="Mois" Title="Inscriptions" Fill="var(--rz-info)" />
+                                <RadzenColumnOptions Margin="0" />
+                                <RadzenCategoryAxis Padding="20" Visible="false" />
+                            </RadzenSparkline>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack Gap="0">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2">Notes saisies</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" TagName="TagName.P" class="rz-color-warning rz-m-0">@($"{Math.Round(kpi.TauxNotesSaisies)}%")</RadzenText>
+                            </RadzenStack>
+                            <RadzenSparkline Style="width: 100%; height: 80px;">
+                                <RadzenColumnSeries FillMode="FillMode.Gradient" Data="@progressionNotes" ValueProperty="Taux" CategoryProperty="Libelle" Title="Notes" Fill="var(--rz-warning)" />
+                                <RadzenColumnOptions Margin="0" />
+                                <RadzenCategoryAxis Padding="20" Visible="false" />
+                            </RadzenSparkline>
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3" SizeXL="12">
+                    <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                        <RadzenStack Gap="0">
+                            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                                <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2">Rattrapage</RadzenText>
+                                <RadzenText TextStyle="TextStyle.H2" TagName="TagName.P" class="rz-color-danger rz-m-0">@kpi.NombreRattrapage</RadzenText>
+                            </RadzenStack>
+                            <RadzenProgressBar ProgressBarStyle="ProgressBarStyle.Danger"
+                                               Value="@kpi.TauxRattrapage"
+                                               ShowValue="true"
+                                               Style="--rz-progressbar-background-color: var(--rz-danger-lighter); --rz-progressbar-height: 1rem;" />
+                        </RadzenStack>
+                    </RadzenCard>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenColumn>
+
+        <RadzenColumn Size="12" SizeMD="6" SizeLG="6">
+            <RadzenCard Variant="Variant.Outlined" Style="height: 100%;">
+                <RadzenStack Style="height: 100%;" JustifyContent="JustifyContent.SpaceBetween">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Start" JustifyContent="JustifyContent.SpaceBetween">
+                        <RadzenStack Gap="0">
+                            <RadzenText TextStyle="TextStyle.H6" TagName="TagName.H2" class="rz-m-0">Complétude des notes</RadzenText>
+                            <RadzenText TextStyle="TextStyle.Caption" Text="CCON, CC, SN et SR par semestre" />
+                        </RadzenStack>
+                        <RadzenText TextStyle="TextStyle.H2" TagName="TagName.P" class="rz-m-0">@($"{Math.Round(kpi.TauxNotesSaisies)}%")</RadzenText>
+                    </RadzenStack>
+
+                    <RadzenChart Style="width: 100%; height: 340px;">
+                        <RadzenAreaSeries FillMode="FillMode.Gradient" Data="@evolutionSaisieNotes" ValueProperty="Ccon" CategoryProperty="Periode" Title="CCON" Smooth="true" Stroke="var(--rz-info)" Fill="var(--rz-info-lighter)">
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenAreaSeries>
+                        <RadzenAreaSeries FillMode="FillMode.Gradient" Data="@evolutionSaisieNotes" ValueProperty="Cc" CategoryProperty="Periode" Title="CC" Smooth="true" Stroke="var(--rz-success)" Fill="var(--rz-success-lighter)">
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenAreaSeries>
+                        <RadzenAreaSeries FillMode="FillMode.Gradient" Data="@evolutionSaisieNotes" ValueProperty="Sn" CategoryProperty="Periode" Title="SN" Smooth="true" Stroke="var(--rz-warning)" Fill="var(--rz-warning-lighter)">
+                            <RadzenMarkers Visible="true" MarkerType="MarkerType.Circle" />
+                        </RadzenAreaSeries>
+                        <RadzenValueAxis Min="0" Max="100">
+                            <RadzenGridLines Visible="true" />
+                        </RadzenValueAxis>
+                        <RadzenCategoryAxis Padding="30" />
+                        <RadzenLegend Visible="true" Position="LegendPosition.Bottom" />
+                    </RadzenChart>
+                </RadzenStack>
+            </RadzenCard>
+        </RadzenColumn>
+
+        <RadzenColumn Size="12" SizeMD="6" SizeXL="4">
+            <RadzenCard Variant="Variant.Outlined" Style="height: 100%; --rz-card-padding: 0;">
+                <RadzenTabs Style="height: 100%; min-height: 390px">
+                    <Tabs>
+                        <RadzenTabsItem Text="Résultats">
+                            <RadzenChart Style="width: 100%; height: 350px;">
+                                <RadzenDonutSeries FillMode="FillMode.Gradient" Data="@repartitionResultats" CategoryProperty="Libelle" ValueProperty="Nombre" Fills="@resultatColors" />
+                            </RadzenChart>
+                        </RadzenTabsItem>
+
+                        <RadzenTabsItem Text="Taux par cycle">
+                            <RadzenChart Style="width: 100%; height: 350px;">
+                                <RadzenColumnSeries FillMode="FillMode.Gradient" Data="@tauxParCycle" CategoryProperty="Libelle" ValueProperty="Taux" Fill="var(--rz-success)" />
+                                <RadzenValueAxis Min="0" Max="100">
+                                    <RadzenGridLines Visible="true" />
+                                </RadzenValueAxis>
+                                <RadzenCategoryAxis Padding="20" />
+                                <RadzenLegend Visible="false" />
+                            </RadzenChart>
+                        </RadzenTabsItem>
+
+                        <RadzenTabsItem Text="EC à risque">
+                            <RadzenStack Gap="0.75rem" class="rz-p-4">
+                                @if (ecsARisque.Count == 0)
+                                {
+                                    <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat" ShowIcon="true">
+                                        Aucun EC à risque détecté pour les filtres sélectionnés.
+                                    </RadzenAlert>
+                                }
+                                else
+                                {
+                                    @foreach (var ec in ecsARisque)
+                                    {
+                                        <RadzenCard Variant="Variant.Outlined">
+                                            <RadzenStack Gap="0.25rem">
+                                                <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.SpaceBetween" AlignItems="AlignItems.Center">
+                                                    <RadzenText TextStyle="TextStyle.Subtitle2" class="rz-m-0" Text="@ec.Libelle" />
+                                                    <RadzenBadge Text="@($"{ec.TauxEchec}% échec")" BadgeStyle="BadgeStyle.Danger" Variant="Variant.Flat" Shade="Shade.Light" />
+                                                </RadzenStack>
+                                                <RadzenText TextStyle="TextStyle.Caption" Text="@($"{ec.Classe} - Moyenne : {ec.MoyenneClasse:0.##}/20")" />
+                                            </RadzenStack>
+                                        </RadzenCard>
+                                    }
+                                }
+                            </RadzenStack>
+                        </RadzenTabsItem>
+                    </Tabs>
+                </RadzenTabs>
+            </RadzenCard>
+        </RadzenColumn>
+    </RadzenRow>
+
+    <RadzenRow>
+        <RadzenColumn Size="12">
+            <RadzenDataGrid Data="@classesSynthese" TItem="ClasseSyntheseDashboard" Style="min-height: 520px" AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand" AllowSorting="true" AllowPaging="true" PageSize="8">
+                <HeaderTemplate>
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem" class="rz-py-2">
+                        <RadzenStack Gap="0">
+                            <RadzenText TextStyle="TextStyle.H6" class="rz-m-0" Text="Synthèse par classe pédagogique" />
+                            <RadzenText TextStyle="TextStyle.Caption" Text="Données agrégées depuis IDashboardAcademiqueService." />
+                        </RadzenStack>
+                        <RadzenButton Text="Actualiser"
+                                      Icon="refresh"
+                                      ButtonStyle="ButtonStyle.Light"
+                                      Variant="Variant.Flat"
+                                      Click="@RefreshDashboard" />
+                    </RadzenStack>
+                </HeaderTemplate>
+                <Columns>
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Classe" Title="Classe" Width="170px" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Cycle" Title="Cycle" Width="110px" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Niveau" Title="Niveau" Width="120px" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Parcours" Title="Filière / spécialité" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Inscrits" Title="Inscrits" Width="110px" TextAlign="TextAlign.Center" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Title="Notes saisies" Width="150px">
+                        <Template Context="classe">
+                            <RadzenProgressBar Value="@classe.TauxNotesSaisies"
+                                               ShowValue="true"
+                                               Style="--rz-progressbar-height: .85rem;" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Title="Moyenne" Width="110px" TextAlign="TextAlign.Center">
+                        <Template Context="classe">@($"{classe.MoyenneClasse:0.##}")</Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Admis" Title="Admis" Width="95px" TextAlign="TextAlign.Center" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Rattrapage" Title="Rattrapage" Width="125px" TextAlign="TextAlign.Center" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Property="Echec" Title="Échec" Width="95px" TextAlign="TextAlign.Center" />
+                    <RadzenDataGridColumn TItem="ClasseSyntheseDashboard" Title="Documents" Width="170px" Sortable="false" Filterable="false">
+                        <Template Context="classe">
+                            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.35rem">
+                                <RadzenBadge Text="@($"{classe.PvGeneres} PV")" BadgeStyle="BadgeStyle.Info" Variant="Variant.Flat" Shade="Shade.Light" />
+                                <RadzenBadge Text="@($"{classe.RelevesDisponibles} relevés")" BadgeStyle="BadgeStyle.Success" Variant="Variant.Flat" Shade="Shade.Light" />
+                            </RadzenStack>
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+        </RadzenColumn>
+    </RadzenRow>
+</RadzenStack>
+
+<style>
+    .rz-tabview-panel {
+        height: 100%;
+    }
+
+    .rz-default,
+    .rz-dark,
+    .rz-standard,
+    .rz-standard-dark,
+    .rz-software,
+    .rz-software-dark,
+    .rz-humanistic,
+    .rz-humanistic-dark {
+        .rz-card:has(.rz-tabview) {
+            --rz-card-border: none;
+        }
+    }
+</style>
+
+@code {
+    private DashboardAcademiqueDto dashboard = new();
+
+    private List<DashboardFilterOption> anneesAcademiques = [];
+    private List<DashboardFilterOption> cycles = [];
+    private List<DashboardFilterOption> niveaux = [];
+    private List<DashboardParcoursFilterOption> parcours = [];
+    private List<DashboardFilterOption> semestres = [];
+
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedCycleFormationId;
+    private long? selectedNiveauEtudeId;
+    private string? selectedParcoursKey;
+    private long? selectedSemestrePedagogiqueId;
+
+    private bool isLoading;
+    private string? loadError;
+
+    private DashboardKpi kpi = new();
+    private List<SimpleCountPoint> inscriptionsParMois = [];
+    private List<SimpleRatePoint> progressionNotes = [];
+    private List<EvaluationProgressPoint> evolutionSaisieNotes = [];
+    private List<ResultatRepartitionPoint> repartitionResultats = [];
+    private List<SimpleRatePoint> tauxParCycle = [];
+    private List<EcRisqueDashboard> ecsARisque = [];
+    private List<ClasseSyntheseDashboard> classesSynthese = [];
+    private IEnumerable<string> resultatColors = ["#28a745", "#ffc107", "#dc3545", "#6c757d"];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDashboardAsync(rebuildFilterOptions: true);
+    }
+
+    private async Task OnFiltersChanged(object? _)
+    {
+        await LoadDashboardAsync();
+    }
+
+    private async Task RefreshDashboard()
+    {
+        await LoadDashboardAsync(rebuildFilterOptions: true);
+    }
+
+    private async Task LoadDashboardAsync(bool rebuildFilterOptions = false)
+    {
+        isLoading = true;
+        loadError = null;
+
+        try
+        {
+            if (rebuildFilterOptions)
+            {
+                var referenceDashboard = await DashboardAcademiqueService.GetDashboardAcademiqueAsync(new DashboardAcademiqueFilterDto());
+                BuildFilterOptions(referenceDashboard);
+            }
+
+            dashboard = await DashboardAcademiqueService.GetDashboardAcademiqueAsync(BuildFilter(), CancellationToken.None);
+            MapDashboardToView(dashboard);
+        }
+        catch (Exception ex)
+        {
+            loadError = $"Impossible de charger le dashboard académique : {ex.Message}";
+
+            NotificationService.Notify(new NotificationMessage
+            {
+                Severity = NotificationSeverity.Error,
+                Summary = "Dashboard académique",
+                Detail = loadError,
+                Duration = 7000
+            });
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private DashboardAcademiqueFilterDto BuildFilter()
+    {
+        var selectedParcours = parcours.FirstOrDefault(x => x.Key == selectedParcoursKey);
+
+        return new DashboardAcademiqueFilterDto
+        {
+            AnneeAcademiqueId = selectedAnneeAcademiqueId,
+            CycleFormationId = selectedCycleFormationId,
+            NiveauEtudeId = selectedNiveauEtudeId,
+            FiliereId = selectedParcours?.FiliereId,
+            SpecialiteId = selectedParcours?.SpecialiteId,
+            SemestrePedagogiqueId = selectedSemestrePedagogiqueId
+        };
+    }
+
+    private void BuildFilterOptions(DashboardAcademiqueDto referenceDashboard)
+    {
+        anneesAcademiques = referenceDashboard.Classes
+            .Where(x => x.AnneeAcademiqueId.HasValue && !string.IsNullOrWhiteSpace(x.AnneeAcademiqueLibelle))
+            .GroupBy(x => new { Id = x.AnneeAcademiqueId!.Value, Libelle = x.AnneeAcademiqueLibelle })
+            .OrderByDescending(x => x.Key.Libelle)
+            .Select(x => new DashboardFilterOption(x.Key.Id, x.Key.Libelle))
+            .ToList();
+
+        cycles = referenceDashboard.Classes
+            .Where(x => x.CycleFormationId.HasValue && !string.IsNullOrWhiteSpace(x.CycleFormationLibelle))
+            .GroupBy(x => new { Id = x.CycleFormationId!.Value, Libelle = BuildCycleLibelle(x.CycleFormationCode, x.CycleFormationLibelle) })
+            .OrderBy(x => x.Key.Libelle)
+            .Select(x => new DashboardFilterOption(x.Key.Id, x.Key.Libelle))
+            .ToList();
+
+        niveaux = referenceDashboard.Classes
+            .Where(x => x.NiveauEtudeId.HasValue && !string.IsNullOrWhiteSpace(x.NiveauEtudeLibelle))
+            .GroupBy(x => new { Id = x.NiveauEtudeId!.Value, Libelle = x.NiveauEtudeLibelle })
+            .OrderBy(x => x.Key.Libelle)
+            .Select(x => new DashboardFilterOption(x.Key.Id, x.Key.Libelle))
+            .ToList();
+
+        parcours = referenceDashboard.Classes
+            .Where(x => x.FiliereId.HasValue || x.SpecialiteId.HasValue || !string.IsNullOrWhiteSpace(x.ParcoursLibelle))
+            .GroupBy(x => new
+            {
+                x.FiliereId,
+                x.SpecialiteId,
+                Libelle = BuildParcoursLibelle(x)
+            })
+            .OrderBy(x => x.Key.Libelle)
+            .Select(x => new DashboardParcoursFilterOption(
+                $"{x.Key.FiliereId?.ToString() ?? "0"}-{x.Key.SpecialiteId?.ToString() ?? "0"}",
+                x.Key.Libelle,
+                x.Key.FiliereId,
+                x.Key.SpecialiteId))
+            .ToList();
+
+        semestres = referenceDashboard.EvolutionSaisieNotes
+            .Where(x => x.SemestrePedagogiqueId.HasValue)
+            .GroupBy(x => new
+            {
+                Id = x.SemestrePedagogiqueId!.Value,
+                Numero = x.SemestreNumero,
+                x.Periode
+            })
+            .OrderBy(x => x.Key.Numero ?? byte.MaxValue)
+            .ThenBy(x => x.Key.Periode)
+            .Select(x => new DashboardFilterOption(x.Key.Id, BuildSemestreLibelle(x.Key.Numero, x.Key.Periode)))
+            .ToList();
+    }
+
+    private void MapDashboardToView(DashboardAcademiqueDto source)
+    {
+        kpi = new DashboardKpi
+        {
+            NombreInscrits = source.Kpi.NombreInscrits,
+            TauxReussite = ToDouble(source.Kpi.TauxReussite),
+            TauxNotesSaisies = ToDouble(source.Kpi.TauxNotesSaisies),
+            NombreRattrapage = source.Kpi.NombreRattrapage,
+            TauxRattrapage = ToDouble(source.Kpi.TauxRattrapage)
+        };
+
+        inscriptionsParMois = source.InscriptionsParPeriode
+            .OrderBy(x => x.Ordre)
+            .Select(x => new SimpleCountPoint(x.Periode, x.NombreInscriptions))
+            .ToList();
+
+        progressionNotes = source.ProgressionNotesParType
+            .OrderBy(x => GetEvaluationOrder(x.CodeTypeEvaluation))
+            .Select(x => new SimpleRatePoint(x.LibelleTypeEvaluation, ToDouble(x.TauxCompletion)))
+            .ToList();
+
+        evolutionSaisieNotes = source.EvolutionSaisieNotes
+            .OrderBy(x => x.SemestreNumero ?? byte.MaxValue)
+            .ThenBy(x => x.Periode)
+            .Select(x => new EvaluationProgressPoint(
+                BuildSemestreLibelle(x.SemestreNumero, x.Periode),
+                ToDouble(x.TauxCcon),
+                ToDouble(x.TauxCc),
+                ToDouble(x.TauxSn),
+                ToDouble(x.TauxSr)))
+            .ToList();
+
+        repartitionResultats = source.RepartitionResultats
+            .Select(x => new ResultatRepartitionPoint(x.Libelle, x.Nombre))
+            .ToList();
+
+        resultatColors = source.RepartitionResultats.Count == 0
+            ? ["#28a745", "#ffc107", "#dc3545", "#6c757d"]
+            : source.RepartitionResultats.Select(x => string.IsNullOrWhiteSpace(x.Couleur) ? "#6c757d" : x.Couleur).ToList();
+
+        tauxParCycle = source.TauxReussiteParCycle
+            .OrderBy(x => x.Libelle)
+            .Select(x => new SimpleRatePoint(x.Libelle, ToDouble(x.TauxReussite)))
+            .ToList();
+
+        ecsARisque = source.ElementsConstitutifsARisque
+            .OrderByDescending(x => x.TauxEchec)
+            .ThenBy(x => x.MoyenneClasse)
+            .Take(6)
+            .Select(x => new EcRisqueDashboard(
+                x.ElementConstitutifLibelle,
+                GetEcRisqueContext(x),
+                Convert.ToInt32(Math.Round(x.TauxEchec, 0)),
+                x.MoyenneClasse))
+            .ToList();
+
+        classesSynthese = source.Classes
+            .OrderBy(x => x.CycleFormationCode)
+            .ThenBy(x => x.NiveauEtudeLibelle)
+            .ThenBy(x => x.ParcoursLibelle)
+            .Select(x => new ClasseSyntheseDashboard(
+                string.IsNullOrWhiteSpace(x.ClassePedagogiqueCode) ? x.ClassePedagogiqueLibelle : x.ClassePedagogiqueCode,
+                string.IsNullOrWhiteSpace(x.CycleFormationCode) ? x.CycleFormationLibelle : x.CycleFormationCode,
+                x.NiveauEtudeLibelle,
+                BuildParcoursLibelle(x),
+                x.NombreInscrits,
+                ToDouble(x.TauxNotesSaisies),
+                x.MoyenneClasse,
+                x.NombreAdmis,
+                x.NombreRattrapage,
+                x.NombreEchec,
+                x.NombreProcesVerbauxGeneres,
+                x.NombreRelevesDisponibles))
+            .ToList();
+    }
+
+    private static string BuildCycleLibelle(string code, string libelle)
+    {
+        if (string.IsNullOrWhiteSpace(code))
+        {
+            return libelle;
+        }
+
+        if (string.IsNullOrWhiteSpace(libelle) || string.Equals(code, libelle, StringComparison.OrdinalIgnoreCase))
+        {
+            return code;
+        }
+
+        return $"{code} - {libelle}";
+    }
+
+    private static string BuildParcoursLibelle(DashboardClasseSyntheseDto classe)
+    {
+        if (!string.IsNullOrWhiteSpace(classe.ParcoursLibelle))
+        {
+            return classe.ParcoursLibelle;
+        }
+
+        if (!string.IsNullOrWhiteSpace(classe.FiliereLibelle) && !string.IsNullOrWhiteSpace(classe.SpecialiteLibelle))
+        {
+            return $"{classe.FiliereLibelle} / {classe.SpecialiteLibelle}";
+        }
+
+        if (!string.IsNullOrWhiteSpace(classe.SpecialiteLibelle))
+        {
+            return classe.SpecialiteLibelle;
+        }
+
+        return string.IsNullOrWhiteSpace(classe.FiliereLibelle)
+            ? "Parcours non renseigné"
+            : classe.FiliereLibelle;
+    }
+
+    private static string BuildSemestreLibelle(byte? numero, string periode)
+    {
+        if (numero.HasValue)
+        {
+            return $"S{numero.Value}";
+        }
+
+        return string.IsNullOrWhiteSpace(periode) ? "Semestre" : periode;
+    }
+
+    private static string GetEcRisqueContext(DashboardEcRisqueDto ec)
+    {
+        if (!string.IsNullOrWhiteSpace(ec.ClassePedagogiqueLibelle))
+        {
+            return ec.ClassePedagogiqueLibelle;
+        }
+
+        if (!string.IsNullOrWhiteSpace(ec.UniteEnseignementLibelle))
+        {
+            return ec.UniteEnseignementLibelle;
+        }
+
+        return "Toutes classes";
+    }
+
+    private static int GetEvaluationOrder(string code)
+        => code?.ToUpperInvariant() switch
+        {
+            "CCON" => 1,
+            "CC" => 2,
+            "SN" => 3,
+            "SR" => 4,
+            _ => 99
+        };
+
+    private static double ToDouble(decimal value)
+        => Convert.ToDouble(Math.Round(value, 2));
+
+    private class DashboardKpi
+    {
+        public int NombreInscrits { get; set; }
+        public double TauxReussite { get; set; }
+        public double TauxNotesSaisies { get; set; }
+        public int NombreRattrapage { get; set; }
+        public double TauxRattrapage { get; set; }
+    }
+
+    private record DashboardFilterOption(long Id, string Libelle);
+
+    private record DashboardParcoursFilterOption(string Key, string Libelle, long? FiliereId, long? SpecialiteId);
+
+    private record SimpleCountPoint(string Mois, int Nombre);
+
+    private record SimpleRatePoint(string Libelle, double Taux);
+
+    private record EvaluationProgressPoint(string Periode, double Ccon, double Cc, double Sn, double Sr);
+
+    private record ResultatRepartitionPoint(string Libelle, int Nombre);
+
+    private record EcRisqueDashboard(string Libelle, string Classe, int TauxEchec, decimal MoyenneClasse);
+
+    private record ClasseSyntheseDashboard(
+        string Classe,
+        string Cycle,
+        string Niveau,
+        string Parcours,
+        int Inscrits,
+        double TauxNotesSaisies,
+        decimal MoyenneClasse,
+        int Admis,
+        int Rattrapage,
+        int Echec,
+        int PvGeneres,
+        int RelevesDisponibles);
+}

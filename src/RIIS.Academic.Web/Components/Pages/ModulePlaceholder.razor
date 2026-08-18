@@ -1,0 +1,87 @@
+@page "/{*ModulePath}"
+
+<RadzenCard>
+    <RadzenStack Gap="1rem">
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.75rem">
+            <RadzenIcon Icon="@Icon" Style="font-size: 2.25rem" />
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="@Title" />
+                <RadzenText Text="@Description" />
+            </RadzenStack>
+        </RadzenStack>
+
+        <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+            Ce module est prêt à recevoir son écran CRUD ou son workflow métier.
+        </RadzenAlert>
+
+        <RadzenButton Text="Retour au tableau de bord" Icon="dashboard" Path="/" ButtonStyle="ButtonStyle.Secondary" Variant="Variant.Flat" />
+    </RadzenStack>
+</RadzenCard>
+
+@code {
+    [Parameter]
+    public string? ModulePath { get; set; }
+
+    private string[] Segments => (ModulePath ?? string.Empty)
+        .Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    private string LastSegment => Segments.LastOrDefault() ?? "module";
+
+    private string? ParentSegment => Segments.Length > 1
+        ? Segments[^2]
+        : null;
+
+    private string Title => HumanizeSegment(LastSegment);
+
+    private string Description => ParentSegment switch
+    {
+        "referentiels" => $"Gestion du référentiel : {Title}.",
+        "programme" => $"Gestion du programme pédagogique : {Title}.",
+        _ => $"Gestion du module : {Title}."
+    };
+
+    private string Icon => ParentSegment switch
+    {
+        "referentiels" => "settings",
+        "programme" => "menu_book",
+        _ => LastSegment switch
+        {
+            "etudiants" => "groups",
+            "inscriptions" => "assignment_ind",
+            "classes-pedagogiques" => "co_present",
+            "evaluations" => "fact_check",
+            "saisie-notes" => "edit_note",
+            "calcul-resultats" => "calculate",
+            "pv-releves" => "description",
+            _ => "apps"
+        }
+    };
+
+    private static string HumanizeSegment(string segment)
+    {
+        if (string.IsNullOrWhiteSpace(segment))
+        {
+            return "Module";
+        }
+
+        var words = segment
+            .Split('-', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Select(FormatWord);
+
+        return string.Join(' ', words);
+    }
+
+    private static string FormatWord(string word)
+    {
+        return word.ToLowerInvariant() switch
+        {
+            "ue" => "UE",
+            "ec" => "EC",
+            "pv" => "PV",
+            "lmd" => "LMD",
+            "bts" => "BTS",
+            "prepa" => "PREPA",
+            _ => CultureInfo.CurrentCulture.TextInfo.ToTitleCase(word.ToLowerInvariant())
+        };
+    }
+}

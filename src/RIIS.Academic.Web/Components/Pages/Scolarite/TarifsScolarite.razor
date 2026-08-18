@@ -1,0 +1,559 @@
+@page "/scolarite/tarifs"
+@inject ITarifsScolariteService TarifsScolariteService
+@inject ITypesElementsScolariteService TypesElementsScolariteService
+@inject IReferentielsService ReferentielsService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
+            <RadzenStack Gap="0">
+                <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Tarifs scolarité" />
+                <RadzenText Text="Configuration des montants par année, cycle, niveau, filière ou spécialité." />
+            </RadzenStack>
+            <RadzenButton Text="Nouveau tarif" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" Disabled="@(typeElements.Count == 0 || anneesAcademiques.Count == 0)" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.H6" Text="Filtres" />
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="4">
+                    <RadzenFormField Text="Type d'élément" Style="width:100%">
+                        <RadzenDropDown Data="@typeElements"
+                                        @bind-Value="@filtreTypeElementId"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        TValue="long?"
+                                        AllowClear="true"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@anneesAcademiques"
+                                        @bind-Value="@filtreAnneeAcademiqueCode"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Libelle"
+                                        TValue="string"
+                                        AllowClear="true"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0.5rem" Style="height:100%">
+                        <RadzenCheckBox @bind-Value="@inclureInactifs" />
+                        <RadzenText Text="Inclure inactifs" />
+                    </RadzenStack>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" JustifyContent="JustifyContent.End" Gap="0.5rem" Style="height:100%">
+                        <RadzenButton Text="Filtrer" Icon="search" ButtonStyle="ButtonStyle.Primary" Click="@LoadTarifs" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (typeElements.Count == 0)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Flat" ShowIcon="true">
+            Créez d'abord au moins un type d'élément scolarité avant de configurer les tarifs.
+        </RadzenAlert>
+    }
+
+    @if (anneesAcademiques.Count == 0)
+    {
+        <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Flat" ShowIcon="true">
+            Créez d'abord au moins une année académique, par exemple 2024-2025, avant de configurer les tarifs.
+        </RadzenAlert>
+    }
+
+    @if (showForm)
+    {
+        <RadzenCard>
+            <RadzenTemplateForm TItem="TarifScolariteDto" Data="@model" Submit="@Save">
+                <RadzenStack Gap="1rem">
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Code" Style="width:100%">
+                                <RadzenTextBox Value="@model.Code" Name="Code" ReadOnly="true" Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Type d'élément" Style="width:100%">
+                                <RadzenDropDown Data="@typeElements"
+                                                @bind-Value="@ModelTypeElementScolariteId"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Id"
+                                                TValue="long"
+                                                Name="TypeElementScolariteId"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Année académique" Style="width:100%">
+                                <RadzenDropDown Data="@anneesAcademiques"
+                                                @bind-Value="@ModelAnneeAcademiqueCode"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Libelle"
+                                                TValue="string"
+                                                Name="AnneeAcademiqueCode"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="AnneeAcademiqueCode" Text="Année obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Montant" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Montant"
+                                               Name="Montant"
+                                               Min="1"
+                                               Step="1000"
+                                               Format="N0"
+                                               Style="width:100%" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Montant" Text="Montant obligatoire." />
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Devise" Style="width:100%">
+                                <RadzenTextBox @bind-Value="@model.Devise" Name="Devise" />
+                            </RadzenFormField>
+                            <RadzenRequiredValidator Component="Devise" Text="Devise obligatoire." />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Cycle" Style="width:100%">
+                                <RadzenDropDown Data="@cycleOptions"
+                                                @bind-Value="@ModelCycleCode"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Code"
+                                                TValue="string"
+                                                AllowClear="true"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenFormField Text="Niveau" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@ModelNiveauNumero" TValue="int?" Min="1" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Filière" Style="width:100%">
+                                <RadzenDropDown Data="@filiereOptions"
+                                                @bind-Value="@ModelFiliereCode"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Code"
+                                                TValue="string"
+                                                AllowClear="true"
+                                                Disabled="@string.IsNullOrWhiteSpace(model.CycleCode)"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="3">
+                            <RadzenFormField Text="Spécialité" Style="width:100%">
+                                <RadzenDropDown Data="@specialiteOptions"
+                                                @bind-Value="@ModelSpecialiteCode"
+                                                TextProperty="Libelle"
+                                                ValueProperty="Code"
+                                                TValue="string"
+                                                AllowClear="true"
+                                                Disabled="@string.IsNullOrWhiteSpace(model.FiliereCode)"
+                                                Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="1">
+                            <RadzenFormField Text="Priorité" Style="width:100%">
+                                <RadzenNumeric @bind-Value="@model.Priorite" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Début validité" Style="width:100%">
+                                <RadzenDatePicker @bind-Value="@dateDebutValidite"
+                                                  TValue="DateTime"
+                                                  DateFormat="dd/MM/yyyy"
+                                                  Name="DateDebutValidite"
+                                                  Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="4">
+                            <RadzenFormField Text="Fin validité" Style="width:100%">
+                                <RadzenDatePicker @bind-Value="@dateFinValidite"
+                                                  TValue="DateTime?"
+                                                  DateFormat="dd/MM/yyyy"
+                                                  AllowClear="true"
+                                                  Style="width:100%" />
+                            </RadzenFormField>
+                        </RadzenColumn>
+
+                        <RadzenColumn Size="12" SizeMD="2">
+                            <RadzenLabel Text="Actif" />
+                            <RadzenCheckBox @bind-Value="@model.EstActif" />
+                        </RadzenColumn>
+                    </RadzenRow>
+
+                    <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                        <RadzenButton Text="Annuler" Icon="close" ButtonStyle="ButtonStyle.Light" Click="@Cancel" />
+                        <RadzenButton Text="Enregistrer" Icon="save" ButtonType="ButtonType.Submit" ButtonStyle="ButtonStyle.Primary" />
+                    </RadzenStack>
+                </RadzenStack>
+            </RadzenTemplateForm>
+        </RadzenCard>
+    }
+
+    <RadzenCard>
+        <RadzenDataGrid Data="@items" TItem="TarifScolariteDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
+            <Columns>
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Property="Code" Title="Code" Width="140px" />
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Property="TypeElementScolariteLibelle" Title="Type d'élément" />
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Property="AnneeAcademiqueCode" Title="Année" Width="130px" />
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Title="Contexte">
+                    <Template Context="item">
+                        <RadzenText Text="@item.ContexteLibelle" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Title="Montant" Width="150px" TextAlign="TextAlign.Right">
+                    <Template Context="item">
+                        <RadzenText Text="@($"{item.Montant:N0} {item.Devise}")" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Title="Validité" Width="220px">
+                    <Template Context="item">
+                        <RadzenText Text="@DisplayValidite(item)" />
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Property="Priorite" Title="Priorité" Width="110px" TextAlign="TextAlign.Center" />
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Property="EstActif" Title="Actif" Width="100px">
+                    <Template Context="item"><RadzenCheckBox Value="@item.EstActif" Disabled="true" /></Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TarifScolariteDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
+                    <Template Context="item">
+                        <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
+                        <RadzenButton Icon="delete" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Danger" Variant="Variant.Flat" Click="@(() => Delete(item))" class="rz-ml-1" />
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+    </RadzenCard>
+</RadzenStack>
+
+@code {
+    private List<TypeElementScolariteDto> typeElements = [];
+    private List<AnneeAcademiqueDto> anneesAcademiques = [];
+    private List<ParcoursFormationDto> parcoursFormation = [];
+    private List<CodeLibelleOption> cycleOptions = [];
+    private List<CodeLibelleOption> filiereOptions = [];
+    private List<CodeLibelleOption> specialiteOptions = [];
+    private List<TarifScolariteDto> items = [];
+    private TarifScolariteDto model = new();
+    private long? filtreTypeElementId;
+    private string? filtreAnneeAcademiqueCode;
+    private bool inclureInactifs;
+    private bool showForm;
+    private DateTime dateDebutValidite = DateTime.Today;
+    private DateTime? dateFinValidite;
+
+    protected override async Task OnInitializedAsync()
+    {
+        anneesAcademiques = await ReferentielsService.GetAnneesAcademiquesAsync();
+        parcoursFormation = await ReferentielsService.GetParcoursFormationAsync(inclureInactifs: true);
+        RefreshParcoursOptions();
+        typeElements = await TypesElementsScolariteService.GetTypesElementsScolariteAsync(inclureInactifs: true);
+        await LoadTarifs();
+    }
+
+    private async Task LoadTarifs()
+    {
+        items = await TarifsScolariteService.GetTarifsScolariteAsync(
+            typeElementScolariteId: filtreTypeElementId,
+            anneeAcademiqueCode: filtreAnneeAcademiqueCode,
+            inclureInactifs: inclureInactifs);
+    }
+
+    private void Create()
+    {
+        model = TarifsScolariteService.CreateDefaultTarifScolarite(filtreTypeElementId);
+        model.AnneeAcademiqueCode = string.IsNullOrWhiteSpace(filtreAnneeAcademiqueCode)
+            ? GetDefaultAnneeAcademiqueCode() ?? model.AnneeAcademiqueCode
+            : filtreAnneeAcademiqueCode;
+
+        if (model.TypeElementScolariteId == 0 && typeElements.Count > 0)
+        {
+            model.TypeElementScolariteId = typeElements[0].Id;
+        }
+
+        SyncSelectedTypeElement();
+        UpdateGeneratedCode();
+        SyncDatesFromModel();
+        RefreshParcoursOptions();
+        showForm = true;
+    }
+
+    private void Edit(TarifScolariteDto item)
+    {
+        model = new TarifScolariteDto
+        {
+            Id = item.Id,
+            Code = item.Code,
+            TypeElementScolariteId = item.TypeElementScolariteId,
+            TypeElementScolariteCode = item.TypeElementScolariteCode,
+            TypeElementScolariteLibelle = item.TypeElementScolariteLibelle,
+            AnneeAcademiqueCode = item.AnneeAcademiqueCode,
+            CycleCode = item.CycleCode,
+            NiveauNumero = item.NiveauNumero,
+            FiliereCode = item.FiliereCode,
+            SpecialiteCode = item.SpecialiteCode,
+            Montant = item.Montant,
+            Devise = item.Devise,
+            DateDebutValidite = item.DateDebutValidite,
+            DateFinValidite = item.DateFinValidite,
+            Priorite = item.Priorite,
+            EstActif = item.EstActif,
+            ContexteLibelle = item.ContexteLibelle
+        };
+        SyncSelectedTypeElement();
+        UpdateGeneratedCode();
+        SyncDatesFromModel();
+        RefreshParcoursOptions();
+        showForm = true;
+    }
+
+    private async Task Save(TarifScolariteDto _)
+    {
+        try
+        {
+            model.DateDebutValidite = DateOnly.FromDateTime(dateDebutValidite);
+            model.DateFinValidite = dateFinValidite.HasValue
+                ? DateOnly.FromDateTime(dateFinValidite.Value)
+                : null;
+            SyncSelectedTypeElement();
+            UpdateGeneratedCode();
+
+            await TarifsScolariteService.SaveTarifScolariteAsync(model);
+            NotifySuccess();
+            showForm = false;
+            await LoadTarifs();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private async Task Delete(TarifScolariteDto item)
+    {
+        try
+        {
+            await TarifsScolariteService.DeleteTarifScolariteAsync(item.Id);
+            await LoadTarifs();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void Cancel() => showForm = false;
+
+    private void SyncDatesFromModel()
+    {
+        dateDebutValidite = model.DateDebutValidite.ToDateTime(TimeOnly.MinValue);
+        dateFinValidite = model.DateFinValidite?.ToDateTime(TimeOnly.MinValue);
+    }
+
+    private string? GetDefaultAnneeAcademiqueCode()
+        => anneesAcademiques.FirstOrDefault(x => x.EstActive)?.Libelle
+            ?? anneesAcademiques.FirstOrDefault()?.Libelle;
+
+    private long ModelTypeElementScolariteId
+    {
+        get => model.TypeElementScolariteId;
+        set
+        {
+            model.TypeElementScolariteId = value;
+            SyncSelectedTypeElement();
+            UpdateGeneratedCode();
+        }
+    }
+
+    private string ModelAnneeAcademiqueCode
+    {
+        get => model.AnneeAcademiqueCode;
+        set
+        {
+            model.AnneeAcademiqueCode = value;
+            UpdateGeneratedCode();
+        }
+    }
+
+    private int? ModelNiveauNumero
+    {
+        get => model.NiveauNumero;
+        set
+        {
+            model.NiveauNumero = value;
+            UpdateGeneratedCode();
+        }
+    }
+
+    private string? ModelCycleCode
+    {
+        get => model.CycleCode;
+        set
+        {
+            model.CycleCode = NormalizeNullable(value);
+
+            if (!string.IsNullOrWhiteSpace(model.FiliereCode) && !FiliereBelongsToCycle(model.FiliereCode, model.CycleCode))
+            {
+                model.FiliereCode = null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(model.SpecialiteCode) && !SpecialiteBelongsToSelection(model.SpecialiteCode, model.CycleCode, model.FiliereCode))
+            {
+                model.SpecialiteCode = null;
+            }
+
+            RefreshParcoursOptions();
+            UpdateGeneratedCode();
+        }
+    }
+
+    private string? ModelFiliereCode
+    {
+        get => model.FiliereCode;
+        set
+        {
+            model.FiliereCode = NormalizeNullable(value);
+
+            if (!string.IsNullOrWhiteSpace(model.SpecialiteCode) && !SpecialiteBelongsToSelection(model.SpecialiteCode, model.CycleCode, model.FiliereCode))
+            {
+                model.SpecialiteCode = null;
+            }
+
+            RefreshParcoursOptions();
+        }
+    }
+
+    private string? ModelSpecialiteCode
+    {
+        get => model.SpecialiteCode;
+        set => model.SpecialiteCode = NormalizeNullable(value);
+    }
+
+    private void SyncSelectedTypeElement()
+    {
+        var selectedType = typeElements.FirstOrDefault(x => x.Id == model.TypeElementScolariteId);
+        if (selectedType is null)
+        {
+            model.TypeElementScolariteCode = string.Empty;
+            model.TypeElementScolariteLibelle = string.Empty;
+            return;
+        }
+
+        model.TypeElementScolariteCode = selectedType.Code;
+        model.TypeElementScolariteLibelle = FormatCodeLibelle(selectedType.Code, selectedType.Libelle);
+    }
+
+    private void UpdateGeneratedCode()
+    {
+        try
+        {
+            model.Code = TarifsScolariteService.GenerateCode(model);
+        }
+        catch
+        {
+            model.Code = string.Empty;
+        }
+    }
+
+    private void RefreshParcoursOptions()
+    {
+        cycleOptions = parcoursFormation
+            .Where(x => !string.IsNullOrWhiteSpace(x.CycleCode))
+            .GroupBy(x => x.CycleCode)
+            .Select(x =>
+            {
+                var first = x.First();
+                return new CodeLibelleOption(first.CycleCode, FormatCodeLibelle(first.CycleCode, first.CycleLibelle));
+            })
+            .OrderBy(x => x.Libelle)
+            .ToList();
+
+        filiereOptions = parcoursFormation
+            .Where(x => SameCode(x.CycleCode, model.CycleCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x.FiliereCode))
+            .GroupBy(x => x.FiliereCode)
+            .Select(x =>
+            {
+                var first = x.First();
+                return new CodeLibelleOption(first.FiliereCode, FormatCodeLibelle(first.FiliereCode, first.FiliereLibelle));
+            })
+            .OrderBy(x => x.Libelle)
+            .ToList();
+
+        specialiteOptions = parcoursFormation
+            .Where(x => SameCode(x.CycleCode, model.CycleCode))
+            .Where(x => SameCode(x.FiliereCode, model.FiliereCode))
+            .Where(x => !string.IsNullOrWhiteSpace(x.SpecialiteCode))
+            .GroupBy(x => x.SpecialiteCode!)
+            .Select(x =>
+            {
+                var first = x.First();
+                return new CodeLibelleOption(first.SpecialiteCode!, FormatCodeLibelle(first.SpecialiteCode!, first.SpecialiteLibelle ?? string.Empty));
+            })
+            .OrderBy(x => x.Libelle)
+            .ToList();
+    }
+
+    private bool FiliereBelongsToCycle(string? filiereCode, string? cycleCode)
+        => parcoursFormation.Any(x => SameCode(x.CycleCode, cycleCode) && SameCode(x.FiliereCode, filiereCode));
+
+    private bool SpecialiteBelongsToSelection(string? specialiteCode, string? cycleCode, string? filiereCode)
+        => parcoursFormation.Any(x =>
+            SameCode(x.CycleCode, cycleCode)
+            && SameCode(x.FiliereCode, filiereCode)
+            && SameCode(x.SpecialiteCode, specialiteCode));
+
+    private static string? NormalizeNullable(string? value)
+    {
+        var normalized = value?.Trim();
+        return string.IsNullOrWhiteSpace(normalized) ? null : normalized;
+    }
+
+    private static bool SameCode(string? left, string? right)
+        => string.Equals(left, right, StringComparison.OrdinalIgnoreCase);
+
+    private static string FormatCodeLibelle(string code, string libelle)
+        => string.IsNullOrWhiteSpace(code) ? libelle : $"{code} - {libelle}";
+
+    private static string DisplayValidite(TarifScolariteDto item)
+    {
+        var debut = item.DateDebutValidite.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture);
+        var fin = item.DateFinValidite?.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture) ?? "sans fin";
+        return $"{debut} - {fin}";
+    }
+
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private sealed record CodeLibelleOption(string Code, string Libelle);
+}

@@ -1,0 +1,343 @@
+@page "/saisie-notes"
+@inject ISaisieNotesService SaisieNotesService
+@inject NotificationService NotificationService
+
+<RadzenStack Gap="1rem">
+    <RadzenCard>
+        <RadzenStack Gap="0">
+            <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Saisie des notes" />
+            <RadzenText Text="Saisie des notes par évaluation, classe pédagogique et étudiant." />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="1rem">
+            <RadzenText TextStyle="TextStyle.H6" Text="Sélection de la grille" />
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Année académique" Style="width:100%">
+                        <RadzenDropDown Data="@anneesAcademiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedAnneeAcademiqueId"
+                                        Change="@OnAnneeAcademiqueChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les années"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Classe pédagogique" Style="width:100%">
+                        <RadzenDropDown Data="@classesPedagogiques"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedClassePedagogiqueId"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Sélectionner une classe"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="UE" Style="width:100%">
+                        <RadzenDropDown Data="@unitesEnseignement"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedUniteEnseignementId"
+                                        Change="@OnUniteEnseignementChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Toutes les UE"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="EC" Style="width:100%">
+                        <RadzenDropDown Data="@elementsConstitutifs"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedElementConstitutifId"
+                                        Change="@OnEvaluationFilterChanged"
+                                        AllowClear="true"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Tous les EC"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+            </RadzenRow>
+
+            <RadzenRow>
+                <RadzenColumn Size="12" SizeMD="3">
+                    <RadzenFormField Text="Type" Style="width:100%">
+                        <RadzenDropDown Data="@typesEvaluation"
+                                        TextProperty="Text"
+                                        ValueProperty="Value"
+                                        @bind-Value="@selectedTypeEvaluation"
+                                        Change="@OnEvaluationFilterChanged"
+                                        AllowClear="true"
+                                        Placeholder="Tous les types"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="7">
+                    <RadzenFormField Text="Évaluation" Style="width:100%">
+                        <RadzenDropDown Data="@evaluations"
+                                        TextProperty="Libelle"
+                                        ValueProperty="Id"
+                                        @bind-Value="@selectedEvaluationAcademiqueId"
+                                        AllowFiltering="true"
+                                        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
+                                        Placeholder="Sélectionner l'évaluation à saisir"
+                                        Style="width:100%" />
+                    </RadzenFormField>
+                </RadzenColumn>
+
+                <RadzenColumn Size="12" SizeMD="2">
+                    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.5rem" Style="height:100%">
+                        <RadzenButton Text="Charger" Icon="fact_check" ButtonStyle="ButtonStyle.Primary" Click="@LoadGrille" Disabled="@(!CanLoadGrille)" />
+                    </RadzenStack>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (grille is not null)
+    {
+        <RadzenCard>
+            <RadzenStack Gap="0.5rem">
+                <RadzenText TextStyle="TextStyle.H6" Text="@grille.EvaluationLibelle" />
+                <RadzenText Text="@($"{grille.AnneeAcademiqueLibelle} | {grille.ClassePedagogiqueLibelle} | {grille.UniteEnseignementLibelle} | {grille.ElementConstitutifLibelle}")" />
+                <RadzenText Text="@($"Barème : {grille.Bareme:N2} / Pondération : {grille.PonderationPourcentage:N2} %")" />
+
+                @if (!string.IsNullOrWhiteSpace(grille.Avertissement))
+                {
+                    <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Flat" ShowIcon="true">
+                        @grille.Avertissement
+                    </RadzenAlert>
+                }
+
+                @if (grille.TypeEvaluation == TypeEvaluation.SessionRattrapage)
+                {
+                    <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
+                        Pour une SR, la grille est limitée aux étudiants dont les crédits semestriels calculés sont insuffisants. Si aucun calcul n'existe encore, tous les étudiants sont affichés provisoirement.
+                    </RadzenAlert>
+                }
+            </RadzenStack>
+        </RadzenCard>
+
+        <RadzenCard>
+            <RadzenDataGrid Data="@grille.Lignes" TItem="SaisieNoteLigneDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="20">
+                <Columns>
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Property="Matricule" Title="Matricule" Width="140px" />
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Property="NomComplet" Title="Étudiant" />
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Title="Note" Width="160px" Sortable="false" Filterable="false">
+                        <Template Context="ligne">
+                            <RadzenNumeric @bind-Value="@ligne.Valeur"
+                                           Min="0m"
+                                           Max="@grille.Bareme"
+                                           Step="0.25m"
+                                           Disabled="@(ligne.StatutPresence != StatutPresenceEvaluation.Present)"
+                                           Style="width:100%" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Title="Présence" Width="220px" Sortable="false" Filterable="false">
+                        <Template Context="ligne">
+                            <RadzenDropDown Data="@statutsPresence"
+                                            TextProperty="Text"
+                                            ValueProperty="Value"
+                                            @bind-Value="@ligne.StatutPresence"
+                                            Change="@(_ => OnPresenceChanged(ligne))"
+                                            Style="width:100%" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Title="Crédits semestre" Width="160px">
+                        <Template Context="ligne">
+                            @if (ligne.CreditsSemestreAcquis is null || ligne.CreditsSemestreRequis is null)
+                            {
+                                <span>-</span>
+                            }
+                            else
+                            {
+                                <span>@($"{ligne.CreditsSemestreAcquis:N0}/{ligne.CreditsSemestreRequis:N0}")</span>
+                            }
+                        </Template>
+                    </RadzenDataGridColumn>
+                    <RadzenDataGridColumn TItem="SaisieNoteLigneDto" Title="Observation" Sortable="false" Filterable="false">
+                        <Template Context="ligne">
+                            <RadzenTextBox @bind-Value="@ligne.Observation" Style="width:100%" />
+                        </Template>
+                    </RadzenDataGridColumn>
+                </Columns>
+            </RadzenDataGrid>
+
+            <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem" class="rz-mt-4">
+                <RadzenButton Text="Recharger" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@LoadGrille" />
+                <RadzenButton Text="Enregistrer les notes" Icon="save" ButtonStyle="ButtonStyle.Primary" Click="@SaveNotes" Disabled="@(grille.Lignes.Count == 0)" />
+            </RadzenStack>
+        </RadzenCard>
+    }
+</RadzenStack>
+
+@code {
+    private List<LookupDto> anneesAcademiques = [];
+    private List<LookupDto> classesPedagogiques = [];
+    private List<LookupDto> unitesEnseignement = [];
+    private List<LookupDto> elementsConstitutifs = [];
+    private List<LookupDto> evaluations = [];
+    private SaisieNotesGrilleDto? grille;
+    private long? selectedAnneeAcademiqueId;
+    private long? selectedClassePedagogiqueId;
+    private long? selectedUniteEnseignementId;
+    private long? selectedElementConstitutifId;
+    private long? selectedEvaluationAcademiqueId;
+    private TypeEvaluation? selectedTypeEvaluation;
+
+    private bool CanLoadGrille => selectedEvaluationAcademiqueId is not null && selectedClassePedagogiqueId is not null;
+
+    private readonly List<EnumOption<TypeEvaluation>> typesEvaluation =
+    [
+        new("CCON - Contrôle continu", TypeEvaluation.ControleContinu),
+        new("CC - Contrôle de connaissance", TypeEvaluation.ControleConnaissance),
+        new("SN - Session normale", TypeEvaluation.SessionNormale),
+        new("SR - Session de rattrapage", TypeEvaluation.SessionRattrapage)
+    ];
+
+    private readonly List<EnumOption<StatutPresenceEvaluation>> statutsPresence =
+    [
+        new("Présent", StatutPresenceEvaluation.Present),
+        new("Absence justifiée", StatutPresenceEvaluation.AbsenceJustifiee),
+        new("Absence non justifiée", StatutPresenceEvaluation.AbsenceNonJustifiee),
+        new("Dispense", StatutPresenceEvaluation.Dispense)
+    ];
+
+    protected override async Task OnInitializedAsync()
+    {
+        anneesAcademiques = await SaisieNotesService.GetAnneesAcademiquesLookupAsync();
+        unitesEnseignement = await SaisieNotesService.GetUnitesEnseignementLookupAsync();
+        await RefreshClassesAsync();
+        await RefreshElementsConstitutifsAsync();
+        await RefreshEvaluationsAsync();
+    }
+
+    private async Task OnAnneeAcademiqueChanged(object? _)
+    {
+        selectedClassePedagogiqueId = null;
+        selectedEvaluationAcademiqueId = null;
+        grille = null;
+
+        await RefreshClassesAsync();
+        await RefreshEvaluationsAsync();
+    }
+
+    private async Task OnUniteEnseignementChanged(object? _)
+    {
+        selectedElementConstitutifId = null;
+        selectedEvaluationAcademiqueId = null;
+        grille = null;
+
+        await RefreshElementsConstitutifsAsync();
+        await RefreshEvaluationsAsync();
+    }
+
+    private async Task OnEvaluationFilterChanged(object? _)
+    {
+        selectedEvaluationAcademiqueId = null;
+        grille = null;
+
+        await RefreshEvaluationsAsync();
+    }
+
+    private async Task RefreshClassesAsync()
+    {
+        classesPedagogiques = await SaisieNotesService.GetClassesPedagogiquesLookupAsync(selectedAnneeAcademiqueId);
+        EnsureSelectedValueIsAvailable(classesPedagogiques, ref selectedClassePedagogiqueId);
+    }
+
+    private async Task RefreshElementsConstitutifsAsync()
+    {
+        elementsConstitutifs = await SaisieNotesService.GetElementsConstitutifsLookupAsync(selectedUniteEnseignementId);
+        EnsureSelectedValueIsAvailable(elementsConstitutifs, ref selectedElementConstitutifId);
+    }
+
+    private async Task RefreshEvaluationsAsync()
+    {
+        evaluations = await SaisieNotesService.GetEvaluationsLookupAsync(
+            selectedAnneeAcademiqueId,
+            selectedUniteEnseignementId,
+            selectedElementConstitutifId,
+            selectedTypeEvaluation);
+
+        EnsureSelectedValueIsAvailable(evaluations, ref selectedEvaluationAcademiqueId);
+    }
+
+    private async Task LoadGrille()
+    {
+        if (!CanLoadGrille)
+        {
+            return;
+        }
+
+        try
+        {
+            grille = await SaisieNotesService.GetGrilleSaisieAsync(
+                selectedEvaluationAcademiqueId!.Value,
+                selectedClassePedagogiqueId!.Value);
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void OnPresenceChanged(SaisieNoteLigneDto ligne)
+    {
+        if (ligne.StatutPresence != StatutPresenceEvaluation.Present)
+        {
+            ligne.Valeur = null;
+        }
+    }
+
+    private async Task SaveNotes()
+    {
+        if (grille is null)
+        {
+            return;
+        }
+
+        try
+        {
+            await SaisieNotesService.SaveNotesAsync(grille);
+            NotifySuccess();
+            await LoadGrille();
+        }
+        catch (Exception ex)
+        {
+            NotifyError(ex.Message);
+        }
+    }
+
+    private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Notes enregistrées.");
+
+    private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    private static void EnsureSelectedValueIsAvailable(IReadOnlyCollection<LookupDto> options, ref long? selectedValue)
+    {
+        var value = selectedValue;
+
+        if (value is not null && options.All(x => x.Id != value))
+        {
+            selectedValue = null;
+        }
+    }
+
+    private record EnumOption<TValue>(string Text, TValue Value);
+}
