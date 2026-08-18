@@ -7,25 +7,9 @@
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
             <RadzenStack Gap="0">
                 <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Classes pédagogiques" />
-                <RadzenText Text="Gestion des groupes pédagogiques par année et parcours." />
+                <RadzenText Text="Gestion des groupes pédagogiques par parcours." />
             </RadzenStack>
             <RadzenButton Text="Nouvelle classe" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
-        </RadzenStack>
-    </RadzenCard>
-
-    <RadzenCard>
-        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.End" Gap="0.75rem">
-            <RadzenFormField Text="Année académique" Style="width: min(100%, 360px)">
-                <RadzenDropDown Data="@annees"
-                                TextProperty="Libelle"
-                                ValueProperty="Id"
-                                @bind-Value="@selectedAnneeAcademiqueId"
-                                AllowClear="true"
-                                Placeholder="Toutes les années"
-                                Style="width:100%" />
-            </RadzenFormField>
-            <RadzenButton Text="Filtrer" Icon="filter_alt" Click="@Load" />
-            <RadzenButton Text="Réinitialiser" Icon="refresh" ButtonStyle="ButtonStyle.Light" Click="@ResetFilter" />
         </RadzenStack>
     </RadzenCard>
 
@@ -35,38 +19,17 @@
             <RadzenTemplateForm TItem="ClassePedagogiqueDto" Data="@model" Submit="@Save">
                 <RadzenStack Gap="1rem">
                     <RadzenRow>
-                        <RadzenColumn Size="12" SizeMD="4">
-                            <RadzenFormField Text="Année académique" Style="width:100%">
-                                <RadzenDropDown Data="@annees" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.AnneeAcademiqueId" Name="AnneeAcademiqueId" Style="width:100%" />
-                            </RadzenFormField>
-                            <RadzenRequiredValidator Component="AnneeAcademiqueId" Text="Année obligatoire." />
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="5">
+                        <RadzenColumn Size="12" SizeMD="6">
                             <RadzenFormField Text="Parcours" Style="width:100%">
                                 <RadzenDropDown Data="@parcours" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.ParcoursAcademiqueId" Name="ParcoursAcademiqueId" Style="width:100%" />
                             </RadzenFormField>
                             <RadzenRequiredValidator Component="ParcoursAcademiqueId" Text="Parcours obligatoire." />
                         </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="3">
-                            <RadzenFormField Text="Code" Style="width:100%">
-                                <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
-                            </RadzenFormField>
-                            <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
-                        </RadzenColumn>
-                    </RadzenRow>
-
-                    <RadzenRow>
-                        <RadzenColumn Size="12" SizeMD="10">
+                        <RadzenColumn Size="12" SizeMD="6">
                             <RadzenFormField Text="Libellé" Style="width:100%">
                                 <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
                             </RadzenFormField>
                             <RadzenRequiredValidator Component="Libelle" Text="Libellé obligatoire." />
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="2">
-                            <RadzenStack Gap="0.5rem">
-                                <RadzenLabel Text="Active" />
-                                <RadzenCheckBox @bind-Value="@model.EstActive" />
-                            </RadzenStack>
                         </RadzenColumn>
                     </RadzenRow>
 
@@ -82,14 +45,9 @@
     <RadzenCard>
         <RadzenDataGrid Data="@items" TItem="ClassePedagogiqueDto" AllowPaging="true" AllowSorting="true" AllowFiltering="true" PageSize="10">
             <Columns>
-                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="AnneeAcademiqueLibelle" Title="Année" Width="140px" />
-                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Code" Title="Code" Width="160px" />
-                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Libelle" Title="Libellé" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="ParcoursAcademiqueLibelle" Title="Parcours" />
+                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Libelle" Title="Libellé" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Effectif" Title="Effectif" Width="110px" />
-                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="EstActive" Title="Active" Width="100px">
-                    <Template Context="item"><RadzenCheckBox Value="@item.EstActive" Disabled="true" /></Template>
-                </RadzenDataGridColumn>
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
                     <Template Context="item">
                         <RadzenButton Icon="edit" Size="ButtonSize.Small" ButtonStyle="ButtonStyle.Light" Click="@(() => Edit(item))" />
@@ -103,10 +61,8 @@
 
 @code {
     private List<ClassePedagogiqueDto> items = [];
-    private List<LookupDto> annees = [];
     private List<LookupDto> parcours = [];
     private ClassePedagogiqueDto model = new();
-    private long? selectedAnneeAcademiqueId;
     private bool showForm;
 
     protected override async Task OnInitializedAsync()
@@ -117,19 +73,12 @@
 
     private async Task LoadLookups()
     {
-        annees = await ClassesPedagogiquesService.GetAnneesAcademiquesLookupAsync();
         parcours = await ClassesPedagogiquesService.GetParcoursAcademiquesLookupAsync();
     }
 
     private async Task Load()
     {
-        items = await ClassesPedagogiquesService.GetClassesPedagogiquesAsync(selectedAnneeAcademiqueId);
-    }
-
-    private async Task ResetFilter()
-    {
-        selectedAnneeAcademiqueId = null;
-        await Load();
+        items = await ClassesPedagogiquesService.GetClassesPedagogiquesAsync();
     }
 
     private async Task Create()
@@ -143,13 +92,9 @@
         model = new ClassePedagogiqueDto
         {
             Id = item.Id,
-            AnneeAcademiqueId = item.AnneeAcademiqueId,
-            AnneeAcademiqueLibelle = item.AnneeAcademiqueLibelle,
             ParcoursAcademiqueId = item.ParcoursAcademiqueId,
             ParcoursAcademiqueLibelle = item.ParcoursAcademiqueLibelle,
-            Code = item.Code,
             Libelle = item.Libelle,
-            EstActive = item.EstActive,
             Effectif = item.Effectif
         };
         showForm = true;

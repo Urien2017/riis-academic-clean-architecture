@@ -18,7 +18,6 @@ public class ParcoursAcademique
     public Filiere Filiere { get; set; } = null!;
     public Specialite Specialite { get; set; } = null!;
     public ICollection<Inscription> Inscriptions { get; set; } = [];
-    public ICollection<ClassePedagogique> ClassesPedagogiques { get; set; } = [];
     public ICollection<ProcesVerbal> ProcesVerbaux { get; set; } = [];
     public ICollection<MaquettePedagogique> MaquettesPedagogiques { get; set; } = [];
 }

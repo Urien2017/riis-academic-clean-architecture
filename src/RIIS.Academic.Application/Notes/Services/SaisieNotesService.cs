@@ -28,20 +28,13 @@ public class SaisieNotesService(
             .ToList();
     }
 
-    public async Task<List<LookupDto>> GetClassesPedagogiquesLookupAsync(long? anneeAcademiqueId = null, CancellationToken cancellationToken = default)
+    public async Task<List<LookupDto>> GetClassesPedagogiquesLookupAsync(CancellationToken cancellationToken = default)
     {
         var items = await classesPedagogiques.ListAsync(cancellationToken);
 
-        if (anneeAcademiqueId is not null)
-        {
-            items = items.Where(x => x.AnneeAcademiqueId == anneeAcademiqueId).ToList();
-        }
-
         return items
-            .Where(x => x.EstActive)
-            .OrderBy(x => x.Code)
-            .ThenBy(x => x.Libelle)
-            .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
+            .OrderBy(x => x.Libelle)
+            .Select(x => new LookupDto { Id = x.Id, Libelle = x.Libelle })
             .ToList();
     }
 
@@ -146,11 +139,6 @@ public class SaisieNotesService(
         var classe = await classesPedagogiques.GetByIdAsync(classePedagogiqueId, cancellationToken)
             ?? throw new InvalidOperationException("La classe sélectionnée est introuvable.");
 
-        if (classe.AnneeAcademiqueId != evaluation.AnneeAcademiqueId)
-        {
-            throw new InvalidOperationException("La classe sélectionnée n'appartient pas à l'année académique de l'évaluation.");
-        }
-
         var anneeItems = await anneesAcademiques.ListAsync(cancellationToken);
         var inscriptionItems = await inscriptions.ListAsync(cancellationToken);
         var etudiantItems = await etudiants.ListAsync(cancellationToken);
@@ -207,7 +195,7 @@ public class SaisieNotesService(
             EvaluationAcademiqueId = evaluation.Id,
             ClassePedagogiqueId = classe.Id,
             EvaluationLibelle = $"{evaluation.Code} - {evaluation.Libelle}",
-            ClassePedagogiqueLibelle = FormatCodeLibelle(classe.Code, classe.Libelle),
+            ClassePedagogiqueLibelle = classe.Libelle,
             AnneeAcademiqueLibelle = annee?.Libelle ?? string.Empty,
             ElementConstitutifLibelle = FormatCodeLibelle(ec.Code, ec.Libelle),
             UniteEnseignementLibelle = FormatCodeLibelle(ue.Code, ue.Libelle),
@@ -252,11 +240,6 @@ public class SaisieNotesService(
 
         var classe = await classesPedagogiques.GetByIdAsync(grille.ClassePedagogiqueId, cancellationToken)
             ?? throw new InvalidOperationException("La classe sélectionnée est introuvable.");
-
-        if (classe.AnneeAcademiqueId != evaluation.AnneeAcademiqueId)
-        {
-            throw new InvalidOperationException("La classe sélectionnée n'appartient pas à l'année académique de l'évaluation.");
-        }
 
         var inscriptionItems = await inscriptions.ListAsync(cancellationToken);
         var noteItems = await notesEvaluations.ListAsync(cancellationToken);

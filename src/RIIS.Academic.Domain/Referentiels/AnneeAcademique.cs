@@ -9,6 +9,5 @@ public class AnneeAcademique
     public bool EstActive { get; set; }
 
     public ICollection<ParcoursAcademique> ParcoursAcademiques { get; set; } = [];
-    public ICollection<ClassePedagogique> ClassesPedagogiques { get; set; } = [];
     public ICollection<Inscription> Inscriptions { get; set; } = [];
 }

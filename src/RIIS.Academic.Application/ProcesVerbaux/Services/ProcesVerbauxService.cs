@@ -137,8 +137,8 @@ public class ProcesVerbauxService(
         }
 
         return filteredClasses
-            .OrderBy(x => x.Code)
-            .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
+            .OrderBy(x => x.Libelle)
+            .Select(x => new LookupDto { Id = x.Id, Libelle = x.Libelle })
             .ToList();
     }
 
@@ -278,7 +278,7 @@ public class ProcesVerbauxService(
             AnneeAcademiqueLibelle = annee?.Libelle ?? string.Empty,
             CycleFormationLibelle = cycle is null ? string.Empty : FormatCodeLibelle(cycle.Code, cycle.Libelle),
             ParcoursLibelle = parcoursItem is null ? string.Empty : FormatCodeLibelle(parcoursItem.Code, parcoursItem.Libelle),
-            ClassePedagogiqueLibelle = classe is null ? string.Empty : FormatCodeLibelle(classe.Code, classe.Libelle),
+            ClassePedagogiqueLibelle = classe?.Libelle ?? string.Empty,
             SemestrePedagogiqueLibelle = semestre is null ? "Annuel" : $"Semestre {semestre.NumeroSemestre}",
             SemestreNumero = semestre?.NumeroSemestre,
             Type = pv.Type,

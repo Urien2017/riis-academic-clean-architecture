@@ -30,7 +30,7 @@ public class InscriptionConfiguration : IEntityTypeConfiguration<Inscription>
             .HasForeignKey(x => x.NiveauEtudeId).OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(x => x.MaquettePedagogique).WithMany(x => x.Inscriptions)
             .HasForeignKey(x => x.MaquettePedagogiqueId).OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.ClassePedagogique).WithMany(x => x.Inscriptions)
+        builder.HasOne(x => x.ClassePedagogique).WithMany()
             .HasForeignKey(x => x.ClassePedagogiqueId).OnDelete(DeleteBehavior.Restrict);
     }
 }

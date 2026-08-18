@@ -853,9 +853,14 @@ public class ProgrammePedagogiqueService(
         if (anneeAcademiqueId is not null)
         {
             var annee = anneeItems.FirstOrDefault(x => x.Id == anneeAcademiqueId);
-            var maquetteIdsPourAnnee = classeItems
-                .Where(x => x.AnneeAcademiqueId == anneeAcademiqueId && x.MaquettePedagogiqueId is not null)
-                .Select(x => x.MaquettePedagogiqueId!.Value)
+            var parcoursIdsPourAnnee = ouvertureItems
+                .Where(x => x.AnneeAcademiqueId == anneeAcademiqueId)
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            var maquetteIdsPourAnnee = maquetteItems
+                .Where(x => parcoursIdsPourAnnee.Contains(x.ParcoursAcademiqueId))
+                .Select(x => x.Id)
                 .ToHashSet();
 
             query = query.Where(x =>

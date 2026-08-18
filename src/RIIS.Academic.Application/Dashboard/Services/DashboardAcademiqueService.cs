@@ -415,7 +415,7 @@ public class DashboardAcademiqueService(
         IReadOnlyCollection<ClassePedagogique> classes,
         IReadOnlyCollection<Inscription> inscriptions)
         => classes
-            .OrderBy(x => x.Code)
+            .OrderBy(x => x.Libelle)
             .Select(classe =>
             {
                 var classeInscriptions = inscriptions.Where(x => x.ClassePedagogiqueId == classe.Id).ToList();
@@ -426,7 +426,7 @@ public class DashboardAcademiqueService(
                 var filiere = ouverture is null ? null : data.Filieres.FirstOrDefault(x => x.Id == ouverture.FiliereId);
                 var specialite = ouverture is null ? null : data.Specialites.FirstOrDefault(x => x.Id == ouverture.SpecialiteId);
                 var niveau = ouverture is null ? null : data.Niveaux.FirstOrDefault(x => x.Id == ouverture.NiveauEtudeId);
-                var annee = data.Annees.FirstOrDefault(x => x.Id == classe.AnneeAcademiqueId);
+                var annee = ouverture is null ? null : data.Annees.FirstOrDefault(x => x.Id == ouverture.AnneeAcademiqueId);
                 var evaluations = ResolveEvaluationsForClasse(data, classe, classeInscriptions);
                 var notes = data.Notes
                     .Where(x => inscriptionIds.Contains(x.InscriptionId))
@@ -438,9 +438,9 @@ public class DashboardAcademiqueService(
                 return new DashboardClasseSyntheseDto
                 {
                     ClassePedagogiqueId = classe.Id,
-                    ClassePedagogiqueCode = classe.Code,
+                    ClassePedagogiqueCode = string.Empty,
                     ClassePedagogiqueLibelle = classe.Libelle,
-                    AnneeAcademiqueId = classe.AnneeAcademiqueId,
+                    AnneeAcademiqueId = ouverture?.AnneeAcademiqueId,
                     AnneeAcademiqueLibelle = annee?.Libelle ?? string.Empty,
                     CycleFormationId = ouverture?.CycleFormationId,
                     CycleFormationCode = cycle?.Code ?? string.Empty,
@@ -473,13 +473,15 @@ public class DashboardAcademiqueService(
         ClassePedagogique classe,
         IReadOnlyCollection<Inscription> classeInscriptions)
     {
+        var ouverture = data.Ouvertures.FirstOrDefault(x => x.Id == classe.ParcoursAcademiqueId);
+
         var maquetteIds = classeInscriptions
             .Where(x => x.MaquettePedagogiqueId is not null)
             .Select(x => x.MaquettePedagogiqueId!.Value)
             .ToHashSet();
 
         return data.Evaluations
-            .Where(x => x.AnneeAcademiqueId == classe.AnneeAcademiqueId)
+            .Where(x => ouverture is not null && x.AnneeAcademiqueId == ouverture.AnneeAcademiqueId)
             .Where(evaluation =>
             {
                 var semestre = ResolveSemestre(data, evaluation.MaquetteElementConstitutifId);

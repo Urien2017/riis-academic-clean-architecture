@@ -7,7 +7,7 @@ namespace RIIS.Academic.Application.Notes.Services;
 public interface ISaisieNotesService
 {
     Task<List<LookupDto>> GetAnneesAcademiquesLookupAsync(CancellationToken cancellationToken = default);
-    Task<List<LookupDto>> GetClassesPedagogiquesLookupAsync(long? anneeAcademiqueId = null, CancellationToken cancellationToken = default);
+    Task<List<LookupDto>> GetClassesPedagogiquesLookupAsync(CancellationToken cancellationToken = default);
     Task<List<LookupDto>> GetUnitesEnseignementLookupAsync(CancellationToken cancellationToken = default);
     Task<List<LookupDto>> GetElementsConstitutifsLookupAsync(long? uniteEnseignementId = null, CancellationToken cancellationToken = default);
     Task<List<LookupDto>> GetEvaluationsLookupAsync(

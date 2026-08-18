@@ -9,17 +9,7 @@ public class ClassePedagogiqueConfiguration : IEntityTypeConfiguration<ClassePed
     {
         builder.ToTable("ClassesPedagogiques");
         builder.HasKey(x => x.Id);
-        builder.Property(x => x.Code).HasMaxLength(50).IsRequired();
         builder.Property(x => x.Libelle).HasMaxLength(200).IsRequired();
-        builder.HasIndex(x => new { x.AnneeAcademiqueId, x.ParcoursAcademiqueId, x.Code }).IsUnique();
-
-        builder.HasOne(x => x.AnneeAcademique)
-            .WithMany(x => x.ClassesPedagogiques)
-            .HasForeignKey(x => x.AnneeAcademiqueId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.ParcoursAcademique)
-            .WithMany(x => x.ClassesPedagogiques)
-            .HasForeignKey(x => x.ParcoursAcademiqueId)
-            .OnDelete(DeleteBehavior.Restrict);
+        builder.HasIndex(x => new { x.ParcoursAcademiqueId, x.Libelle }).IsUnique();
     }
 }

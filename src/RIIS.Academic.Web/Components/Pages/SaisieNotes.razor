@@ -258,7 +258,7 @@
 
     private async Task RefreshClassesAsync()
     {
-        classesPedagogiques = await SaisieNotesService.GetClassesPedagogiquesLookupAsync(selectedAnneeAcademiqueId);
+        classesPedagogiques = await SaisieNotesService.GetClassesPedagogiquesLookupAsync();
         EnsureSelectedValueIsAvailable(classesPedagogiques, ref selectedClassePedagogiqueId);
     }
 

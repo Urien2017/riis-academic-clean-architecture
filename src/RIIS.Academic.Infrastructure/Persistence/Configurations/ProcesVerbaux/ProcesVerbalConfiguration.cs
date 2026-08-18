@@ -25,7 +25,7 @@ public class ProcesVerbalConfiguration : IEntityTypeConfiguration<ProcesVerbal>
             .HasForeignKey(x => x.ParcoursAcademiqueId)
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(x => x.ClassePedagogique)
-            .WithMany(x => x.ProcesVerbaux)
+            .WithMany()
             .HasForeignKey(x => x.ClassePedagogiqueId)
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(x => x.SemestrePedagogique)

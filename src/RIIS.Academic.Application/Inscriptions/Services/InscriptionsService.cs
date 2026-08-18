@@ -268,8 +268,13 @@ public class InscriptionsService(
 
         if (anneeAcademiqueId is not null)
         {
-            items = items
+            var ouvertureIdsPourAnnee = ouvertures
                 .Where(x => x.AnneeAcademiqueId == anneeAcademiqueId)
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            items = items
+                .Where(x => ouvertureIdsPourAnnee.Contains(x.ParcoursAcademiqueId))
                 .ToList();
         }
 
@@ -298,9 +303,8 @@ public class InscriptionsService(
         }
 
         return items
-            .Where(x => x.EstActive)
-            .OrderBy(x => x.Code)
-            .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
+            .OrderBy(x => x.Libelle)
+            .Select(x => new LookupDto { Id = x.Id, Libelle = x.Libelle })
             .ToList();
     }
 
@@ -349,11 +353,6 @@ public class InscriptionsService(
             if (classe is null)
             {
                 throw new InvalidOperationException("La classe pédagogique sélectionnée est introuvable.");
-            }
-
-            if (classe.AnneeAcademiqueId != dto.AnneeAcademiqueId)
-            {
-                throw new InvalidOperationException("La classe sélectionnée n'appartient pas à l'année académique de l'inscription.");
             }
 
             if (classe.ParcoursAcademiqueId != dto.ParcoursAcademiqueId)
@@ -426,7 +425,7 @@ public class InscriptionsService(
             MaquettePedagogiqueId = inscription.MaquettePedagogiqueId,
             MaquettePedagogiqueLibelle = maquette is null ? null : $"{maquette.Libelle} - {maquette.Version}",
             ClassePedagogiqueId = inscription.ClassePedagogiqueId,
-            ClassePedagogiqueLibelle = classe is null ? null : FormatCodeLibelle(classe.Code, classe.Libelle),
+            ClassePedagogiqueLibelle = classe?.Libelle,
             DateInscription = inscription.DateInscription,
             Statut = inscription.Statut,
             MentionSpeciale = inscription.MentionSpeciale,
