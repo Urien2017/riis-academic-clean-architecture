@@ -7,7 +7,7 @@
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
             <RadzenStack Gap="0">
                 <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Classes pédagogiques" />
-                <RadzenText Text="Gestion des groupes pédagogiques par année, parcours et niveau." />
+                <RadzenText Text="Gestion des groupes pédagogiques par année et parcours." />
             </RadzenStack>
             <RadzenButton Text="Nouvelle classe" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
         </RadzenStack>
@@ -35,45 +35,28 @@
             <RadzenTemplateForm TItem="ClassePedagogiqueDto" Data="@model" Submit="@Save">
                 <RadzenStack Gap="1rem">
                     <RadzenRow>
-                        <RadzenColumn Size="12" SizeMD="3">
+                        <RadzenColumn Size="12" SizeMD="4">
                             <RadzenFormField Text="Année académique" Style="width:100%">
                                 <RadzenDropDown Data="@annees" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.AnneeAcademiqueId" Name="AnneeAcademiqueId" Style="width:100%" />
                             </RadzenFormField>
                             <RadzenRequiredValidator Component="AnneeAcademiqueId" Text="Année obligatoire." />
                         </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="4">
+                        <RadzenColumn Size="12" SizeMD="5">
                             <RadzenFormField Text="Parcours" Style="width:100%">
                                 <RadzenDropDown Data="@parcours" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.ParcoursAcademiqueId" Name="ParcoursAcademiqueId" Style="width:100%" />
                             </RadzenFormField>
                             <RadzenRequiredValidator Component="ParcoursAcademiqueId" Text="Parcours obligatoire." />
                         </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="2">
-                            <RadzenFormField Text="Niveau" Style="width:100%">
-                                <RadzenDropDown Data="@niveaux" TextProperty="Libelle" ValueProperty="Id" @bind-Value="@model.NiveauEtudeId" Name="NiveauEtudeId" Style="width:100%" />
-                            </RadzenFormField>
-                            <RadzenRequiredValidator Component="NiveauEtudeId" Text="Niveau obligatoire." />
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="3">
-                            <RadzenFormField Text="Maquette" Style="width:100%">
-                                <RadzenDropDown Data="@maquettes"
-                                                TextProperty="Libelle"
-                                                ValueProperty="Id"
-                                                @bind-Value="@model.MaquettePedagogiqueId"
-                                                AllowClear="true"
-                                                Placeholder="Aucune maquette"
-                                                Style="width:100%" />
-                            </RadzenFormField>
-                        </RadzenColumn>
-                    </RadzenRow>
-
-                    <RadzenRow>
                         <RadzenColumn Size="12" SizeMD="3">
                             <RadzenFormField Text="Code" Style="width:100%">
                                 <RadzenTextBox @bind-Value="@model.Code" Name="Code" />
                             </RadzenFormField>
                             <RadzenRequiredValidator Component="Code" Text="Code obligatoire." />
                         </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="7">
+                    </RadzenRow>
+
+                    <RadzenRow>
+                        <RadzenColumn Size="12" SizeMD="10">
                             <RadzenFormField Text="Libellé" Style="width:100%">
                                 <RadzenTextBox @bind-Value="@model.Libelle" Name="Libelle" />
                             </RadzenFormField>
@@ -103,7 +86,6 @@
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Code" Title="Code" Width="160px" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Libelle" Title="Libellé" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="ParcoursAcademiqueLibelle" Title="Parcours" />
-                <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="NiveauEtudeLibelle" Title="Niveau" Width="140px" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="Effectif" Title="Effectif" Width="110px" />
                 <RadzenDataGridColumn TItem="ClassePedagogiqueDto" Property="EstActive" Title="Active" Width="100px">
                     <Template Context="item"><RadzenCheckBox Value="@item.EstActive" Disabled="true" /></Template>
@@ -123,8 +105,6 @@
     private List<ClassePedagogiqueDto> items = [];
     private List<LookupDto> annees = [];
     private List<LookupDto> parcours = [];
-    private List<LookupDto> niveaux = [];
-    private List<LookupDto> maquettes = [];
     private ClassePedagogiqueDto model = new();
     private long? selectedAnneeAcademiqueId;
     private bool showForm;
@@ -139,8 +119,6 @@
     {
         annees = await ClassesPedagogiquesService.GetAnneesAcademiquesLookupAsync();
         parcours = await ClassesPedagogiquesService.GetParcoursAcademiquesLookupAsync();
-        niveaux = await ClassesPedagogiquesService.GetNiveauxEtudeLookupAsync();
-        maquettes = await ClassesPedagogiquesService.GetMaquettesPedagogiquesLookupAsync();
     }
 
     private async Task Load()
@@ -169,10 +147,6 @@
             AnneeAcademiqueLibelle = item.AnneeAcademiqueLibelle,
             ParcoursAcademiqueId = item.ParcoursAcademiqueId,
             ParcoursAcademiqueLibelle = item.ParcoursAcademiqueLibelle,
-            NiveauEtudeId = item.NiveauEtudeId,
-            NiveauEtudeLibelle = item.NiveauEtudeLibelle,
-            MaquettePedagogiqueId = item.MaquettePedagogiqueId,
-            MaquettePedagogiqueLibelle = item.MaquettePedagogiqueLibelle,
             Code = item.Code,
             Libelle = item.Libelle,
             EstActive = item.EstActive,

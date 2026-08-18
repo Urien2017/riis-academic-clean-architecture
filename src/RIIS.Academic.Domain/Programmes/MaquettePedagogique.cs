@@ -5,12 +5,7 @@ namespace RIIS.Academic.Domain;
 public class MaquettePedagogique
 {
     public long Id { get; set; }
-    [NotMapped]
     public long ParcoursAcademiqueId { get; set; }
-    public long CycleFormationId { get; set; }
-    public long NiveauEtudeId { get; set; }
-    public long FiliereId { get; set; }
-    public long SpecialiteId { get; set; }
     public required string Code { get; set; }
     public required string Libelle { get; set; }
     public required string Version { get; set; }
@@ -21,10 +16,13 @@ public class MaquettePedagogique
     public string? Observation { get; set; }
     public DateTime CreeLeUtc { get; set; } = DateTime.UtcNow;
 
-    public CycleFormation CycleFormation { get; set; } = null!;
-    public NiveauEtude NiveauEtude { get; set; } = null!;
-    public Filiere Filiere { get; set; } = null!;
-    public Specialite Specialite { get; set; } = null!;
+    [NotMapped]
+    public decimal CreditsTotaux => Semestres?.Sum(s => s.CreditsUE) ?? 0m;
+
+    [NotMapped]
+    public short VolumeHoraireTotal => (short)(Semestres?.Sum(s => s.VolumeHoraireUE) ?? 0);
+
+    public ParcoursAcademique ParcoursAcademique { get; set; } = null!;
     public ICollection<SemestrePedagogique> Semestres { get; set; } = [];
     public ICollection<Inscription> Inscriptions { get; set; } = [];
 }

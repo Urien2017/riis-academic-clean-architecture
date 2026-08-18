@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RIIS.Academic.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using RIIS.Academic.Infrastructure.Persistence;
 namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(RiisAcademicDbContext))]
-    partial class RiisAcademicDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818172534_AddRefonteQoder")]
+    partial class AddRefonteQoder
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

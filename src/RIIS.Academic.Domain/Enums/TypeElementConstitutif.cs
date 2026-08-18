@@ -2,9 +2,11 @@ namespace RIIS.Academic.Domain;
 
 public enum TypeElementConstitutif
 {
-    Cours = 0,
-    Stage = 1,
-    Projet = 2,
-    Memoire = 3,
-    Autre = 9
+    CoursMagistraux = 1,
+    TravauxDiriges = 2,
+    TravauxPratiques = 3,
+    Seminaire = 4,
+    ProjetAtelier = 5,
+    EnseignementEnLigne = 6,
+    StageImmersion = 7
 }

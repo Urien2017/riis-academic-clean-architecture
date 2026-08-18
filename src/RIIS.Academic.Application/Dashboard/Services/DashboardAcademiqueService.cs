@@ -17,6 +17,7 @@ public class DashboardAcademiqueService(
     IRepository<SemestrePedagogique> semestresPedagogiques,
     IRepository<UniteEnseignement> unitesEnseignement,
     IRepository<ElementConstitutif> elementsConstitutifs,
+    IRepository<MaquetteElementConstitutif> maquetteElementsConstitutifs,
     IRepository<EvaluationAcademique> evaluationsAcademiques,
     IRepository<NoteEvaluation> notesEvaluations,
     IRepository<ResultatElementConstitutif> resultatsElementsConstitutifs,
@@ -71,6 +72,7 @@ public class DashboardAcademiqueService(
             await semestresPedagogiques.ListAsync(cancellationToken),
             await unitesEnseignement.ListAsync(cancellationToken),
             await elementsConstitutifs.ListAsync(cancellationToken),
+            await maquetteElementsConstitutifs.ListAsync(cancellationToken),
             await evaluationsAcademiques.ListAsync(cancellationToken),
             await notesEvaluations.ListAsync(cancellationToken),
             await resultatsElementsConstitutifs.ListAsync(cancellationToken),
@@ -180,7 +182,7 @@ public class DashboardAcademiqueService(
             .Where(x => anneeIds.Contains(x.AnneeAcademiqueId))
             .Where(evaluation =>
             {
-                var semestre = ResolveSemestre(data, evaluation.ElementConstitutifId);
+                var semestre = ResolveSemestre(data, evaluation.MaquetteElementConstitutifId);
                 if (semestre is null)
                 {
                     return false;
@@ -195,7 +197,7 @@ public class DashboardAcademiqueService(
 
         if (filter.SemestrePedagogiqueId is not null)
         {
-            query = query.Where(x => ResolveSemestre(data, x.ElementConstitutifId)?.Id == filter.SemestrePedagogiqueId);
+            query = query.Where(x => ResolveSemestre(data, x.MaquetteElementConstitutifId)?.Id == filter.SemestrePedagogiqueId);
         }
 
         if (!string.IsNullOrWhiteSpace(filter.CodeSession))
@@ -291,19 +293,19 @@ public class DashboardAcademiqueService(
         DashboardData data)
     {
         var semestreIds = evaluations
-            .Select(x => ResolveSemestre(data, x.ElementConstitutifId))
+            .Select(x => ResolveSemestre(data, x.MaquetteElementConstitutifId))
             .Where(x => x is not null)
             .Select(x => x!)
             .DistinctBy(x => x.Id)
-            .OrderBy(x => x.Numero)
+            .OrderBy(x => x.NumeroSemestre)
             .ToList();
 
         return semestreIds
             .Select(semestre => new DashboardEvaluationCompletionParSemestreDto
             {
                 SemestrePedagogiqueId = semestre.Id,
-                SemestreNumero = semestre.Numero,
-                Periode = $"S{semestre.Numero}",
+                SemestreNumero = semestre.NumeroSemestre,
+                Periode = $"S{semestre.NumeroSemestre}",
                 TauxCcon = CompletionForSemestreAndType(data, evaluations, notes, inscriptions, semestre.Id, TypeEvaluation.ControleContinu),
                 TauxCc = CompletionForSemestreAndType(data, evaluations, notes, inscriptions, semestre.Id, TypeEvaluation.ControleConnaissance),
                 TauxSn = CompletionForSemestreAndType(data, evaluations, notes, inscriptions, semestre.Id, TypeEvaluation.SessionNormale),
@@ -375,11 +377,12 @@ public class DashboardAcademiqueService(
         var resultats = data.ResultatsElementsConstitutifs
             .Where(x => inscriptionIds.Contains(x.InscriptionId))
             .Where(x => filter.SemestrePedagogiqueId is null
-                || ResolveSemestre(data, x.ElementConstitutifId)?.Id == filter.SemestrePedagogiqueId)
-            .GroupBy(x => x.ElementConstitutifId)
+                || ResolveSemestre(data, x.MaquetteElementConstitutifId)?.Id == filter.SemestrePedagogiqueId)
+            .GroupBy(x => x.MaquetteElementConstitutifId)
             .Select(group =>
             {
-                var ec = data.ElementsConstitutifs.FirstOrDefault(x => x.Id == group.Key);
+                var maquetteEc = data.MaquetteElementsConstitutifs.FirstOrDefault(x => x.Id == group.Key);
+                var ec = maquetteEc is null ? null : data.ElementsConstitutifs.FirstOrDefault(x => x.Id == maquetteEc.ElementConstitutifId);
                 var ue = ec is null ? null : data.UnitesEnseignement.FirstOrDefault(x => x.Id == ec.UniteEnseignementId);
                 var notes = group.Select(x => x.MoyenneRetenue).Where(x => x is not null).Select(x => x!.Value).ToList();
                 var nombreEchecs = group.Count(x => x.MoyenneRetenue is < 10m || x.StatutValidation == StatutValidationAcademique.NonValide);
@@ -422,7 +425,7 @@ public class DashboardAcademiqueService(
                 var cycle = ouverture is null ? null : data.Cycles.FirstOrDefault(x => x.Id == ouverture.CycleFormationId);
                 var filiere = ouverture is null ? null : data.Filieres.FirstOrDefault(x => x.Id == ouverture.FiliereId);
                 var specialite = ouverture is null ? null : data.Specialites.FirstOrDefault(x => x.Id == ouverture.SpecialiteId);
-                var niveau = data.Niveaux.FirstOrDefault(x => x.Id == classe.NiveauEtudeId);
+                var niveau = ouverture is null ? null : data.Niveaux.FirstOrDefault(x => x.Id == ouverture.NiveauEtudeId);
                 var annee = data.Annees.FirstOrDefault(x => x.Id == classe.AnneeAcademiqueId);
                 var evaluations = ResolveEvaluationsForClasse(data, classe, classeInscriptions);
                 var notes = data.Notes
@@ -442,7 +445,7 @@ public class DashboardAcademiqueService(
                     CycleFormationId = ouverture?.CycleFormationId,
                     CycleFormationCode = cycle?.Code ?? string.Empty,
                     CycleFormationLibelle = cycle?.Libelle ?? string.Empty,
-                    NiveauEtudeId = classe.NiveauEtudeId,
+                    NiveauEtudeId = ouverture?.NiveauEtudeId ?? 0,
                     NiveauEtudeLibelle = niveau?.Libelle ?? string.Empty,
                     FiliereId = ouverture?.FiliereId,
                     FiliereLibelle = filiere?.Libelle ?? string.Empty,
@@ -475,16 +478,11 @@ public class DashboardAcademiqueService(
             .Select(x => x.MaquettePedagogiqueId!.Value)
             .ToHashSet();
 
-        if (classe.MaquettePedagogiqueId is not null)
-        {
-            maquetteIds.Add(classe.MaquettePedagogiqueId.Value);
-        }
-
         return data.Evaluations
             .Where(x => x.AnneeAcademiqueId == classe.AnneeAcademiqueId)
             .Where(evaluation =>
             {
-                var semestre = ResolveSemestre(data, evaluation.ElementConstitutifId);
+                var semestre = ResolveSemestre(data, evaluation.MaquetteElementConstitutifId);
                 if (semestre is null)
                 {
                     return false;
@@ -505,7 +503,7 @@ public class DashboardAcademiqueService(
         IReadOnlyCollection<Inscription> inscriptions)
         => evaluations.Sum(evaluation =>
         {
-            var semestre = ResolveSemestre(data, evaluation.ElementConstitutifId);
+            var semestre = ResolveSemestre(data, evaluation.MaquetteElementConstitutifId);
             if (semestre is null)
             {
                 return 0;
@@ -533,7 +531,7 @@ public class DashboardAcademiqueService(
     {
         var evaluationsFiltrees = evaluations
             .Where(x => x.Type == type)
-            .Where(x => ResolveSemestre(data, x.ElementConstitutifId)?.Id == semestrePedagogiqueId)
+            .Where(x => ResolveSemestre(data, x.MaquetteElementConstitutifId)?.Id == semestrePedagogiqueId)
             .ToList();
         var evaluationIds = evaluationsFiltrees.Select(x => x.Id).ToHashSet();
         var saisies = notes.Count(x => evaluationIds.Contains(x.EvaluationAcademiqueId) && x.Valeur is not null);
@@ -542,12 +540,11 @@ public class DashboardAcademiqueService(
         return Percent(saisies, attendues);
     }
 
-    private static SemestrePedagogique? ResolveSemestre(DashboardData data, long elementConstitutifId)
+    private static SemestrePedagogique? ResolveSemestre(DashboardData data, long maquetteElementConstitutifId)
     {
-        var ec = data.ElementsConstitutifs.FirstOrDefault(x => x.Id == elementConstitutifId);
-        var ue = ec is null ? null : data.UnitesEnseignement.FirstOrDefault(x => x.Id == ec.UniteEnseignementId);
+        var maquetteEc = data.MaquetteElementsConstitutifs.FirstOrDefault(x => x.Id == maquetteElementConstitutifId);
 
-        return ue is null ? null : data.Semestres.FirstOrDefault(x => x.Id == ue.SemestrePedagogiqueId);
+        return maquetteEc is null ? null : data.Semestres.FirstOrDefault(x => x.Id == maquetteEc.SemestrePedagogiqueId);
     }
 
     private static DashboardGroupeKey BuildGroupeKey(DashboardData data, Inscription inscription, GroupeDashboard groupe)
@@ -597,10 +594,7 @@ public class DashboardAcademiqueService(
         var parcours = data.Ouvertures.FirstOrDefault(x => x.Id == parcoursAcademiqueId);
 
         return parcours is not null
-            && maquette.CycleFormationId == parcours.CycleFormationId
-            && maquette.NiveauEtudeId == parcours.NiveauEtudeId
-            && maquette.FiliereId == parcours.FiliereId
-            && maquette.SpecialiteId == parcours.SpecialiteId;
+            && maquette.ParcoursAcademiqueId == parcours.Id;
     }
 
     private static decimal Average(IEnumerable<decimal?> values)
@@ -648,6 +642,7 @@ public class DashboardAcademiqueService(
         List<SemestrePedagogique> Semestres,
         List<UniteEnseignement> UnitesEnseignement,
         List<ElementConstitutif> ElementsConstitutifs,
+        List<MaquetteElementConstitutif> MaquetteElementsConstitutifs,
         List<EvaluationAcademique> Evaluations,
         List<NoteEvaluation> Notes,
         List<ResultatElementConstitutif> ResultatsElementsConstitutifs,

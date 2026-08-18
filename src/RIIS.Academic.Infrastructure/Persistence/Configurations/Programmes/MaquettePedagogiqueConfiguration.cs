@@ -15,23 +15,11 @@ public class MaquettePedagogiqueConfiguration : IEntityTypeConfiguration<Maquett
         builder.Property(x => x.Statut).HasConversion<string>().HasMaxLength(20);
         builder.Property(x => x.SourceDocument).HasMaxLength(500);
         builder.Property(x => x.Observation).HasMaxLength(1000);
-        builder.HasIndex(x => new { x.CycleFormationId, x.NiveauEtudeId, x.FiliereId, x.SpecialiteId, x.Code, x.Version }).IsUnique();
+        builder.HasIndex(x => new { x.ParcoursAcademiqueId, x.Code, x.Version }).IsUnique();
 
-        builder.HasOne(x => x.CycleFormation)
-            .WithMany()
-            .HasForeignKey(x => x.CycleFormationId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.NiveauEtude)
-            .WithMany()
-            .HasForeignKey(x => x.NiveauEtudeId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.Filiere)
-            .WithMany()
-            .HasForeignKey(x => x.FiliereId)
-            .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.Specialite)
-            .WithMany()
-            .HasForeignKey(x => x.SpecialiteId)
+        builder.HasOne(x => x.ParcoursAcademique)
+            .WithMany(x => x.MaquettesPedagogiques)
+            .HasForeignKey(x => x.ParcoursAcademiqueId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

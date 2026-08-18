@@ -171,7 +171,7 @@ public class ProcesVerbauxService(
 
         return semestreItems
             .Where(x => semestreIds.Contains(x.Id))
-            .GroupBy(x => x.Numero)
+            .GroupBy(x => x.NumeroSemestre)
             .OrderBy(x => x.Key)
             .Select(x => new LookupDto { Id = x.Key, Libelle = $"Semestre {x.Key}" })
             .ToList();
@@ -222,7 +222,7 @@ public class ProcesVerbauxService(
         if (semestreNumero is not null)
         {
             var semestreIds = semestreItems
-                .Where(x => x.Numero == semestreNumero)
+                .Where(x => x.NumeroSemestre == semestreNumero)
                 .Select(x => x.Id)
                 .ToHashSet();
 
@@ -279,8 +279,8 @@ public class ProcesVerbauxService(
             CycleFormationLibelle = cycle is null ? string.Empty : FormatCodeLibelle(cycle.Code, cycle.Libelle),
             ParcoursLibelle = parcoursItem is null ? string.Empty : FormatCodeLibelle(parcoursItem.Code, parcoursItem.Libelle),
             ClassePedagogiqueLibelle = classe is null ? string.Empty : FormatCodeLibelle(classe.Code, classe.Libelle),
-            SemestrePedagogiqueLibelle = semestre is null ? "Annuel" : $"Semestre {semestre.Numero}",
-            SemestreNumero = semestre?.Numero,
+            SemestrePedagogiqueLibelle = semestre is null ? "Annuel" : $"Semestre {semestre.NumeroSemestre}",
+            SemestreNumero = semestre?.NumeroSemestre,
             Type = pv.Type,
             CodeSession = pv.CodeSession,
             Titre = pv.Titre,

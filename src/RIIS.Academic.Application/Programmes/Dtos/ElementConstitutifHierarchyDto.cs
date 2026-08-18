@@ -5,6 +5,7 @@ namespace RIIS.Academic.Application.Programmes.Dtos;
 public class ElementConstitutifHierarchyDto
 {
     public long Id { get; set; }
+    public long MaquetteElementConstitutifId { get; set; }
     public string? Code { get; set; }
     public string Libelle { get; set; } = string.Empty;
     public TypeElementConstitutif Type { get; set; }

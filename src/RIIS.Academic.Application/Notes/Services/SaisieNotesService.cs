@@ -12,8 +12,10 @@ public class SaisieNotesService(
     IRepository<Etudiant> etudiants,
     IRepository<EvaluationAcademique> evaluations,
     IRepository<NoteEvaluation> notesEvaluations,
-    IRepository<ElementConstitutif> elementsConstitutifs,
+    IRepository<MaquetteElementConstitutif> maquetteElementsConstitutifs,
+    IRepository<SemestrePedagogique> semestresPedagogiques,
     IRepository<UniteEnseignement> unitesEnseignement,
+    IRepository<ElementConstitutif> elementsConstitutifs,
     IRepository<ResultatSemestre> resultatsSemestres) : ISaisieNotesService
 {
     public async Task<List<LookupDto>> GetAnneesAcademiquesLookupAsync(CancellationToken cancellationToken = default)
@@ -48,8 +50,7 @@ public class SaisieNotesService(
         var items = await unitesEnseignement.ListAsync(cancellationToken);
 
         return items
-            .OrderBy(x => x.OrdreAffichage)
-            .ThenBy(x => x.Code)
+            .OrderBy(x => x.Code)
             .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
             .ToList();
     }
@@ -64,8 +65,7 @@ public class SaisieNotesService(
         }
 
         return items
-            .OrderBy(x => x.OrdreAffichage)
-            .ThenBy(x => x.Libelle)
+            .OrderBy(x => x.Libelle)
             .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
             .ToList();
     }
@@ -78,7 +78,9 @@ public class SaisieNotesService(
         CancellationToken cancellationToken = default)
     {
         var evaluationItems = await evaluations.ListAsync(cancellationToken);
+        var mecItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var ecItems = await elementsConstitutifs.ListAsync(cancellationToken);
+        var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
 
         if (anneeAcademiqueId is not null)
         {
@@ -87,17 +89,26 @@ public class SaisieNotesService(
 
         if (uniteEnseignementId is not null)
         {
-            var ecIds = ecItems
-                .Where(x => x.UniteEnseignementId == uniteEnseignementId)
-                .Select(x => x.Id)
+            var semestreIds = semestreItems
+                .Where(s => s.UniteEnseignementId == uniteEnseignementId)
+                .Select(s => s.Id)
+                .ToHashSet();
+            var mecIds = mecItems
+                .Where(m => semestreIds.Contains(m.SemestrePedagogiqueId))
+                .Select(m => m.Id)
                 .ToHashSet();
 
-            evaluationItems = evaluationItems.Where(x => ecIds.Contains(x.ElementConstitutifId)).ToList();
+            evaluationItems = evaluationItems.Where(x => mecIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (elementConstitutifId is not null)
         {
-            evaluationItems = evaluationItems.Where(x => x.ElementConstitutifId == elementConstitutifId).ToList();
+            var mecIds = mecItems
+                .Where(m => m.ElementConstitutifId == elementConstitutifId)
+                .Select(m => m.Id)
+                .ToHashSet();
+
+            evaluationItems = evaluationItems.Where(x => mecIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (typeEvaluation is not null)
@@ -111,7 +122,8 @@ public class SaisieNotesService(
             .ThenBy(x => x.Code)
             .Select(x =>
             {
-                var ec = ecItems.FirstOrDefault(ec => ec.Id == x.ElementConstitutifId);
+                var mec = mecItems.FirstOrDefault(m => m.Id == x.MaquetteElementConstitutifId);
+                var ec = mec is null ? null : ecItems.FirstOrDefault(ec => ec.Id == mec.ElementConstitutifId);
                 var ecLibelle = ec is null ? string.Empty : FormatCodeLibelle(ec.Code, ec.Libelle);
 
                 return new LookupDto
@@ -143,14 +155,20 @@ public class SaisieNotesService(
         var inscriptionItems = await inscriptions.ListAsync(cancellationToken);
         var etudiantItems = await etudiants.ListAsync(cancellationToken);
         var noteItems = await notesEvaluations.ListAsync(cancellationToken);
-        var ecItems = await elementsConstitutifs.ListAsync(cancellationToken);
+        var mecItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
+        var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var ueItems = await unitesEnseignement.ListAsync(cancellationToken);
+        var ecItems = await elementsConstitutifs.ListAsync(cancellationToken);
         var resultatSemestreItems = await resultatsSemestres.ListAsync(cancellationToken);
 
         var annee = anneeItems.FirstOrDefault(x => x.Id == evaluation.AnneeAcademiqueId);
-        var ec = ecItems.FirstOrDefault(x => x.Id == evaluation.ElementConstitutifId)
+        var mec = mecItems.FirstOrDefault(x => x.Id == evaluation.MaquetteElementConstitutifId)
+            ?? throw new InvalidOperationException("Le MEC de l'évaluation est introuvable.");
+        var semestre = semestreItems.FirstOrDefault(x => x.Id == mec.SemestrePedagogiqueId)
+            ?? throw new InvalidOperationException("Le semestre de l'évaluation est introuvable.");
+        var ec = ecItems.FirstOrDefault(x => x.Id == mec.ElementConstitutifId)
             ?? throw new InvalidOperationException("L'EC de l'évaluation est introuvable.");
-        var ue = ueItems.FirstOrDefault(x => x.Id == ec.UniteEnseignementId)
+        var ue = ueItems.FirstOrDefault(x => x.Id == semestre.UniteEnseignementId)
             ?? throw new InvalidOperationException("L'UE de l'évaluation est introuvable.");
 
         var inscriptionsClasse = inscriptionItems
@@ -164,7 +182,7 @@ public class SaisieNotesService(
         if (evaluation.Type == TypeEvaluation.SessionRattrapage)
         {
             var resultatsPourSemestre = resultatSemestreItems
-                .Where(x => x.SemestrePedagogiqueId == ue.SemestrePedagogiqueId)
+                .Where(x => x.SemestrePedagogiqueId == semestre.Id)
                 .ToList();
 
             if (resultatsPourSemestre.Count == 0)
@@ -204,7 +222,7 @@ public class SaisieNotesService(
                     var note = noteItems.FirstOrDefault(x => x.EvaluationAcademiqueId == evaluation.Id && x.InscriptionId == inscription.Id);
                     var resultatSemestre = resultatSemestreItems.FirstOrDefault(x =>
                         x.InscriptionId == inscription.Id
-                        && x.SemestrePedagogiqueId == ue.SemestrePedagogiqueId);
+                        && x.SemestrePedagogiqueId == semestre.Id);
 
                     return new SaisieNoteLigneDto
                     {

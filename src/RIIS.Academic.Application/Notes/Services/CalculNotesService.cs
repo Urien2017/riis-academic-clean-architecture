@@ -19,6 +19,6 @@ public class CalculNotesService : ICalculNotesService
     public bool EstEligibleRattrapage(decimal? moyenneElementConstitutif)
         => moyenneElementConstitutif.HasValue && moyenneElementConstitutif.Value < 10m;
 
-    public decimal CalculerCreditsAcquis(ElementConstitutif elementConstitutif, decimal? moyenneRetenue)
-        => moyenneRetenue.HasValue && moyenneRetenue.Value >= 10m ? elementConstitutif.Credits : 0m;
+    public decimal CalculerCreditsAcquis(MaquetteElementConstitutif maquetteElementConstitutif, decimal? moyenneRetenue)
+        => moyenneRetenue.HasValue && moyenneRetenue.Value >= 10m ? maquetteElementConstitutif.Credits : 0m;
 }

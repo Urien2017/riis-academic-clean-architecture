@@ -287,8 +287,13 @@ public class InscriptionsService(
 
         if (niveauEtudeId is not null)
         {
-            items = items
+            var parcoursIdsPourNiveau = ouvertures
                 .Where(x => x.NiveauEtudeId == niveauEtudeId)
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            items = items
+                .Where(x => parcoursIdsPourNiveau.Contains(x.ParcoursAcademiqueId))
                 .ToList();
         }
 
@@ -355,13 +360,6 @@ public class InscriptionsService(
             {
                 throw new InvalidOperationException("La classe sélectionnée n'appartient pas au parcours de l'inscription.");
             }
-
-            if (classe.NiveauEtudeId != dto.NiveauEtudeId)
-            {
-                throw new InvalidOperationException("La classe sélectionnée n'appartient pas au niveau de l'inscription.");
-            }
-
-            dto.MaquettePedagogiqueId ??= classe.MaquettePedagogiqueId;
         }
 
         if (dto.MaquettePedagogiqueId is not null)
@@ -442,10 +440,7 @@ public class InscriptionsService(
         => string.IsNullOrWhiteSpace(code) ? libelle : $"{code} - {libelle}";
 
     private static bool IsMaquetteCompatibleWithParcours(MaquettePedagogique maquette, ParcoursAcademique parcours)
-        => maquette.CycleFormationId == parcours.CycleFormationId
-            && maquette.NiveauEtudeId == parcours.NiveauEtudeId
-            && maquette.FiliereId == parcours.FiliereId
-            && maquette.SpecialiteId == parcours.SpecialiteId;
+        => maquette.ParcoursAcademiqueId == parcours.Id;
 
     private static string? NormalizeNullable(string? value)
     {

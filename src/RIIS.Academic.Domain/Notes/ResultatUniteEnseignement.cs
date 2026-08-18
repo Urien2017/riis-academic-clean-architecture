@@ -4,7 +4,7 @@ public class ResultatUniteEnseignement
 {
     public long Id { get; set; }
     public long InscriptionId { get; set; }
-    public long UniteEnseignementId { get; set; }
+    public long SemestrePedagogiqueId { get; set; }
     public decimal? Moyenne { get; set; }
     public decimal CreditsAcquis { get; set; }
     public decimal CreditsAttendus { get; set; }
@@ -12,5 +12,5 @@ public class ResultatUniteEnseignement
     public DateTime CalculeLeUtc { get; set; } = DateTime.UtcNow;
 
     public Inscription Inscription { get; set; } = null!;
-    public UniteEnseignement UniteEnseignement { get; set; } = null!;
+    public SemestrePedagogique SemestrePedagogique { get; set; } = null!;
 }

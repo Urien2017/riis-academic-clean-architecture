@@ -12,6 +12,7 @@ public class EvaluationsService(
     IRepository<UniteEnseignement> unitesEnseignement,
     IRepository<SemestrePedagogique> semestresPedagogiques,
     IRepository<MaquettePedagogique> maquettesPedagogiques,
+    IRepository<MaquetteElementConstitutif> maquetteElementsConstitutifs,
     IRepository<ParcoursAcademique> parcoursAcademiques,
     IRepository<CycleFormation> cyclesFormation) : IEvaluationsService
 {
@@ -30,6 +31,7 @@ public class EvaluationsService(
         var ueItems = await unitesEnseignement.ListAsync(cancellationToken);
         var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var maquetteItems = await maquettesPedagogiques.ListAsync(cancellationToken);
+        var maquetteEcItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var ouvertureItems = await parcoursAcademiques.ListAsync(cancellationToken);
         var cycleItems = await cyclesFormation.ListAsync(cancellationToken);
 
@@ -59,32 +61,22 @@ public class EvaluationsService(
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            var ueIds = ueItems
+            var maquetteEcIds = maquetteEcItems
                 .Where(x => semestreIds.Contains(x.SemestrePedagogiqueId))
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            var ecIds = ecItems
-                .Where(x => ueIds.Contains(x.UniteEnseignementId))
-                .Select(x => x.Id)
-                .ToHashSet();
-
-            evaluationItems = evaluationItems.Where(x => ecIds.Contains(x.ElementConstitutifId)).ToList();
+            evaluationItems = evaluationItems.Where(x => maquetteEcIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (semestrePedagogiqueId is not null)
         {
-            var ueIds = ueItems
+            var maquetteEcIds = maquetteEcItems
                 .Where(x => x.SemestrePedagogiqueId == semestrePedagogiqueId)
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            var ecIds = ecItems
-                .Where(x => ueIds.Contains(x.UniteEnseignementId))
-                .Select(x => x.Id)
-                .ToHashSet();
-
-            evaluationItems = evaluationItems.Where(x => ecIds.Contains(x.ElementConstitutifId)).ToList();
+            evaluationItems = evaluationItems.Where(x => maquetteEcIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (uniteEnseignementId is not null)
@@ -94,12 +86,22 @@ public class EvaluationsService(
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            evaluationItems = evaluationItems.Where(x => ecIds.Contains(x.ElementConstitutifId)).ToList();
+            var maquetteEcIds = maquetteEcItems
+                .Where(x => ecIds.Contains(x.ElementConstitutifId))
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            evaluationItems = evaluationItems.Where(x => maquetteEcIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (elementConstitutifId is not null)
         {
-            evaluationItems = evaluationItems.Where(x => x.ElementConstitutifId == elementConstitutifId).ToList();
+            var maquetteEcIds = maquetteEcItems
+                .Where(x => x.ElementConstitutifId == elementConstitutifId)
+                .Select(x => x.Id)
+                .ToHashSet();
+
+            evaluationItems = evaluationItems.Where(x => maquetteEcIds.Contains(x.MaquetteElementConstitutifId)).ToList();
         }
 
         if (type is not null)
@@ -108,7 +110,7 @@ public class EvaluationsService(
         }
 
         return evaluationItems
-            .Select(x => ToDto(x, anneeItems, ecItems, ueItems, semestreItems, maquetteItems, ouvertureItems, cycleItems, evaluationItems))
+            .Select(x => ToDto(x, anneeItems, ecItems, ueItems, semestreItems, maquetteItems, maquetteEcItems, ouvertureItems, cycleItems, evaluationItems))
             .OrderBy(x => x.AnneeAcademiqueLibelle)
             .ThenBy(x => x.CycleFormationLibelle)
             .ThenBy(x => x.SemestrePedagogiqueLibelle)
@@ -132,16 +134,17 @@ public class EvaluationsService(
         var ueItems = await unitesEnseignement.ListAsync(cancellationToken);
         var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var maquetteItems = await maquettesPedagogiques.ListAsync(cancellationToken);
+        var maquetteEcItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var ouvertureItems = await parcoursAcademiques.ListAsync(cancellationToken);
         var cycleItems = await cyclesFormation.ListAsync(cancellationToken);
         var evaluationItems = await evaluations.ListAsync(cancellationToken);
 
-        return ToDto(entity, anneeItems, ecItems, ueItems, semestreItems, maquetteItems, ouvertureItems, cycleItems, evaluationItems);
+        return ToDto(entity, anneeItems, ecItems, ueItems, semestreItems, maquetteItems, maquetteEcItems, ouvertureItems, cycleItems, evaluationItems);
     }
 
     public async Task<EvaluationAcademiqueDto> CreateDefaultEvaluationAsync(
         long? anneeAcademiqueId = null,
-        long? elementConstitutifId = null,
+        long? maquetteElementConstitutifId = null,
         TypeEvaluation type = TypeEvaluation.ControleContinu,
         CancellationToken cancellationToken = default)
     {
@@ -149,7 +152,7 @@ public class EvaluationsService(
         var evaluationItems = await evaluations.ListAsync(cancellationToken);
         var filtered = evaluationItems
             .Where(x => x.AnneeAcademiqueId == anneeAcademiqueId
-                && x.ElementConstitutifId == elementConstitutifId
+                && x.MaquetteElementConstitutifId == maquetteElementConstitutifId
                 && x.Type == type)
             .ToList();
         var nextNumero = filtered.Count == 0 ? (byte)1 : (byte)(filtered.Max(x => x.Numero) + 1);
@@ -158,7 +161,7 @@ public class EvaluationsService(
         return new EvaluationAcademiqueDto
         {
             AnneeAcademiqueId = anneeAcademiqueId ?? anneeItems.FirstOrDefault(x => x.EstActive)?.Id ?? anneeItems.FirstOrDefault()?.Id ?? 0,
-            ElementConstitutifId = elementConstitutifId ?? 0,
+            MaquetteElementConstitutifId = maquetteElementConstitutifId ?? 0,
             Type = type,
             TypeLibelle = GetTypeLibelle(type),
             Numero = nextNumero,
@@ -176,7 +179,7 @@ public class EvaluationsService(
             throw new InvalidOperationException("L'année académique est obligatoire.");
         }
 
-        if (dto.ElementConstitutifId <= 0)
+        if (dto.MaquetteElementConstitutifId <= 0)
         {
             throw new InvalidOperationException("L'EC est obligatoire.");
         }
@@ -214,7 +217,7 @@ public class EvaluationsService(
                 throw new InvalidOperationException("Une session de rattrapage ne peut remplacer qu'une session normale.");
             }
 
-            if (evaluationRemplacee.AnneeAcademiqueId != dto.AnneeAcademiqueId || evaluationRemplacee.ElementConstitutifId != dto.ElementConstitutifId)
+            if (evaluationRemplacee.AnneeAcademiqueId != dto.AnneeAcademiqueId || evaluationRemplacee.MaquetteElementConstitutifId != dto.MaquetteElementConstitutifId)
             {
                 throw new InvalidOperationException("La session normale remplacée doit appartenir à la même année académique et au même EC.");
             }
@@ -232,7 +235,7 @@ public class EvaluationsService(
             var duplicateSession = evaluationItems.Any(x =>
                 x.Id != dto.Id
                 && x.AnneeAcademiqueId == dto.AnneeAcademiqueId
-                && x.ElementConstitutifId == dto.ElementConstitutifId
+                && x.MaquetteElementConstitutifId == dto.MaquetteElementConstitutifId
                 && x.Type == dto.Type);
 
             if (duplicateSession)
@@ -244,7 +247,7 @@ public class EvaluationsService(
         var duplicate = evaluationItems.Any(x =>
             x.Id != dto.Id
             && x.AnneeAcademiqueId == dto.AnneeAcademiqueId
-            && x.ElementConstitutifId == dto.ElementConstitutifId
+            && x.MaquetteElementConstitutifId == dto.MaquetteElementConstitutifId
             && x.Type == dto.Type
             && x.Numero == dto.Numero);
 
@@ -260,7 +263,7 @@ public class EvaluationsService(
             await evaluations.AddAsync(new EvaluationAcademique
             {
                 AnneeAcademiqueId = dto.AnneeAcademiqueId,
-                ElementConstitutifId = dto.ElementConstitutifId,
+                MaquetteElementConstitutifId = dto.MaquetteElementConstitutifId,
                 Type = dto.Type,
                 Numero = dto.Numero,
                 Code = NormalizeCode(dto.Code),
@@ -278,7 +281,7 @@ public class EvaluationsService(
                 ?? throw new InvalidOperationException("L'évaluation est introuvable.");
 
             entity.AnneeAcademiqueId = dto.AnneeAcademiqueId;
-            entity.ElementConstitutifId = dto.ElementConstitutifId;
+            entity.MaquetteElementConstitutifId = dto.MaquetteElementConstitutifId;
             entity.Type = dto.Type;
             entity.Numero = dto.Numero;
             entity.Code = NormalizeCode(dto.Code);
@@ -358,9 +361,9 @@ public class EvaluationsService(
 
         return semestreItems
             .Where(x => maquetteIds.Contains(x.MaquettePedagogiqueId))
-            .OrderBy(x => x.Numero)
+            .OrderBy(x => x.NumeroSemestre)
             .ThenBy(x => x.Libelle)
-            .Select(x => new LookupDto { Id = x.Id, Libelle = $"S{x.Numero} - {x.Libelle}" })
+            .Select(x => new LookupDto { Id = x.Id, Libelle = $"S{x.NumeroSemestre} - {x.Libelle}" })
             .ToList();
     }
 
@@ -373,6 +376,7 @@ public class EvaluationsService(
         var items = await unitesEnseignement.ListAsync(cancellationToken);
         var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var maquetteItems = await maquettesPedagogiques.ListAsync(cancellationToken);
+        var maquetteEcItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var ouvertureItems = await parcoursAcademiques.ListAsync(cancellationToken);
 
         if (anneeAcademiqueId is not null)
@@ -409,17 +413,36 @@ public class EvaluationsService(
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            items = items.Where(x => semestreIds.Contains(x.SemestrePedagogiqueId)).ToList();
+            var ueIds = maquetteEcItems
+                .Where(x => semestreIds.Contains(x.SemestrePedagogiqueId))
+                .Select(x => x.ElementConstitutifId)
+                .ToHashSet();
+
+            var catalogUeIds = (await elementsConstitutifs.ListAsync(cancellationToken))
+                .Where(x => ueIds.Contains(x.Id))
+                .Select(x => x.UniteEnseignementId)
+                .ToHashSet();
+
+            items = items.Where(x => catalogUeIds.Contains(x.Id)).ToList();
         }
 
         if (semestrePedagogiqueId is not null)
         {
-            items = items.Where(x => x.SemestrePedagogiqueId == semestrePedagogiqueId).ToList();
+            var ecIds = maquetteEcItems
+                .Where(x => x.SemestrePedagogiqueId == semestrePedagogiqueId)
+                .Select(x => x.ElementConstitutifId)
+                .ToHashSet();
+
+            var catalogUeIds = (await elementsConstitutifs.ListAsync(cancellationToken))
+                .Where(x => ecIds.Contains(x.Id))
+                .Select(x => x.UniteEnseignementId)
+                .ToHashSet();
+
+            items = items.Where(x => catalogUeIds.Contains(x.Id)).ToList();
         }
 
         return items
-            .OrderBy(x => x.OrdreAffichage)
-            .ThenBy(x => x.Code)
+            .OrderBy(x => x.Code)
             .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
             .ToList();
     }
@@ -435,6 +458,7 @@ public class EvaluationsService(
         var ueItems = await unitesEnseignement.ListAsync(cancellationToken);
         var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var maquetteItems = await maquettesPedagogiques.ListAsync(cancellationToken);
+        var maquetteEcItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var ouvertureItems = await parcoursAcademiques.ListAsync(cancellationToken);
 
         if (anneeAcademiqueId is not null)
@@ -467,22 +491,22 @@ public class EvaluationsService(
                 .Select(x => x.Id)
                 .ToHashSet();
 
-            var ueIds = ueItems
+            var ecIds = maquetteEcItems
                 .Where(x => semestreIds.Contains(x.SemestrePedagogiqueId))
-                .Select(x => x.Id)
+                .Select(x => x.ElementConstitutifId)
                 .ToHashSet();
 
-            items = items.Where(x => ueIds.Contains(x.UniteEnseignementId)).ToList();
+            items = items.Where(x => ecIds.Contains(x.Id)).ToList();
         }
 
         if (semestrePedagogiqueId is not null)
         {
-            var ueIds = ueItems
+            var ecIds = maquetteEcItems
                 .Where(x => x.SemestrePedagogiqueId == semestrePedagogiqueId)
-                .Select(x => x.Id)
+                .Select(x => x.ElementConstitutifId)
                 .ToHashSet();
 
-            items = items.Where(x => ueIds.Contains(x.UniteEnseignementId)).ToList();
+            items = items.Where(x => ecIds.Contains(x.Id)).ToList();
         }
 
         if (uniteEnseignementId is not null)
@@ -491,15 +515,14 @@ public class EvaluationsService(
         }
 
         return items
-            .OrderBy(x => x.OrdreAffichage)
-            .ThenBy(x => x.Libelle)
+            .OrderBy(x => x.Libelle)
             .Select(x => new LookupDto { Id = x.Id, Libelle = FormatCodeLibelle(x.Code, x.Libelle) })
             .ToList();
     }
 
     public async Task<List<LookupDto>> GetSessionsNormalesLookupAsync(
         long? anneeAcademiqueId = null,
-        long? elementConstitutifId = null,
+        long? maquetteElementConstitutifId = null,
         CancellationToken cancellationToken = default)
     {
         var items = await evaluations.ListAsync(cancellationToken);
@@ -511,9 +534,9 @@ public class EvaluationsService(
             items = items.Where(x => x.AnneeAcademiqueId == anneeAcademiqueId).ToList();
         }
 
-        if (elementConstitutifId is not null)
+        if (maquetteElementConstitutifId is not null)
         {
-            items = items.Where(x => x.ElementConstitutifId == elementConstitutifId).ToList();
+            items = items.Where(x => x.MaquetteElementConstitutifId == maquetteElementConstitutifId).ToList();
         }
 
         return items
@@ -529,16 +552,18 @@ public class EvaluationsService(
         IReadOnlyCollection<UniteEnseignement> ueItems,
         IReadOnlyCollection<SemestrePedagogique> semestreItems,
         IReadOnlyCollection<MaquettePedagogique> maquetteItems,
+        IReadOnlyCollection<MaquetteElementConstitutif> maquetteEcItems,
         IReadOnlyCollection<ParcoursAcademique> ouvertureItems,
         IReadOnlyCollection<CycleFormation> cycleItems,
         IReadOnlyCollection<EvaluationAcademique> evaluationItems)
     {
         var annee = anneeItems.FirstOrDefault(x => x.Id == evaluation.AnneeAcademiqueId);
-        var ec = ecItems.FirstOrDefault(x => x.Id == evaluation.ElementConstitutifId);
+        var maquetteEc = maquetteEcItems.FirstOrDefault(x => x.Id == evaluation.MaquetteElementConstitutifId);
+        var ec = maquetteEc is null ? null : ecItems.FirstOrDefault(x => x.Id == maquetteEc.ElementConstitutifId);
         var ue = ec is null ? null : ueItems.FirstOrDefault(x => x.Id == ec.UniteEnseignementId);
-        var semestre = ue is null ? null : semestreItems.FirstOrDefault(x => x.Id == ue.SemestrePedagogiqueId);
+        var semestre = maquetteEc is null ? null : semestreItems.FirstOrDefault(x => x.Id == maquetteEc.SemestrePedagogiqueId);
         var maquette = semestre is null ? null : maquetteItems.FirstOrDefault(x => x.Id == semestre.MaquettePedagogiqueId);
-        var ouverture = maquette is null ? null : FindRepresentativeParcours(maquette, ouvertureItems);
+        var ouverture = maquette is null ? null : ouvertureItems.FirstOrDefault(x => x.Id == maquette.ParcoursAcademiqueId);
         var cycle = ouverture is null ? null : cycleItems.FirstOrDefault(x => x.Id == ouverture.CycleFormationId);
         var remplacee = evaluation.EvaluationRemplaceeId is null
             ? null
@@ -549,12 +574,12 @@ public class EvaluationsService(
             Id = evaluation.Id,
             AnneeAcademiqueId = evaluation.AnneeAcademiqueId,
             AnneeAcademiqueLibelle = annee?.Libelle ?? string.Empty,
-            ElementConstitutifId = evaluation.ElementConstitutifId,
+            MaquetteElementConstitutifId = evaluation.MaquetteElementConstitutifId,
             ElementConstitutifLibelle = ec is null ? string.Empty : FormatCodeLibelle(ec.Code, ec.Libelle),
             UniteEnseignementId = ue?.Id ?? 0,
             UniteEnseignementLibelle = ue is null ? string.Empty : FormatCodeLibelle(ue.Code, ue.Libelle),
             SemestrePedagogiqueId = semestre?.Id ?? 0,
-            SemestrePedagogiqueLibelle = semestre is null ? string.Empty : $"S{semestre.Numero} - {semestre.Libelle}",
+            SemestrePedagogiqueLibelle = semestre is null ? string.Empty : $"S{semestre.NumeroSemestre} - {semestre.Libelle}",
             CycleFormationId = ouverture?.CycleFormationId ?? 0,
             CycleFormationLibelle = cycle is null ? string.Empty : FormatCodeLibelle(cycle.Code, cycle.Libelle),
             Type = evaluation.Type,
@@ -603,20 +628,6 @@ public class EvaluationsService(
 
     private static string FormatCodeLibelle(string? code, string libelle)
         => string.IsNullOrWhiteSpace(code) ? libelle : $"{code} - {libelle}";
-
-    private static ParcoursAcademique? FindRepresentativeParcours(
-        MaquettePedagogique maquette,
-        IReadOnlyCollection<ParcoursAcademique> ouvertures)
-        => ouvertures
-            .Where(ouverture =>
-                maquette.CycleFormationId == ouverture.CycleFormationId
-                && maquette.NiveauEtudeId == ouverture.NiveauEtudeId
-                && maquette.FiliereId == ouverture.FiliereId
-                && maquette.SpecialiteId == ouverture.SpecialiteId)
-            .OrderByDescending(x => x.EstActive)
-            .ThenByDescending(x => x.AnneeAcademiqueId)
-            .ThenBy(x => x.Code)
-            .FirstOrDefault();
 
     private static string NormalizeCode(string? value)
         => RequireText(value, "Le code est obligatoire.").ToUpperInvariant();

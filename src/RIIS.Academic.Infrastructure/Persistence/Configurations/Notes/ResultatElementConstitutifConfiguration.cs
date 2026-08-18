@@ -18,15 +18,15 @@ public class ResultatElementConstitutifConfiguration : IEntityTypeConfiguration<
         builder.Property(x => x.MoyenneRetenue).HasPrecision(5, 2);
         builder.Property(x => x.CreditsAcquis).HasPrecision(5, 2);
         builder.Property(x => x.StatutValidation).HasConversion<string>().HasMaxLength(30);
-        builder.HasIndex(x => new { x.InscriptionId, x.ElementConstitutifId }).IsUnique();
+        builder.HasIndex(x => new { x.InscriptionId, x.MaquetteElementConstitutifId }).IsUnique();
 
         builder.HasOne(x => x.Inscription)
             .WithMany(x => x.ResultatsElementsConstitutifs)
             .HasForeignKey(x => x.InscriptionId)
             .OnDelete(DeleteBehavior.Cascade);
-        builder.HasOne(x => x.ElementConstitutif)
+        builder.HasOne(x => x.MaquetteElementConstitutif)
             .WithMany(x => x.ResultatsElementsConstitutifs)
-            .HasForeignKey(x => x.ElementConstitutifId)
+            .HasForeignKey(x => x.MaquetteElementConstitutifId)
             .OnDelete(DeleteBehavior.Restrict);
     }
 }

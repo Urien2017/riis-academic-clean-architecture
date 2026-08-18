@@ -18,6 +18,7 @@ public class RelevesNotesService(
     IRepository<SemestrePedagogique> semestresPedagogiques,
     IRepository<UniteEnseignement> unitesEnseignement,
     IRepository<ElementConstitutif> elementsConstitutifs,
+    IRepository<MaquetteElementConstitutif> maquetteElementsConstitutifs,
     IRepository<EvaluationAcademique> evaluationsAcademiques,
     IRepository<NoteEvaluation> notesEvaluations,
     ICalculNotesService calculNotesService) : IRelevesNotesService
@@ -113,6 +114,7 @@ public class RelevesNotesService(
         var semestreItems = await semestresPedagogiques.ListAsync(cancellationToken);
         var ueItems = await unitesEnseignement.ListAsync(cancellationToken);
         var ecItems = await elementsConstitutifs.ListAsync(cancellationToken);
+        var maquetteEcItems = await maquetteElementsConstitutifs.ListAsync(cancellationToken);
         var evaluationItems = await evaluationsAcademiques.ListAsync(cancellationToken);
         var noteItems = await notesEvaluations.ListAsync(cancellationToken);
 
@@ -153,7 +155,7 @@ public class RelevesNotesService(
         foreach (var numeroSemestre in numerosSemestres)
         {
             var semestre = semestreItems
-                .Where(x => x.MaquettePedagogiqueId == maquette.Id && x.Numero == numeroSemestre)
+                .Where(x => x.MaquettePedagogiqueId == maquette.Id && x.NumeroSemestre == numeroSemestre)
                 .OrderBy(x => x.Id)
                 .FirstOrDefault();
 
@@ -168,6 +170,7 @@ public class RelevesNotesService(
                 semestre,
                 ueItems,
                 ecItems,
+                maquetteEcItems,
                 evaluationItems,
                 noteItems));
         }
@@ -205,47 +208,45 @@ public class RelevesNotesService(
         SemestrePedagogique semestre,
         IReadOnlyCollection<UniteEnseignement> ueItems,
         IReadOnlyCollection<ElementConstitutif> ecItems,
+        IReadOnlyCollection<MaquetteElementConstitutif> maquetteEcItems,
         IReadOnlyCollection<EvaluationAcademique> evaluationItems,
         IReadOnlyCollection<NoteEvaluation> noteItems)
     {
         var semestreDto = new ReleveNoteSemestreDto
         {
-            Numero = semestre.Numero,
-            Libelle = $"SEMESTRE {semestre.Numero}",
-            CreditsAttendus = semestre.CreditsAttendus
+            Numero = semestre.NumeroSemestre,
+            Libelle = $"SEMESTRE {semestre.NumeroSemestre}",
+            CreditsAttendus = semestre.CreditsUE
         };
 
-        var elementsConstitutifsAvecUe =
-            (from ec in ecItems
-             join ue in ueItems on ec.UniteEnseignementId equals ue.Id
-             where ue.SemestrePedagogiqueId == semestre.Id
-             orderby ue.OrdreAffichage, ue.Code, ec.OrdreAffichage, ec.Libelle
-             select new
-             {
-                 ElementConstitutif = ec,
-                 UniteEnseignement = ue
-             })
+        var maquetteEcsForSemestre = maquetteEcItems
+            .Where(mec => mec.SemestrePedagogiqueId == semestre.Id)
             .ToList();
 
-        foreach (var item in elementsConstitutifsAvecUe)
+        foreach (var maquetteEc in maquetteEcsForSemestre)
         {
-            var ec = item.ElementConstitutif;
-            var ue = item.UniteEnseignement;
+            var ec = ecItems.FirstOrDefault(e => e.Id == maquetteEc.ElementConstitutifId);
+            var ue = ec is null ? null : ueItems.FirstOrDefault(u => u.Id == ec.UniteEnseignementId);
 
-            var moyenneCcon = CalculerMoyenneType(inscription.Id, annee.Id, ec.Id, TypeEvaluation.ControleContinu, evaluationItems, noteItems);
-            var moyenneCc = CalculerMoyenneType(inscription.Id, annee.Id, ec.Id, TypeEvaluation.ControleConnaissance, evaluationItems, noteItems);
-            var moyenneSn = CalculerMoyenneType(inscription.Id, annee.Id, ec.Id, TypeEvaluation.SessionNormale, evaluationItems, noteItems);
-            var moyenneSr = CalculerMoyenneType(inscription.Id, annee.Id, ec.Id, TypeEvaluation.SessionRattrapage, evaluationItems, noteItems);
+            if (ec is null || ue is null)
+            {
+                continue;
+            }
+
+            var moyenneCcon = CalculerMoyenneType(inscription.Id, annee.Id, maquetteEc.Id, TypeEvaluation.ControleContinu, evaluationItems, noteItems);
+            var moyenneCc = CalculerMoyenneType(inscription.Id, annee.Id, maquetteEc.Id, TypeEvaluation.ControleConnaissance, evaluationItems, noteItems);
+            var moyenneSn = CalculerMoyenneType(inscription.Id, annee.Id, maquetteEc.Id, TypeEvaluation.SessionNormale, evaluationItems, noteItems);
+            var moyenneSr = CalculerMoyenneType(inscription.Id, annee.Id, maquetteEc.Id, TypeEvaluation.SessionRattrapage, evaluationItems, noteItems);
             var moyenneSessionRetenue = moyenneSr ?? moyenneSn;
             var moyenneFinale = calculNotesService.CalculerMoyenneElementConstitutif(moyenneCcon, moyenneCc, moyenneSessionRetenue);
-            var credits = calculNotesService.CalculerCreditsAcquis(ec, moyenneFinale);
+            var credits = calculNotesService.CalculerCreditsAcquis(maquetteEc, moyenneFinale);
 
             semestreDto.Lignes.Add(new ReleveNoteLigneDto
             {
                 UniteEnseignementLibelle = ue.Libelle,
                 ElementConstitutifCode = ec.Code,
                 ElementConstitutifLibelle = ec.Libelle,
-                Session = moyenneSr is not null ? "SR" : $"SN{semestre.Numero}",
+                Session = moyenneSr is not null ? "SR" : $"SN{semestre.NumeroSemestre}",
                 NoteSur20 = moyenneFinale,
                 Decision = moyenneFinale >= 10m ? "V" : "NV",
                 CreditsCapitalises = credits,
@@ -290,14 +291,14 @@ public class RelevesNotesService(
     private static decimal? CalculerMoyenneType(
         long inscriptionId,
         long anneeAcademiqueId,
-        long elementConstitutifId,
+        long maquetteElementConstitutifId,
         TypeEvaluation type,
         IReadOnlyCollection<EvaluationAcademique> evaluations,
         IReadOnlyCollection<NoteEvaluation> notes)
     {
         var evaluationIds = evaluations
             .Where(x => x.AnneeAcademiqueId == anneeAcademiqueId
-                && x.ElementConstitutifId == elementConstitutifId
+                && x.MaquetteElementConstitutifId == maquetteElementConstitutifId
                 && x.Type == type)
             .Select(x => x.Id)
             .ToHashSet();

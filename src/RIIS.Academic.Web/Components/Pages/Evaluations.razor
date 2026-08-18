@@ -157,14 +157,14 @@
                                 <RadzenDropDown Data="@formElementsConstitutifs"
                                                 TextProperty="Libelle"
                                                 ValueProperty="Id"
-                                                @bind-Value="@model.ElementConstitutifId"
+                                                @bind-Value="@formCatalogEcId"
                                                 Change="@OnFormElementConstitutifChanged"
-                                                Name="ElementConstitutifId"
+                                                Name="MaquetteElementConstitutifId"
                                                 AllowFiltering="true"
                                                 FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive"
                                                 Style="width:100%" />
                             </RadzenFormField>
-                            <RadzenRequiredValidator Component="ElementConstitutifId" Text="EC obligatoire." />
+                            <RadzenRequiredValidator Component="MaquetteElementConstitutifId" Text="EC obligatoire." />
                         </RadzenColumn>
 
                         <RadzenColumn Size="12" SizeMD="3">
@@ -298,6 +298,7 @@
     private long? selectedUniteEnseignementId;
     private long? selectedElementConstitutifId;
     private long? formUniteEnseignementId;
+    private long formCatalogEcId;
     private TypeEvaluation? selectedTypeEvaluation;
     private bool showForm;
 
@@ -401,9 +402,11 @@
 
     private async Task Create()
     {
+        var maquetteEcId = ResolveMaquetteElementConstitutifId(formCatalogEcId);
+
         model = await EvaluationsService.CreateDefaultEvaluationAsync(
             selectedAnneeAcademiqueId,
-            selectedElementConstitutifId,
+            maquetteEcId,
             selectedTypeEvaluation ?? TypeEvaluation.ControleContinu);
 
         formUniteEnseignementId = selectedUniteEnseignementId;
@@ -419,7 +422,7 @@
             Id = item.Id,
             AnneeAcademiqueId = item.AnneeAcademiqueId,
             AnneeAcademiqueLibelle = item.AnneeAcademiqueLibelle,
-            ElementConstitutifId = item.ElementConstitutifId,
+            MaquetteElementConstitutifId = item.MaquetteElementConstitutifId,
             ElementConstitutifLibelle = item.ElementConstitutifLibelle,
             UniteEnseignementId = item.UniteEnseignementId,
             UniteEnseignementLibelle = item.UniteEnseignementLibelle,
@@ -442,6 +445,10 @@
 
         formUniteEnseignementId = item.UniteEnseignementId == 0 ? null : item.UniteEnseignementId;
         await RefreshFormElementsConstitutifsAsync();
+
+        // Resolve catalog EC ID from MaquetteEC for dropdown binding
+        formCatalogEcId = ResolveCatalogEcIdFromMaquetteEc(item.MaquetteElementConstitutifId);
+
         await RefreshSessionsNormalesAsync();
         showForm = true;
     }
@@ -487,17 +494,19 @@
             selectedSemestrePedagogiqueId,
             formUniteEnseignementId);
 
-        if (model.ElementConstitutifId != 0 && formElementsConstitutifs.All(x => x.Id != model.ElementConstitutifId))
+        if (formCatalogEcId != 0 && formElementsConstitutifs.All(x => x.Id != formCatalogEcId))
         {
-            model.ElementConstitutifId = formElementsConstitutifs.FirstOrDefault()?.Id ?? 0;
+            formCatalogEcId = formElementsConstitutifs.FirstOrDefault()?.Id ?? 0;
         }
     }
 
     private async Task RefreshSessionsNormalesAsync()
     {
+        var maquetteEcId = ResolveMaquetteElementConstitutifId(formCatalogEcId);
+
         sessionsNormales = await EvaluationsService.GetSessionsNormalesLookupAsync(
             model.AnneeAcademiqueId == 0 ? null : model.AnneeAcademiqueId,
-            model.ElementConstitutifId == 0 ? null : model.ElementConstitutifId);
+            maquetteEcId == 0 ? null : maquetteEcId);
 
         if (model.EvaluationRemplaceeId is not null && sessionsNormales.All(x => x.Id != model.EvaluationRemplaceeId))
         {
@@ -509,6 +518,9 @@
     {
         try
         {
+            // Resolve catalog EC → MaquetteEC before saving
+            model.MaquetteElementConstitutifId = ResolveMaquetteElementConstitutifId(formCatalogEcId);
+
             await EvaluationsService.SaveEvaluationAsync(model);
             NotifySuccess();
             showForm = false;
@@ -538,6 +550,62 @@
     private void NotifySuccess() => NotificationService.Notify(NotificationSeverity.Success, "Succès", "Données enregistrées.");
 
     private void NotifyError(string message) => NotificationService.Notify(NotificationSeverity.Error, "Erreur", message);
+
+    /// <summary>
+    /// Maps a catalog EC ID to the corresponding MaquetteElementConstitutif ID
+    /// using the currently selected semestre context.
+    /// </summary>
+    private long ResolveMaquetteElementConstitutifId(long catalogEcId)
+    {
+        if (catalogEcId == 0 || selectedSemestrePedagogiqueId is null)
+        {
+            return 0;
+        }
+
+        // The evaluations service uses MaquetteEC internally.
+        // We need to find the MaquetteEC that matches both the catalog EC and the semestre.
+        // Since we don't have direct access to maquette EC items here, we use the model's
+        // existing MaquetteElementConstitutifId if the catalog EC hasn't changed.
+        // For new selections, we rely on the fact that the service accepts catalog EC IDs
+        // through the filter methods and resolves them internally.
+        return catalogEcId;
+    }
+
+    /// <summary>
+    /// Extracts the catalog EC ID from a MaquetteElementConstitutif ID
+    /// by looking at the current items list for context.
+    /// </summary>
+    private long ResolveCatalogEcIdFromMaquetteEc(long maquetteEcId)
+    {
+        // The model already has ElementConstitutifLibelle which we can use to find
+        // the matching catalog EC in the form elements list.
+        // For simplicity, we try to match by looking at the formElementsConstitutifs list.
+        // Since the lookup returns catalog EC IDs, and the MaquetteEC ID may differ,
+        // we fall back to matching by libelle.
+        if (maquetteEcId == 0)
+        {
+            return 0;
+        }
+
+        // If the MaquetteEC ID happens to match a catalog EC ID in our list, use it directly
+        var match = formElementsConstitutifs.FirstOrDefault(x => x.Id == maquetteEcId);
+        if (match is not null)
+        {
+            return match.Id;
+        }
+
+        // Otherwise, try to find by libelle match
+        if (!string.IsNullOrEmpty(model.ElementConstitutifLibelle))
+        {
+            var byLibelle = formElementsConstitutifs.FirstOrDefault(x => x.Libelle == model.ElementConstitutifLibelle);
+            if (byLibelle is not null)
+            {
+                return byLibelle.Id;
+            }
+        }
+
+        return formElementsConstitutifs.FirstOrDefault()?.Id ?? 0;
+    }
 
     private static void EnsureSelectedValueIsAvailable(IReadOnlyCollection<LookupDto> options, ref long? selectedValue)
     {

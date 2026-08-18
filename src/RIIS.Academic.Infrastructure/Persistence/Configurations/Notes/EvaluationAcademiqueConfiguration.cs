@@ -18,15 +18,15 @@ public class EvaluationAcademiqueConfiguration : IEntityTypeConfiguration<Evalua
         builder.Property(x => x.Bareme).HasPrecision(5, 2).HasDefaultValue(20m);
         builder.Property(x => x.PonderationPourcentage).HasPrecision(5, 2);
         builder.Property(x => x.Observation).HasMaxLength(1000);
-        builder.HasIndex(x => new { x.AnneeAcademiqueId, x.ElementConstitutifId, x.Type, x.Numero }).IsUnique();
+        builder.HasIndex(x => new { x.AnneeAcademiqueId, x.MaquetteElementConstitutifId, x.Type, x.Numero }).IsUnique();
 
         builder.HasOne(x => x.AnneeAcademique)
             .WithMany()
             .HasForeignKey(x => x.AnneeAcademiqueId)
             .OnDelete(DeleteBehavior.Restrict);
-        builder.HasOne(x => x.ElementConstitutif)
+        builder.HasOne(x => x.MaquetteElementConstitutif)
             .WithMany(x => x.Evaluations)
-            .HasForeignKey(x => x.ElementConstitutifId)
+            .HasForeignKey(x => x.MaquetteElementConstitutifId)
             .OnDelete(DeleteBehavior.Restrict);
         builder.HasOne(x => x.EvaluationRemplacee)
             .WithMany(x => x.EvaluationsDeRattrapage)

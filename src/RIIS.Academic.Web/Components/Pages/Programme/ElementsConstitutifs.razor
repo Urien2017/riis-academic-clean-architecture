@@ -7,7 +7,7 @@
         <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.SpaceBetween" Gap="1rem">
             <RadzenStack Gap="0">
                 <RadzenText TextStyle="TextStyle.H4" TagName="TagName.H1" class="rz-m-0" Text="Éléments constitutifs" />
-                <RadzenText Text="Gestion des EC/matières qui recevront les notes." />
+                <RadzenText Text="Gestion des EC/matières du catalogue. Les crédits et coefficients sont gérés au niveau de la maquette." />
             </RadzenStack>
             <RadzenButton Text="Nouvel EC" Icon="add_circle" Click="@Create" ButtonStyle="ButtonStyle.Primary" />
         </RadzenStack>
@@ -62,41 +62,8 @@
                         </RadzenColumn>
                     </RadzenRow>
 
-                    <RadzenRow>
-                        <RadzenColumn Size="12" SizeMD="2">
-                            <RadzenFormField Text="Crédits" Style="width:100%">
-                                <RadzenNumeric @bind-Value="@model.Credits" Min="0" />
-                            </RadzenFormField>
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="2">
-                            <RadzenFormField Text="Coefficient" Style="width:100%">
-                                <RadzenNumeric @bind-Value="@model.Coefficient" Min="0" />
-                            </RadzenFormField>
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="2">
-                            <RadzenFormField Text="Volume horaire" Style="width:100%">
-                                <RadzenNumeric @bind-Value="@model.VolumeHoraire" Min="0" />
-                            </RadzenFormField>
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="3">
-                            <RadzenFormField Text="Ordre affichage" Style="width:100%">
-                                <RadzenNumeric @bind-Value="@model.OrdreAffichage" Min="0" />
-                            </RadzenFormField>
-                        </RadzenColumn>
-                        <RadzenColumn Size="12" SizeMD="3">
-                            <RadzenStack Gap="0.5rem">
-                                <RadzenLabel Text="Obligatoire" />
-                                <RadzenCheckBox @bind-Value="@model.EstObligatoire" />
-                            </RadzenStack>
-                        </RadzenColumn>
-                    </RadzenRow>
-
-                    <RadzenFormField Text="Observation" Style="width:100%">
-                        <RadzenTextArea @bind-Value="@model.Observation" Rows="3" />
-                    </RadzenFormField>
-
                     <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" ShowIcon="true">
-                        Le coefficient d'un EC reste à 1 par défaut. Les crédits sont ceux qui serviront plus tard à la validation.
+                        Les crédits, coefficient, volume horaire et positionnement sont gérés au niveau de la maquette pédagogique (voir la vue hiérarchique des programmes).
                     </RadzenAlert>
 
                     <RadzenStack Orientation="Orientation.Horizontal" JustifyContent="JustifyContent.End" Gap="0.5rem">
@@ -114,9 +81,6 @@
                 <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Code" Title="Code" Width="120px" />
                 <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Libelle" Title="EC (Élément constitutif)" />
                 <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Type" Title="Type" Width="120px" />
-                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Credits" Title="Crédits" Width="110px" />
-                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="Coefficient" Title="Coef." Width="100px" />
-                <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="VolumeHoraire" Title="VH" Width="90px" />
                 <RadzenDataGridColumn TItem="ElementConstitutifDto" Property="UniteEnseignementLibelle" Title="UE (Unité d'enseignement)" />
                 <RadzenDataGridColumn TItem="ElementConstitutifDto" Title="Actions" Width="160px" Sortable="false" Filterable="false">
                     <Template Context="item">
@@ -138,11 +102,13 @@
 
     private readonly List<EnumOption<TypeElementConstitutif>> types =
     [
-        new("Cours", TypeElementConstitutif.Cours),
-        new("Stage", TypeElementConstitutif.Stage),
-        new("Projet", TypeElementConstitutif.Projet),
-        new("Mémoire", TypeElementConstitutif.Memoire),
-        new("Autre", TypeElementConstitutif.Autre)
+        new("Cours Magistraux (CM)", TypeElementConstitutif.CoursMagistraux),
+        new("Travaux Dirigés (TD)", TypeElementConstitutif.TravauxDiriges),
+        new("Travaux Pratiques (TP)", TypeElementConstitutif.TravauxPratiques),
+        new("Séminaire", TypeElementConstitutif.Seminaire),
+        new("Projet / Atelier", TypeElementConstitutif.ProjetAtelier),
+        new("Enseignement en ligne (E-learning)", TypeElementConstitutif.EnseignementEnLigne),
+        new("Stage et Immersion professionnelle", TypeElementConstitutif.StageImmersion)
     ];
 
     protected override async Task OnInitializedAsync()
@@ -187,13 +153,7 @@
             UniteEnseignementLibelle = item.UniteEnseignementLibelle,
             Code = item.Code,
             Libelle = item.Libelle,
-            Type = item.Type,
-            Credits = item.Credits,
-            Coefficient = item.Coefficient,
-            VolumeHoraire = item.VolumeHoraire,
-            OrdreAffichage = item.OrdreAffichage,
-            EstObligatoire = item.EstObligatoire,
-            Observation = item.Observation
+            Type = item.Type
         };
         showForm = true;
     }

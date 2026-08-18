@@ -4,7 +4,7 @@ public class ResultatElementConstitutif
 {
     public long Id { get; set; }
     public long InscriptionId { get; set; }
-    public long ElementConstitutifId { get; set; }
+    public long MaquetteElementConstitutifId { get; set; }
     public decimal? MoyenneControleContinu { get; set; }
     public decimal? MoyenneControleConnaissance { get; set; }
     public decimal? MoyenneSessionNormale { get; set; }
@@ -18,5 +18,5 @@ public class ResultatElementConstitutif
     public DateTime CalculeLeUtc { get; set; } = DateTime.UtcNow;
 
     public Inscription Inscription { get; set; } = null!;
-    public ElementConstitutif ElementConstitutif { get; set; } = null!;
+    public MaquetteElementConstitutif MaquetteElementConstitutif { get; set; } = null!;
 }

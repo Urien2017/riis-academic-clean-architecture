@@ -7,7 +7,7 @@ public class EvaluationAcademiqueDto
     public long Id { get; set; }
     public long AnneeAcademiqueId { get; set; }
     public string AnneeAcademiqueLibelle { get; set; } = string.Empty;
-    public long ElementConstitutifId { get; set; }
+    public long MaquetteElementConstitutifId { get; set; }
     public string ElementConstitutifLibelle { get; set; } = string.Empty;
     public long UniteEnseignementId { get; set; }
     public string UniteEnseignementLibelle { get; set; } = string.Empty;

@@ -7,17 +7,11 @@ public class UniteEnseignementConfiguration : IEntityTypeConfiguration<UniteEnse
 {
     public void Configure(EntityTypeBuilder<UniteEnseignement> builder)
     {
-        builder.ToTable("UnitesEnseignement", table =>
-            table.HasCheckConstraint("CK_UnitesEnseignement_CreditsVolume", "[Credits] >= 0 AND [VolumeHoraire] >= 0"));
+        builder.ToTable("UnitesEnseignement");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Code).HasMaxLength(30).IsRequired();
         builder.Property(x => x.Libelle).HasMaxLength(200).IsRequired();
-        builder.Property(x => x.Credits).HasPrecision(5, 2);
-        builder.HasIndex(x => new { x.SemestrePedagogiqueId, x.Code }).IsUnique();
-
-        builder.HasOne(x => x.SemestrePedagogique)
-            .WithMany(x => x.UnitesEnseignement)
-            .HasForeignKey(x => x.SemestrePedagogiqueId)
-            .OnDelete(DeleteBehavior.Cascade);
+        builder.Property(x => x.Type).HasConversion<string>().HasMaxLength(20);
+        builder.HasIndex(x => x.Code).IsUnique();
     }
 }

@@ -7,5 +7,5 @@ public interface ICalculNotesService
 {
     decimal? CalculerMoyenneElementConstitutif(decimal? moyenneCcon, decimal? moyenneCc, decimal? moyenneSnOuSr);
     bool EstEligibleRattrapage(decimal? moyenneElementConstitutif);
-    decimal CalculerCreditsAcquis(ElementConstitutif elementConstitutif, decimal? moyenneRetenue);
+    decimal CalculerCreditsAcquis(MaquetteElementConstitutif maquetteElementConstitutif, decimal? moyenneRetenue);
 }

@@ -19,6 +19,7 @@ public class RiisAcademicDbContext(DbContextOptions<RiisAcademicDbContext> optio
     public DbSet<SemestrePedagogique> SemestresPedagogiques => Set<SemestrePedagogique>();
     public DbSet<UniteEnseignement> UnitesEnseignement => Set<UniteEnseignement>();
     public DbSet<ElementConstitutif> ElementsConstitutifs => Set<ElementConstitutif>();
+    public DbSet<MaquetteElementConstitutif> MaquetteElementsConstitutifs => Set<MaquetteElementConstitutif>();
     public DbSet<ClassePedagogique> ClassesPedagogiques => Set<ClassePedagogique>();
     public DbSet<EvaluationAcademique> EvaluationsAcademiques => Set<EvaluationAcademique>();
     public DbSet<NoteEvaluation> NotesEvaluations => Set<NoteEvaluation>();

@@ -16,6 +16,4 @@ public interface IClassesPedagogiquesService
 
     Task<List<LookupDto>> GetAnneesAcademiquesLookupAsync(CancellationToken cancellationToken = default);
     Task<List<LookupDto>> GetParcoursAcademiquesLookupAsync(CancellationToken cancellationToken = default);
-    Task<List<LookupDto>> GetNiveauxEtudeLookupAsync(CancellationToken cancellationToken = default);
-    Task<List<LookupDto>> GetMaquettesPedagogiquesLookupAsync(CancellationToken cancellationToken = default);
 }
