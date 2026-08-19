@@ -1,0 +1,1217 @@
+{
+  "RIIS.Academic.Api/Program.cs": {
+    "mtime": 1784204000.3850448,
+    "ast_hash": "cf7318e6eda4c02cd3e87cb2e2281aa5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Api/Properties/launchSettings.json": {
+    "mtime": 1783955495.5158165,
+    "ast_hash": "5a9b408370c10df23db3fd29e8461506",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Api/RIIS.Academic.Api.csproj": {
+    "mtime": 1783955299.328012,
+    "ast_hash": "1a1122457c5f44018e518a3741415afc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Api/appsettings.json": {
+    "mtime": 1783955299.352651,
+    "ast_hash": "27c24f6046436c5f779bf6b1c41320bf",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Abstractions/Persistence/IRepository.cs": {
+    "mtime": 1784222455.6930063,
+    "ast_hash": "ccddd6fee008596cdaed77c72faeecbb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Abstractions/Services/ICalculNotesService.cs": {
+    "mtime": 1783955299.3410861,
+    "ast_hash": "e0901ea7a6f1fccd45386d150751b000",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Abstractions/Services/IInscriptionService.cs": {
+    "mtime": 1783955299.3420863,
+    "ast_hash": "3b22bd452a280e2462dfd4e7f88a0119",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Abstractions/Services/IProcesVerbalService.cs": {
+    "mtime": 1783955299.3415864,
+    "ast_hash": "a95736559c1036f64a1e3a4675440788",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ClassesPedagogiques/Dtos/ClassePedagogiqueDto.cs": {
+    "mtime": 1786642685.8400173,
+    "ast_hash": "736a156c4fac853d6e4bb33aa970cf5c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ClassesPedagogiques/Services/ClassesPedagogiquesService.cs": {
+    "mtime": 1786643500.6531515,
+    "ast_hash": "d07e4ec8c731d9b0f091e48f0eb4a9df",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ClassesPedagogiques/Services/IClassesPedagogiquesService.cs": {
+    "mtime": 1786642685.8429275,
+    "ast_hash": "74106d01c4b516f7a868f066a1e3948f",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Common/Dtos/LookupDto.cs": {
+    "mtime": 1784292844.6200447,
+    "ast_hash": "5c973432144b50cabc9397e7373adbf3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardAcademiqueDto.cs": {
+    "mtime": 1784899692.3096464,
+    "ast_hash": "1e76cf75a614c1b6df4707ba6d3e4d39",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardAcademiqueFilterDto.cs": {
+    "mtime": 1784899693.1115384,
+    "ast_hash": "d158b2abf630e0b98539c1e3b824a71c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardClasseSyntheseDto.cs": {
+    "mtime": 1784899700.6870058,
+    "ast_hash": "b86a6a1e5393f4b4283efb0679f1b60a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardEcRisqueDto.cs": {
+    "mtime": 1784899699.801795,
+    "ast_hash": "a59f67729cbaffa73d8f7ecdc305ec03",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardEvaluationCompletionDto.cs": {
+    "mtime": 1784899696.2275748,
+    "ast_hash": "ebeed6aa0b2eb4fc5cecaa26538adfb2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardEvaluationCompletionParSemestreDto.cs": {
+    "mtime": 1784899697.1296835,
+    "ast_hash": "8ae6dbe6f640ecebe650da8fa8e4046b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardInscriptionEvolutionDto.cs": {
+    "mtime": 1784899695.302306,
+    "ast_hash": "737d40081bbf4263edfbfb61235b276b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardKpiDto.cs": {
+    "mtime": 1784899694.3176003,
+    "ast_hash": "02a817e2e0de81da31433f6508d8f72b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardResultatRepartitionDto.cs": {
+    "mtime": 1784899697.9205544,
+    "ast_hash": "e4093fee6d76529cc257629ffccceb90",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Dtos/DashboardTauxReussiteParGroupeDto.cs": {
+    "mtime": 1784899698.9796548,
+    "ast_hash": "e680547066261cb89505b171486853f0",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Services/DashboardAcademiqueService.cs": {
+    "mtime": 1786643525.1544611,
+    "ast_hash": "46628e8dd2fabda10f1fc33fe21a126a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Dashboard/Services/IDashboardAcademiqueService.cs": {
+    "mtime": 1784900061.9669669,
+    "ast_hash": "d0fb2893c522306f66e7a36becaaede8",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Etudiants/Dtos/EtudiantDto.cs": {
+    "mtime": 1784292845.2272966,
+    "ast_hash": "869772e571c18d4c6d6c1c166e0c5ad3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Etudiants/Services/EtudiantsService.cs": {
+    "mtime": 1784292912.3693771,
+    "ast_hash": "a1ffb6f42196d03663e1f1be6aef15e9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Etudiants/Services/IEtudiantsService.cs": {
+    "mtime": 1784292870.5084214,
+    "ast_hash": "100a5e25ef8f997eb8bb92d680eb3784",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Evaluations/Dtos/EvaluationAcademiqueDto.cs": {
+    "mtime": 1784468033.7058935,
+    "ast_hash": "502a30a3108aaa7f03956902c51bc5a2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Evaluations/Services/EvaluationsService.cs": {
+    "mtime": 1786643543.9626477,
+    "ast_hash": "02db4c4d6a5a1d6fedcb3d6fcf3ad6c2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Evaluations/Services/IEvaluationsService.cs": {
+    "mtime": 1784468327.550738,
+    "ast_hash": "4800fc7dcfb1079d041d2ab04cdbae34",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Inscriptions/Dtos/InscriptionDto.cs": {
+    "mtime": 1786642685.8534384,
+    "ast_hash": "dd24ce139b392879a18f579146efc721",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Inscriptions/Services/IInscriptionsService.cs": {
+    "mtime": 1786642685.8547149,
+    "ast_hash": "7bed980f29843fc699cb549df6e94c61",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Inscriptions/Services/InscriptionsService.cs": {
+    "mtime": 1786654119.3414154,
+    "ast_hash": "95c7bdf02a86332912fffada67905b30",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Notes/Dtos/SaisieNoteLigneDto.cs": {
+    "mtime": 1784402435.9075625,
+    "ast_hash": "1e02565ad7c924bd356075cf7e6d3dd7",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Notes/Dtos/SaisieNotesGrilleDto.cs": {
+    "mtime": 1784402436.6439555,
+    "ast_hash": "1077058088348e8d56f755257956defd",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Notes/Services/CalculNotesService.cs": {
+    "mtime": 1783955299.3425858,
+    "ast_hash": "8fac19c08f2fc205965e5682a3a62153",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Notes/Services/ISaisieNotesService.cs": {
+    "mtime": 1784402437.4987206,
+    "ast_hash": "ae5f35b2d101386e683b085c3a179c9a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Notes/Services/SaisieNotesService.cs": {
+    "mtime": 1784402501.8168392,
+    "ast_hash": "804d24961b4c52f55f59a9f2e44b4345",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalDto.cs": {
+    "mtime": 1784817242.9658947,
+    "ast_hash": "c74d7a818bdae0d3fc40fba9228754eb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalElementConstitutifLigneDto.cs": {
+    "mtime": 1784818706.6307929,
+    "ast_hash": "dc8115b41715fd0e975e6772104d599e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalExcelExportDto.cs": {
+    "mtime": 1784885968.3052952,
+    "ast_hash": "7a91d9ddb0671bb6b348da298f55bc69",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalLigneDto.cs": {
+    "mtime": 1784818707.6997983,
+    "ast_hash": "23af4b139850e650d9bacb27a4b0517a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalWordExportDto.cs": {
+    "mtime": 1784820942.0384536,
+    "ast_hash": "fed1d138254bdc3130a57ec861915ddf",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Services/IProcesVerbalExcelExportService.cs": {
+    "mtime": 1784885968.9117556,
+    "ast_hash": "c05f0f84c81b49d1dbc15ded45ba17fc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Services/IProcesVerbalTemplateWordExportService.cs": {
+    "mtime": 1784889973.9445558,
+    "ast_hash": "13de65078a3ebac726cc688e885ef5d2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Services/IProcesVerbalWordExportService.cs": {
+    "mtime": 1784820942.6647317,
+    "ast_hash": "322404e40df1db6a1d871cfec4e4010d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Services/IProcesVerbauxService.cs": {
+    "mtime": 1784818708.4332223,
+    "ast_hash": "f8ce6682f47a2f739e9cc78bb885ac12",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/ProcesVerbaux/Services/ProcesVerbauxService.cs": {
+    "mtime": 1786642685.8632345,
+    "ast_hash": "76a54d7fe7bacaa1fc0099eb941d2edb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/ElementConstitutifDto.cs": {
+    "mtime": 1784298460.6124065,
+    "ast_hash": "082249aed61a1aafbae8db3c5a328d68",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/ElementConstitutifHierarchyDto.cs": {
+    "mtime": 1784308240.1271803,
+    "ast_hash": "fa1afc85498a15b07972d9db2cfe4a3f",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/MaquettePedagogiqueDto.cs": {
+    "mtime": 1786642685.8657143,
+    "ast_hash": "d799e921a05aa20ebc6ad9c1c124dc01",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/MaquettePedagogiqueHierarchyDto.cs": {
+    "mtime": 1786642685.8662107,
+    "ast_hash": "f61c00a536c308c98d6d2c0b43ba1314",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/SemestrePedagogiqueDto.cs": {
+    "mtime": 1784298459.0198245,
+    "ast_hash": "11d1a6a569761918ee2aa9b32f4f21d3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/SemestrePedagogiqueHierarchyDto.cs": {
+    "mtime": 1784301344.065607,
+    "ast_hash": "d2a4b06b070d0d04a67afd2279499ac5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/UniteEnseignementDto.cs": {
+    "mtime": 1784298459.7684298,
+    "ast_hash": "116e22c96037879fc00d6167e0e1d8a6",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Dtos/UniteEnseignementHierarchyDto.cs": {
+    "mtime": 1784308240.7229092,
+    "ast_hash": "83f177ecc3cb077167b2210396717504",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Services/IProgrammePedagogiqueService.cs": {
+    "mtime": 1786642685.8697524,
+    "ast_hash": "2c6e941099cdbc532c5f2338b614135e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Programmes/Services/ProgrammePedagogiqueService.cs": {
+    "mtime": 1786643474.1144617,
+    "ast_hash": "d76400b14cadd1e07b37a1a55e3b1975",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/RIIS.Academic.Application.csproj": {
+    "mtime": 1783955299.3265035,
+    "ast_hash": "0827f5825e480bf83081d2e16a0cab13",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/AnneeAcademiqueDto.cs": {
+    "mtime": 1784219700.32346,
+    "ast_hash": "f1d8e59f7e109911601867f5b9bbcff3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/CycleFormationDto.cs": {
+    "mtime": 1784219950.3685555,
+    "ast_hash": "e20f7eb611d81f60ff3e57d7b3853f6b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/FiliereDto.cs": {
+    "mtime": 1784219702.5055048,
+    "ast_hash": "1098f6c31169d89450553a5f27de2e9f",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/FiliereLookupDto.cs": {
+    "mtime": 1784219703.293521,
+    "ast_hash": "5e53cf84af57432be543da8c0d8d19a9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/NiveauEtudeDto.cs": {
+    "mtime": 1784219704.059045,
+    "ast_hash": "163d87191453b445d72f201c34f938b9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/ParcoursAcademiqueDto.cs": {
+    "mtime": 1786653217.584129,
+    "ast_hash": "2dd56625a382579430d6f63f87ece324",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/ParcoursFormationDto.cs": {
+    "mtime": 1786636577.924486,
+    "ast_hash": "499c2fcbe9389a0966ab904cdc175822",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Dtos/SpecialiteDto.cs": {
+    "mtime": 1786447542.8077023,
+    "ast_hash": "5ebb24725b94b60e96abe1d4cc9dc4e4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Services/IReferentielsService.cs": {
+    "mtime": 1786653218.7077384,
+    "ast_hash": "2db26e95c1bdcb394efa1f9375e347cd",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Referentiels/Services/ReferentielsService.cs": {
+    "mtime": 1786654118.6753335,
+    "ast_hash": "8ca0ed8b9868d1eeadb78f9330692f5e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteAnnuelDto.cs": {
+    "mtime": 1784629659.4974945,
+    "ast_hash": "31acca78bb42c6248a9e5e477df66cff",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteEtudiantDisponibleDto.cs": {
+    "mtime": 1784629660.1275187,
+    "ast_hash": "c2f978dd2d59df24468652280d4ed899",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteLigneDto.cs": {
+    "mtime": 1784634106.3317223,
+    "ast_hash": "27ad32a2874d1c5ef0cf55313f9d0df3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteResumeDto.cs": {
+    "mtime": 1784629658.855976,
+    "ast_hash": "d8fe4f9db27d1138d3d09b9176557293",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteSemestreDto.cs": {
+    "mtime": 1784629658.2689574,
+    "ast_hash": "197788b532c85acfc5aa27daf1ab9c17",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Dtos/ReleveNoteWordExportDto.cs": {
+    "mtime": 1784630516.0575452,
+    "ast_hash": "1603a5aa11c813c7df5ba907a083fb8e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Services/IReleveNoteTemplateWordExportService.cs": {
+    "mtime": 1784894408.8425336,
+    "ast_hash": "35c02f91c71ff9d9868a921315637321",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Services/IReleveNoteWordExportService.cs": {
+    "mtime": 1784630518.3446903,
+    "ast_hash": "8642aa0061e43f0bc91c21d33fc84d96",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Services/IRelevesNotesService.cs": {
+    "mtime": 1784629713.654509,
+    "ast_hash": "b7e8f1136d23547055583b3ebd338386",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Releves/Services/RelevesNotesService.cs": {
+    "mtime": 1786642685.8798077,
+    "ast_hash": "b488afca90af10016eb959857f551aac",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/AdministrationDossierScolariteDto.cs": {
+    "mtime": 1786456451.5103507,
+    "ast_hash": "862acf9dfee80a13540e8b48f614ff45",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/DossierScolariteDto.cs": {
+    "mtime": 1786454672.3967571,
+    "ast_hash": "d22c8209b1b4bdf5db4fb0ff6fed75ca",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/FinanceDossierScolariteDto.cs": {
+    "mtime": 1786461696.1527796,
+    "ast_hash": "abc045825aeecfe99c97aa95a48da387",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/ModePaiementScolariteDto.cs": {
+    "mtime": 1786461663.0772977,
+    "ast_hash": "409a63ab75b2fad4185a98c9de544ab5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/TarifScolariteContexteDto.cs": {
+    "mtime": 1786404343.362604,
+    "ast_hash": "c9809fc6a483f60db0b75532f054b87d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/TarifScolariteDto.cs": {
+    "mtime": 1786633075.719612,
+    "ast_hash": "9ea3932d465fc20b67b92acbc678f898",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Dtos/TypeElementScolariteDto.cs": {
+    "mtime": 1786404342.1095307,
+    "ast_hash": "993ab399a36426594415e5d2a9e5001e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/DossiersScolariteService.cs": {
+    "mtime": 1786642685.8839173,
+    "ast_hash": "2541d8b29850a617a9cd03ce5241cbe1",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/FinancesScolariteService.cs": {
+    "mtime": 1786461761.3405538,
+    "ast_hash": "cd6481ac6d2e7a219119ea3d12b809c5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/IDossiersScolariteService.cs": {
+    "mtime": 1786456457.367577,
+    "ast_hash": "414de118ff215c16e1ddf567305558c6",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/IFinancesScolariteService.cs": {
+    "mtime": 1786461701.4311037,
+    "ast_hash": "c8243580f8f85f37f72f3027223b4422",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/IModesPaiementScolariteService.cs": {
+    "mtime": 1786461670.7119572,
+    "ast_hash": "3b482f5af2d61b99bb52ae8cb9ed7200",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/ITarifsScolariteService.cs": {
+    "mtime": 1786633076.769616,
+    "ast_hash": "e992d171d80d165c6f3b2f8156c8f6a6",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/ITypesElementsScolariteService.cs": {
+    "mtime": 1786632562.1860976,
+    "ast_hash": "550827e367008f8d6ac4cfcd4c4a889c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/ModesPaiementScolariteService.cs": {
+    "mtime": 1786461686.5240753,
+    "ast_hash": "9354d0dac7be1b896f6313a86e1e551b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/TarifsScolariteService.cs": {
+    "mtime": 1786633260.6536834,
+    "ast_hash": "7c2d9a1179d803a7e92601060adb8082",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Application/Scolarite/Services/TypesElementsScolariteService.cs": {
+    "mtime": 1786632626.2993307,
+    "ast_hash": "697c800ce3e909face5e010821a8ca8d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Common/AuditableEntity.cs": {
+    "mtime": 1783955299.3285122,
+    "ast_hash": "96dad399ab7da69613295f9418614432",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Common/Entity.cs": {
+    "mtime": 1783955299.3285122,
+    "ast_hash": "277666e5bf7793dd3c86b0282a8c27a0",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/AptitudeMedicale.cs": {
+    "mtime": 1783955299.3299472,
+    "ast_hash": "954ae81546cb9e4e73f579b381ad0f21",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/CanalNotificationScolarite.cs": {
+    "mtime": 1786402492.8401186,
+    "ast_hash": "96aa3dd49dd0b230de449ec58a6be1b3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/CategorieTypeElementScolarite.cs": {
+    "mtime": 1786402487.6597054,
+    "ast_hash": "e3d422cb156a62edd611cc862060a5dd",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/DecisionAcademique.cs": {
+    "mtime": 1783955299.3319545,
+    "ast_hash": "7bd63035a5372f2cde0c98fd613f8ad3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/Sexe.cs": {
+    "mtime": 1783955299.3299472,
+    "ast_hash": "3d6aa255f3978cca3b7db8242d56fafb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutDocumentScolarite.cs": {
+    "mtime": 1786402490.9096928,
+    "ast_hash": "c350b96aaea999a5ca910e44f922135e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutDossierScolarite.cs": {
+    "mtime": 1786402488.2969327,
+    "ast_hash": "3351ad315d747c01236c58b0e610c4c9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutEcheanceScolarite.cs": {
+    "mtime": 1786402489.5905576,
+    "ast_hash": "fb478d41c60833b15176bdecf0c94453",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutElementScolarite.cs": {
+    "mtime": 1786402488.9452732,
+    "ast_hash": "bf015df4e1524b85e2d06f0bdebf2611",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutInscription.cs": {
+    "mtime": 1783955299.3304496,
+    "ast_hash": "a7aa68091b24fb9cfb0ac02663dfc348",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutMaquettePedagogique.cs": {
+    "mtime": 1783955299.330952,
+    "ast_hash": "87d35fac23bf028a67343c7a3c764ee5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutNotificationScolarite.cs": {
+    "mtime": 1786402493.473291,
+    "ast_hash": "0219e2c5b294d8972eb68d431fbbb3b2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutPaiementScolarite.cs": {
+    "mtime": 1786402490.2693636,
+    "ast_hash": "7945eb169740a7bc561881f01cb6a130",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutPresenceEvaluation.cs": {
+    "mtime": 1783955299.331453,
+    "ast_hash": "048bcd6ee421acb0f4133df5c0bbd952",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutValidationAcademique.cs": {
+    "mtime": 1783955299.3319545,
+    "ast_hash": "ade56ab06e3bec0934b0b2ae97715358",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/StatutValidationScolarite.cs": {
+    "mtime": 1786402491.5650773,
+    "ast_hash": "fa6984307cb8e608afbf714d4bf00e6b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/TypeElementConstitutif.cs": {
+    "mtime": 1783955299.330952,
+    "ast_hash": "3691457fe28b7e7549bb5758e599b646",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/TypeEvaluation.cs": {
+    "mtime": 1783955299.331453,
+    "ast_hash": "bbcd0e20def4a5b72c6e836191b4168e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/TypeNotificationScolarite.cs": {
+    "mtime": 1786402492.1993096,
+    "ast_hash": "ae8557c04345adcf3a05dcab2bd9221e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Enums/TypeProcesVerbal.cs": {
+    "mtime": 1783955299.3319545,
+    "ast_hash": "35b84335a8a456144a5d2c2175504856",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Etablissements/Etablissement.cs": {
+    "mtime": 1783955299.3331172,
+    "ast_hash": "038aed60ef743d8b19c122a0aa82a3ba",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Etudiants/ContactUrgence.cs": {
+    "mtime": 1783955299.3336186,
+    "ast_hash": "60728cb5c2e6de544d8fe9a377f684b6",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Etudiants/Etudiant.cs": {
+    "mtime": 1783955299.3336186,
+    "ast_hash": "7b556ed459e130c3ad51ede1fcbff28c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Inscriptions/DossierAdmission.cs": {
+    "mtime": 1783955299.334621,
+    "ast_hash": "98c56c1b339bfeeb3b4d6eb111f7fcf3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Inscriptions/Inscription.cs": {
+    "mtime": 1786642685.9040937,
+    "ast_hash": "d9687250eeb32c50a7fa18f690ed63c2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Inscriptions/ValidationInscription.cs": {
+    "mtime": 1783955299.334621,
+    "ast_hash": "4120b1c4d7dd33f57276dd64df3f3ba0",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/ClassePedagogique.cs": {
+    "mtime": 1786642685.9055183,
+    "ast_hash": "97c6d50cdb329e2a4153d3a217241cfb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/EvaluationAcademique.cs": {
+    "mtime": 1783955299.3351388,
+    "ast_hash": "1594004ced29804941d93f94c9e07676",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/NoteEvaluation.cs": {
+    "mtime": 1783955299.3361416,
+    "ast_hash": "09ec740aaec796b26ff952061f3b9fe6",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/ResultatAnnuel.cs": {
+    "mtime": 1783955299.3371453,
+    "ast_hash": "2a1544508410e52c3da9d7269549ed51",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/ResultatElementConstitutif.cs": {
+    "mtime": 1783955299.3366432,
+    "ast_hash": "e9dc9d3665d5fa18159812c52e264429",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/ResultatSemestre.cs": {
+    "mtime": 1783955299.3371453,
+    "ast_hash": "5f334a88f33dbacefa692fa26b7abdea",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Notes/ResultatUniteEnseignement.cs": {
+    "mtime": 1783955299.3366432,
+    "ast_hash": "4c328b6b90c1f23cbbe375cd6b920b7d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Parcours/ParcoursAcademique.cs": {
+    "mtime": 1786654108.9882576,
+    "ast_hash": "9cecf33ff6258ff7efcf642be9cc8077",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/ProcesVerbaux/ProcesVerbal.cs": {
+    "mtime": 1786643086.0682116,
+    "ast_hash": "153ba7b21b44b8e27d9a06da70f7de91",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/ProcesVerbaux/ProcesVerbalLigne.cs": {
+    "mtime": 1783955299.3376992,
+    "ast_hash": "75aefa8937b023814542e0875270889d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Programmes/ElementConstitutif.cs": {
+    "mtime": 1783955299.339083,
+    "ast_hash": "6926888ee3f5489b385a24e707cd2939",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Programmes/MaquettePedagogique.cs": {
+    "mtime": 1786654109.624037,
+    "ast_hash": "d15109b9fa72a4644b6e73a71376812f",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Programmes/SemestrePedagogique.cs": {
+    "mtime": 1783955299.3382008,
+    "ast_hash": "926bb2d14792424c00aee6072b42aced",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Programmes/UniteEnseignement.cs": {
+    "mtime": 1783955299.339083,
+    "ast_hash": "cf434f248bb87f655b373b2b354dd4d9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/RIIS.Academic.Domain.csproj": {
+    "mtime": 1783955299.3265035,
+    "ast_hash": "9322453bf7b3cb12f31fd9a63f69adaa",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Referentiels/AnneeAcademique.cs": {
+    "mtime": 1786642723.374445,
+    "ast_hash": "c017f8711222b2dc632a860b4dd57627",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Referentiels/CycleFormation.cs": {
+    "mtime": 1786642685.9121537,
+    "ast_hash": "50105782a4f5608d6dec500915b7f965",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Referentiels/Filiere.cs": {
+    "mtime": 1786642685.9139757,
+    "ast_hash": "12ea93ad3ed657603f4989c1d5101cbe",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Referentiels/NiveauEtude.cs": {
+    "mtime": 1786642724.1031659,
+    "ast_hash": "a6cd446b636f412b2d4b2acd717cdc27",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Referentiels/Specialite.cs": {
+    "mtime": 1786642685.9150765,
+    "ast_hash": "461417c4a2756a5ff0bfd16f785e7839",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/AffectationPaiementEcheance.cs": {
+    "mtime": 1786402498.447306,
+    "ast_hash": "1626b45c43684669336889669f3420ba",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/DocumentElementScolarite.cs": {
+    "mtime": 1786402499.0915926,
+    "ast_hash": "dc1f4aaef6d59f82aa03e78a1156b353",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/DossierScolarite.cs": {
+    "mtime": 1786402494.556953,
+    "ast_hash": "c214cca0238854c2e00228fd5ad8a673",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/EcheanceScolarite.cs": {
+    "mtime": 1786402497.1451957,
+    "ast_hash": "500d2bcf1b6cf0ce1c2e1bf8471ce2a9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/ElementScolariteEtudiant.cs": {
+    "mtime": 1786402496.474081,
+    "ast_hash": "94adc5fef12b3b19206c30abbea71b76",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/ModePaiementScolarite.cs": {
+    "mtime": 1786461630.0239017,
+    "ast_hash": "54abd8f7abf243ae5a403fa135ab279a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/NotificationScolarite.cs": {
+    "mtime": 1786402500.3688643,
+    "ast_hash": "d3177f649461bf524ec2dfe0e8751caf",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/PaiementScolarite.cs": {
+    "mtime": 1786461636.5495324,
+    "ast_hash": "7a7ce90fb3015b9a624688769e6d2f3d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/TarifScolarite.cs": {
+    "mtime": 1786633075.0383403,
+    "ast_hash": "7ec8820f22fe227b830fc9e94c2635f4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/TypeElementScolarite.cs": {
+    "mtime": 1786402495.1799557,
+    "ast_hash": "9bb4d426387f1e32408b61438d66193a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Scolarite/ValidationElementScolarite.cs": {
+    "mtime": 1786402499.7212403,
+    "ast_hash": "4a49a406974199b18f2f35767e2b500e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/DependencyInjection.cs": {
+    "mtime": 1786465294.1652513,
+    "ast_hash": "b6a32417d53bd71626b04a14df565089",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Documents/ProcesVerbalExcelExportService.cs": {
+    "mtime": 1784886052.7973263,
+    "ast_hash": "f71519d455f117b508cea64b50b27e64",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Documents/ProcesVerbalTemplateWordExportService.cs": {
+    "mtime": 1784890039.3640096,
+    "ast_hash": "b57bdd2171773e27e25c730394a2801a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Documents/ProcesVerbalWordExportService.cs": {
+    "mtime": 1784885152.1419396,
+    "ast_hash": "2a92a9298fb2103924a439528e7b558d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Documents/ReleveNoteTemplateWordExportService.cs": {
+    "mtime": 1784895466.8690479,
+    "ast_hash": "ce4c8de11000b441c413346ae273697d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Documents/ReleveNoteWordExportService.cs": {
+    "mtime": 1784895466.2483346,
+    "ast_hash": "2c610e330d720cbd92ce812e504a6a3a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Etablissements/EtablissementConfiguration.cs": {
+    "mtime": 1783955299.3440857,
+    "ast_hash": "da76a12873852f864cdf906fd3e335cc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Etudiants/ContactUrgenceConfiguration.cs": {
+    "mtime": 1783955299.345086,
+    "ast_hash": "e3f8f236b4fa7453a95fa082332eb458",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Etudiants/EtudiantConfiguration.cs": {
+    "mtime": 1783955299.3445866,
+    "ast_hash": "905821f8faeac9e2b28df69d86c6e7d3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Inscriptions/DossierAdmissionConfiguration.cs": {
+    "mtime": 1783955299.3511455,
+    "ast_hash": "c63da5e29bc277a71d698404a200ecfc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Inscriptions/InscriptionConfiguration.cs": {
+    "mtime": 1786642685.9233136,
+    "ast_hash": "0ffc74b719d8dc1674abafab3c407d1d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Inscriptions/ValidationInscriptionConfiguration.cs": {
+    "mtime": 1783955299.3516474,
+    "ast_hash": "9af0c73176fc03816c52bf250e58e9bd",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ClassePedagogiqueConfiguration.cs": {
+    "mtime": 1786642685.924307,
+    "ast_hash": "9bbdbda82c6c3d55246ae02b3baba30e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/EvaluationAcademiqueConfiguration.cs": {
+    "mtime": 1783955299.348351,
+    "ast_hash": "ef54f9c0d24fc2cff4e55e354e64cd34",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/NoteEvaluationConfiguration.cs": {
+    "mtime": 1783955299.3488526,
+    "ast_hash": "51c8944e87b5a49a64bba9ed8f969b83",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatAnnuelConfiguration.cs": {
+    "mtime": 1783955299.350141,
+    "ast_hash": "03fdd6b61c1c0d721353b70e3d7c7564",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatElementConstitutifConfiguration.cs": {
+    "mtime": 1783955299.3488526,
+    "ast_hash": "ef18bace5db53c0552a040d2230b4c91",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatSemestreConfiguration.cs": {
+    "mtime": 1783955299.349612,
+    "ast_hash": "8cb0420411aa75b6703325a38b87ccce",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatUniteEnseignementConfiguration.cs": {
+    "mtime": 1783955299.349612,
+    "ast_hash": "62ac7f6a7f73883faae6b12969364022",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Parcours/ParcoursAcademiqueConfiguration.cs": {
+    "mtime": 1786654110.3210106,
+    "ast_hash": "52230b24c5cf980ec5ee103f16ae4224",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/ProcesVerbaux/ProcesVerbalConfiguration.cs": {
+    "mtime": 1786643087.4578197,
+    "ast_hash": "a5a36b0aa7955e5605514ad57d7a9d76",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/ProcesVerbaux/ProcesVerbalLigneConfiguration.cs": {
+    "mtime": 1783955299.3506432,
+    "ast_hash": "2ffb5c2c382e9482b13cf41ec7eb7d66",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/ElementConstitutifConfiguration.cs": {
+    "mtime": 1783955299.3478496,
+    "ast_hash": "4b1b1421578cf4caf2103dea896ecbd8",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/MaquettePedagogiqueConfiguration.cs": {
+    "mtime": 1786642736.3374574,
+    "ast_hash": "5936df645ecb1bce61cfe0cdd2979148",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/SemestrePedagogiqueConfiguration.cs": {
+    "mtime": 1783955299.3465858,
+    "ast_hash": "7adbf7d6ac527adfaae92883237fe99a",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/UniteEnseignementConfiguration.cs": {
+    "mtime": 1783955299.3473456,
+    "ast_hash": "17c6f77f489554523ab7896b0f0afa90",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/AnneeAcademiqueConfiguration.cs": {
+    "mtime": 1783955299.345586,
+    "ast_hash": "f6a33aa54cfd003175003115fbb0b8c9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/CycleFormationConfiguration.cs": {
+    "mtime": 1783958913.7795038,
+    "ast_hash": "7469599f1cf1e59ad24f702d8bb18baf",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/FiliereConfiguration.cs": {
+    "mtime": 1783955299.346086,
+    "ast_hash": "504429d65d46a428d825f783cda3ab9c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/NiveauEtudeConfiguration.cs": {
+    "mtime": 1784215680.155343,
+    "ast_hash": "304c8d29b31235b76e0b60d46f48abfc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/SpecialiteConfiguration.cs": {
+    "mtime": 1783955299.3465858,
+    "ast_hash": "bf1fe33cf4abae1a69354ca63504d651",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/AffectationPaiementEcheanceConfiguration.cs": {
+    "mtime": 1786402560.0865436,
+    "ast_hash": "2012db45443b5513a701d680589e50b7",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/DocumentElementScolariteConfiguration.cs": {
+    "mtime": 1786402560.734901,
+    "ast_hash": "9df1c07f8172119d37afe798cc691fce",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/DossierScolariteConfiguration.cs": {
+    "mtime": 1786402555.823166,
+    "ast_hash": "2778936a33bee958b24d45016db6059e",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/EcheanceScolariteConfiguration.cs": {
+    "mtime": 1786402558.4813776,
+    "ast_hash": "798fc326509e0b3f0a0caa5f98673f2f",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/ElementScolariteEtudiantConfiguration.cs": {
+    "mtime": 1786402557.8401723,
+    "ast_hash": "339ff4ceccfeddcfebf1a9f552bd15b8",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/ModePaiementScolariteConfiguration.cs": {
+    "mtime": 1786461642.3820994,
+    "ast_hash": "b27a27d7586ebd812730b9b47e410526",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/NotificationScolariteConfiguration.cs": {
+    "mtime": 1786402562.0566325,
+    "ast_hash": "492d7de41451682f53dea118012eeafc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/PaiementScolariteConfiguration.cs": {
+    "mtime": 1786461649.2871938,
+    "ast_hash": "86ecebb34545f4adf26dc76c30bf3214",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/TarifScolariteConfiguration.cs": {
+    "mtime": 1786633077.6225102,
+    "ast_hash": "e1bd2cc61e7fb6f6a4ad3b0cbf2636c4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/TypeElementScolariteConfiguration.cs": {
+    "mtime": 1786402556.4744308,
+    "ast_hash": "c7c8dbe5a5fbaa6153a57c8cc2803acc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/ValidationElementScolariteConfiguration.cs": {
+    "mtime": 1786402561.380664,
+    "ast_hash": "eff92552dafd607ccd162786255eadbf",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/DatabaseInitializer.cs": {
+    "mtime": 1786667979.5417252,
+    "ast_hash": "c9de95a28cb64a8362066946c435d303",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260814000042_InitialCreate.Designer.cs": {
+    "mtime": 1786665642.6697054,
+    "ast_hash": "4676d0f25c4e31c9ce80837a2b42dd89",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260814000042_InitialCreate.cs": {
+    "mtime": 1786665642.669078,
+    "ast_hash": "7244a8f36a41001b03a84b2ff8d3ff9c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/RiisAcademicDbContextModelSnapshot.cs": {
+    "mtime": 1786665642.6707406,
+    "ast_hash": "455782835368cb00110c91510b917b69",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Repositories/EfRepository.cs": {
+    "mtime": 1784222457.0212753,
+    "ast_hash": "231fb95e0fbbf771e49423e7ad61b507",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/RiisAcademicDatabaseResetter.cs": {
+    "mtime": 1786643085.4503162,
+    "ast_hash": "c37bf18d85362cacaf0ce81973852313",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/RiisAcademicDbContext.cs": {
+    "mtime": 1786642685.9520428,
+    "ast_hash": "d886495e60ab960e0aa929f21c852a68",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Seeders/ParcoursAcademiqueSeeder.cs": {
+    "mtime": 1786654118.016832,
+    "ast_hash": "366108dbe1f1ec018f4f6ad622d44eb9",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/RIIS.Academic.Infrastructure.csproj": {
+    "mtime": 1786648016.121925,
+    "ast_hash": "10ce17104ac16653453ce231f69d6174",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/App.razor": {
+    "mtime": 1786443678.086934,
+    "ast_hash": "a6dc4076f95eb8f02947ca547ba89edc",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Layout/DashboardLayout.razor": {
+    "mtime": 1784208752.4327714,
+    "ast_hash": "f5acf8a4d18c73e7d7a2b5903534609c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Layout/NavBar.razor": {
+    "mtime": 1786649698.6027267,
+    "ast_hash": "80382725a218f04b5a26ebc2b60a7089",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/ClassesPedagogiques.razor": {
+    "mtime": 1786642685.9627223,
+    "ast_hash": "c7d86322143ed5a48e7d71be7c115607",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Dashboard.razor": {
+    "mtime": 1784472256.4572494,
+    "ast_hash": "839374b0a14e86b6aff0a3ade319f3d0",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/DashboardAcademique.razor": {
+    "mtime": 1784900677.5848217,
+    "ast_hash": "4482586a356d717a9852b8a438a324fa",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Etudiants.razor": {
+    "mtime": 1784296414.4817064,
+    "ast_hash": "59cf5b78376a128986bdc4a82501d904",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Evaluations.razor": {
+    "mtime": 1784468372.5165691,
+    "ast_hash": "f5dd186d75d9065893fd7e8e5f5a2dd8",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Inscriptions.razor": {
+    "mtime": 1786642685.9661677,
+    "ast_hash": "be04d16ed24a8688f0fb1b4af53157a4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/ModulePlaceholder.razor": {
+    "mtime": 1784211016.821688,
+    "ast_hash": "b5302f7731b692d708386b57e9a23fdb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/ProcesVerbalDetails.razor": {
+    "mtime": 1784890055.647192,
+    "ast_hash": "bc6e69a94bc7f1ffb712fa17725044e2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/ProcesVerbaux.razor": {
+    "mtime": 1784890063.7681303,
+    "ast_hash": "296d2a28f2f7af7b9878e7e19df0f983",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Programme/ElementsConstitutifs.razor": {
+    "mtime": 1784311611.828804,
+    "ast_hash": "93acd233b1617090e1d12debb6c7a367",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Programme/Maquettes.razor": {
+    "mtime": 1786642685.955133,
+    "ast_hash": "b8d1d20d0649fc28e79e707ed1f29c34",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Programme/Semestres.razor": {
+    "mtime": 1784298757.8153229,
+    "ast_hash": "20e184406ab7891af1b261a34739efc5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Programme/UnitesEnseignement.razor": {
+    "mtime": 1786642685.9575367,
+    "ast_hash": "3b35947716a0c4a591cefef3203ebf70",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/AnneesAcademiques.razor": {
+    "mtime": 1784219849.084228,
+    "ast_hash": "91b41b22e14cd0ff67653baf35c3fdde",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/CyclesFormation.razor": {
+    "mtime": 1784219850.7762573,
+    "ast_hash": "a77af65e9f625b4b3c54be1d6925b88c",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/Filieres.razor": {
+    "mtime": 1784219908.8551934,
+    "ast_hash": "bd41c2a41f4ac5eaebe1cb5f1bcfd651",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/NiveauxEtude.razor": {
+    "mtime": 1784219789.6987946,
+    "ast_hash": "b8a09da97ab716cf383d4cb89be906fe",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/ParcoursAcademiques.razor": {
+    "mtime": 1786653270.3519385,
+    "ast_hash": "0858894735349f29bbf73202db70442d",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Referentiels/Specialites.razor": {
+    "mtime": 1786452469.4903195,
+    "ast_hash": "a388a01bdb127c0bd26d9a52856d24e1",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/ReleveDetails.razor": {
+    "mtime": 1784894545.292164,
+    "ast_hash": "9433cc3c15b16eb64912cb0a251b4be3",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Releves.razor": {
+    "mtime": 1784894539.8920429,
+    "ast_hash": "a0ff0044efb8ccc15f344079a8304202",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/SaisieNotes.razor": {
+    "mtime": 1784402590.174584,
+    "ast_hash": "92eb60c0ea678cd865f96ffebc415181",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Scolarite/DossiersScolarite.razor": {
+    "mtime": 1786631397.783759,
+    "ast_hash": "891527c5a87a7d6cdc6166a4f1fa3a19",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Scolarite/FinancesScolarite.razor": {
+    "mtime": 1786631481.0451348,
+    "ast_hash": "65f89a45fb3c84a69c25f754c2769057",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Scolarite/ModesPaiementScolarite.razor": {
+    "mtime": 1786461869.5294218,
+    "ast_hash": "f02fbf692fce38df562fb90a33427ce2",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Scolarite/TarifsScolarite.razor": {
+    "mtime": 1786633224.2617133,
+    "ast_hash": "1b1c6f93f318f71a702d412872813189",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Pages/Scolarite/TypesElementsScolarite.razor": {
+    "mtime": 1786632660.29764,
+    "ast_hash": "37f7341ca803a1b923041abad02acd32",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/Routes.razor": {
+    "mtime": 1784203524.030033,
+    "ast_hash": "f062a0a483743c7dbc9195f671131581",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Components/_Imports.razor": {
+    "mtime": 1786405609.9590068,
+    "ast_hash": "2a84d18180d51377fd3a753be8506700",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Extensions/RiisAcademicExportEndpointExtensions.cs": {
+    "mtime": 1784895917.3435924,
+    "ast_hash": "6d4bc1fbc1941787b56c9b8ca35d1b19",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Program.cs": {
+    "mtime": 1786654918.5150397,
+    "ast_hash": "3624a288ed1bfd922edc135d51f735b5",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/Properties/launchSettings.json": {
+    "mtime": 1783955495.5158165,
+    "ast_hash": "7424f3bc79fcbb035557539f68b045d4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/RIIS.Academic.Web.csproj": {
+    "mtime": 1784216829.7627258,
+    "ast_hash": "b87342280695686b8b84a59c291b5dde",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Web/appsettings.json": {
+    "mtime": 1786665704.563338,
+    "ast_hash": "65d71eef702c9ca19d50712aa5780d7e",
+    "semantic_hash": ""
+  }
+}

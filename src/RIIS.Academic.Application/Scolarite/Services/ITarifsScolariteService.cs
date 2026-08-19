@@ -6,11 +6,7 @@ public interface ITarifsScolariteService
 {
     Task<List<TarifScolariteDto>> GetTarifsScolariteAsync(
         long? typeElementScolariteId = null,
-        string? anneeAcademiqueCode = null,
-        string? cycleCode = null,
-        int? niveauNumero = null,
-        string? filiereCode = null,
-        string? specialiteCode = null,
+        long? parcoursAcademiqueId = null,
         bool inclureInactifs = false,
         CancellationToken cancellationToken = default);
 
@@ -19,8 +15,6 @@ public interface ITarifsScolariteService
         CancellationToken cancellationToken = default);
 
     TarifScolariteDto CreateDefaultTarifScolarite(long? typeElementScolariteId = null);
-
-    string GenerateCode(TarifScolariteDto dto);
 
     Task SaveTarifScolariteAsync(
         TarifScolariteDto dto,
@@ -32,6 +26,6 @@ public interface ITarifsScolariteService
 
     Task<TarifScolariteDto?> ResolveTarifScolariteAsync(
         long typeElementScolariteId,
-        TarifScolariteContexteDto contexte,
+        long parcoursAcademiqueId,
         CancellationToken cancellationToken = default);
 }

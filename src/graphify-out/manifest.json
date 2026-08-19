@@ -25,8 +25,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Abstractions/Services/ICalculNotesService.cs": {
-    "mtime": 1783955299.3410861,
-    "ast_hash": "e0901ea7a6f1fccd45386d150751b000",
+    "mtime": 1787072161.1636775,
+    "ast_hash": "ae0d073fac25bae9e7f7bf15c5503fbd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Abstractions/Services/IInscriptionService.cs": {
@@ -40,18 +40,18 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/ClassesPedagogiques/Dtos/ClassePedagogiqueDto.cs": {
-    "mtime": 1786642685.8400173,
-    "ast_hash": "736a156c4fac853d6e4bb33aa970cf5c",
+    "mtime": 1787076002.4133596,
+    "ast_hash": "fb4e7739c29c5271e9923e4592da3454",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/ClassesPedagogiques/Services/ClassesPedagogiquesService.cs": {
-    "mtime": 1786643500.6531515,
-    "ast_hash": "d07e4ec8c731d9b0f091e48f0eb4a9df",
+    "mtime": 1787076002.5810068,
+    "ast_hash": "1924fa223e11638209f0bbd7fa2248cb",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/ClassesPedagogiques/Services/IClassesPedagogiquesService.cs": {
-    "mtime": 1786642685.8429275,
-    "ast_hash": "74106d01c4b516f7a868f066a1e3948f",
+    "mtime": 1787076002.1936707,
+    "ast_hash": "a656c5c32e822c9786c98b24b2061251",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Common/Dtos/LookupDto.cs": {
@@ -110,8 +110,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Dashboard/Services/DashboardAcademiqueService.cs": {
-    "mtime": 1786643525.1544611,
-    "ast_hash": "46628e8dd2fabda10f1fc33fe21a126a",
+    "mtime": 1787076134.436021,
+    "ast_hash": "c05da4d3668c31afbcbee4e2f63d66c6",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Dashboard/Services/IDashboardAcademiqueService.cs": {
@@ -135,13 +135,13 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Evaluations/Dtos/EvaluationAcademiqueDto.cs": {
-    "mtime": 1784468033.7058935,
-    "ast_hash": "502a30a3108aaa7f03956902c51bc5a2",
+    "mtime": 1787072694.999985,
+    "ast_hash": "f95c884e449b663a1593855b3646123e",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Evaluations/Services/EvaluationsService.cs": {
-    "mtime": 1786643543.9626477,
-    "ast_hash": "02db4c4d6a5a1d6fedcb3d6fcf3ad6c2",
+    "mtime": 1787072754.7686496,
+    "ast_hash": "0fd6ace0cb94861325a63257ae27f435",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Evaluations/Services/IEvaluationsService.cs": {
@@ -160,8 +160,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Inscriptions/Services/InscriptionsService.cs": {
-    "mtime": 1786654119.3414154,
-    "ast_hash": "95c7bdf02a86332912fffada67905b30",
+    "mtime": 1787076189.6216562,
+    "ast_hash": "f4c83d945bdf4c3543d9fc45e971f7a7",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Notes/Dtos/SaisieNoteLigneDto.cs": {
@@ -175,18 +175,18 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Notes/Services/CalculNotesService.cs": {
-    "mtime": 1783955299.3425858,
-    "ast_hash": "8fac19c08f2fc205965e5682a3a62153",
+    "mtime": 1787072161.31204,
+    "ast_hash": "2600b87c3edfcfff8c2342027aee8338",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Notes/Services/ISaisieNotesService.cs": {
-    "mtime": 1784402437.4987206,
-    "ast_hash": "ae5f35b2d101386e683b085c3a179c9a",
+    "mtime": 1787076189.7896197,
+    "ast_hash": "1e2fd53730189816f99e4cc63770bb55",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Notes/Services/SaisieNotesService.cs": {
-    "mtime": 1784402501.8168392,
-    "ast_hash": "804d24961b4c52f55f59a9f2e44b4345",
+    "mtime": 1787076189.4240701,
+    "ast_hash": "234502fd5d8f926d9a80dde89c6366e4",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/ProcesVerbaux/Dtos/ProcesVerbalDto.cs": {
@@ -235,18 +235,18 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/ProcesVerbaux/Services/ProcesVerbauxService.cs": {
-    "mtime": 1786642685.8632345,
-    "ast_hash": "76a54d7fe7bacaa1fc0099eb941d2edb",
+    "mtime": 1787076189.2372637,
+    "ast_hash": "f54c04c56dd3c8d7467bae9c99c2f26b",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/ElementConstitutifDto.cs": {
-    "mtime": 1784298460.6124065,
-    "ast_hash": "082249aed61a1aafbae8db3c5a328d68",
+    "mtime": 1787075308.4275506,
+    "ast_hash": "74cdfcac39282b8b1c5671e023ba2412",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/ElementConstitutifHierarchyDto.cs": {
-    "mtime": 1784308240.1271803,
-    "ast_hash": "fa1afc85498a15b07972d9db2cfe4a3f",
+    "mtime": 1787073204.8547168,
+    "ast_hash": "a71dedf2b8f3a58a4a2658308a66bef9",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/MaquettePedagogiqueDto.cs": {
@@ -260,22 +260,22 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/SemestrePedagogiqueDto.cs": {
-    "mtime": 1784298459.0198245,
-    "ast_hash": "11d1a6a569761918ee2aa9b32f4f21d3",
+    "mtime": 1787072754.949732,
+    "ast_hash": "b0502c186c4839bf861ff4bea9a77d61",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/SemestrePedagogiqueHierarchyDto.cs": {
-    "mtime": 1784301344.065607,
-    "ast_hash": "d2a4b06b070d0d04a67afd2279499ac5",
+    "mtime": 1787073204.2176769,
+    "ast_hash": "3a1415838729e41a51c69a588fcf142b",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/UniteEnseignementDto.cs": {
-    "mtime": 1784298459.7684298,
-    "ast_hash": "116e22c96037879fc00d6167e0e1d8a6",
+    "mtime": 1787073204.3708036,
+    "ast_hash": "ec8b067c749d7f148f367b11945fb7c0",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Dtos/UniteEnseignementHierarchyDto.cs": {
-    "mtime": 1784308240.7229092,
+    "mtime": 1787073204.5456667,
     "ast_hash": "83f177ecc3cb077167b2210396717504",
     "semantic_hash": ""
   },
@@ -285,8 +285,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Programmes/Services/ProgrammePedagogiqueService.cs": {
-    "mtime": 1786643474.1144617,
-    "ast_hash": "d76400b14cadd1e07b37a1a55e3b1975",
+    "mtime": 1787076047.6765122,
+    "ast_hash": "e887340b26fcf3080591923b498ab3fe",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/RIIS.Academic.Application.csproj": {
@@ -390,8 +390,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Releves/Services/RelevesNotesService.cs": {
-    "mtime": 1786642685.8798077,
-    "ast_hash": "b488afca90af10016eb959857f551aac",
+    "mtime": 1787072653.185097,
+    "ast_hash": "b6b3c778c14cd4775c03939e2f9155bd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Dtos/AdministrationDossierScolariteDto.cs": {
@@ -405,8 +405,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Dtos/FinanceDossierScolariteDto.cs": {
-    "mtime": 1786461696.1527796,
-    "ast_hash": "abc045825aeecfe99c97aa95a48da387",
+    "mtime": 1787094247.6940396,
+    "ast_hash": "79be59c313bf9d60f254799fe48f868a",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Dtos/ModePaiementScolariteDto.cs": {
@@ -414,14 +414,9 @@
     "ast_hash": "409a63ab75b2fad4185a98c9de544ab5",
     "semantic_hash": ""
   },
-  "RIIS.Academic.Application/Scolarite/Dtos/TarifScolariteContexteDto.cs": {
-    "mtime": 1786404343.362604,
-    "ast_hash": "c9809fc6a483f60db0b75532f054b87d",
-    "semantic_hash": ""
-  },
   "RIIS.Academic.Application/Scolarite/Dtos/TarifScolariteDto.cs": {
-    "mtime": 1786633075.719612,
-    "ast_hash": "9ea3932d465fc20b67b92acbc678f898",
+    "mtime": 1787094246.8335462,
+    "ast_hash": "e4db6c67e71136df5b76f351161f4456",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Dtos/TypeElementScolariteDto.cs": {
@@ -435,8 +430,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/FinancesScolariteService.cs": {
-    "mtime": 1786461761.3405538,
-    "ast_hash": "cd6481ac6d2e7a219119ea3d12b809c5",
+    "mtime": 1787093173.4105809,
+    "ast_hash": "fdc9fcf3f9e0b4a7153c5052f8c2bb4c",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/IDossiersScolariteService.cs": {
@@ -455,8 +450,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/ITarifsScolariteService.cs": {
-    "mtime": 1786633076.769616,
-    "ast_hash": "e992d171d80d165c6f3b2f8156c8f6a6",
+    "mtime": 1787093141.4876442,
+    "ast_hash": "0b51b0fdaffcfa2b2ce2653ca1797af2",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/ITypesElementsScolariteService.cs": {
@@ -470,8 +465,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/TarifsScolariteService.cs": {
-    "mtime": 1786633260.6536834,
-    "ast_hash": "7c2d9a1179d803a7e92601060adb8082",
+    "mtime": 1787094248.2949073,
+    "ast_hash": "dadf064501080f2d8a5a4a91a6282152",
     "semantic_hash": ""
   },
   "RIIS.Academic.Application/Scolarite/Services/TypesElementsScolariteService.cs": {
@@ -570,8 +565,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Enums/TypeElementConstitutif.cs": {
-    "mtime": 1783955299.330952,
-    "ast_hash": "3691457fe28b7e7549bb5758e599b646",
+    "mtime": 1787075307.2049448,
+    "ast_hash": "e3aa639ba52d8343969a9ad871258635",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Enums/TypeEvaluation.cs": {
@@ -620,13 +615,13 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/ClassePedagogique.cs": {
-    "mtime": 1786642685.9055183,
-    "ast_hash": "97c6d50cdb329e2a4153d3a217241cfb",
+    "mtime": 1787075977.3810124,
+    "ast_hash": "074186a5227fd6ee15ec810798ee9608",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/EvaluationAcademique.cs": {
-    "mtime": 1783955299.3351388,
-    "ast_hash": "1594004ced29804941d93f94c9e07676",
+    "mtime": 1787071758.3585467,
+    "ast_hash": "7c77d2b8c45ca469edb032db97e7246d",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/NoteEvaluation.cs": {
@@ -640,8 +635,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/ResultatElementConstitutif.cs": {
-    "mtime": 1783955299.3366432,
-    "ast_hash": "e9dc9d3665d5fa18159812c52e264429",
+    "mtime": 1787071757.9712515,
+    "ast_hash": "06363510f57c4f60c95fdb6d8f007eb4",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/ResultatSemestre.cs": {
@@ -650,13 +645,13 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Notes/ResultatUniteEnseignement.cs": {
-    "mtime": 1783955299.3366432,
-    "ast_hash": "4c328b6b90c1f23cbbe375cd6b920b7d",
+    "mtime": 1787071757.1807513,
+    "ast_hash": "1f0b7a14e36869659b89825a4a5f6db0",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Parcours/ParcoursAcademique.cs": {
-    "mtime": 1786654108.9882576,
-    "ast_hash": "9cecf33ff6258ff7efcf642be9cc8077",
+    "mtime": 1787075977.7122996,
+    "ast_hash": "ffec9601f91bd1e9fcdfad03ed1342a7",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/ProcesVerbaux/ProcesVerbal.cs": {
@@ -670,23 +665,23 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Programmes/ElementConstitutif.cs": {
-    "mtime": 1783955299.339083,
-    "ast_hash": "6926888ee3f5489b385a24e707cd2939",
+    "mtime": 1787075308.5890644,
+    "ast_hash": "5f9231112440e7c1e5296257aa4f97ae",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Programmes/MaquettePedagogique.cs": {
-    "mtime": 1786654109.624037,
-    "ast_hash": "d15109b9fa72a4644b6e73a71376812f",
+    "mtime": 1787070545.2516987,
+    "ast_hash": "789eaab2dfaed0565c43b3ca0f5636f2",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Programmes/SemestrePedagogique.cs": {
-    "mtime": 1783955299.3382008,
-    "ast_hash": "926bb2d14792424c00aee6072b42aced",
+    "mtime": 1787071641.9620345,
+    "ast_hash": "7886d8efae32d310105414a8885fbb02",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Programmes/UniteEnseignement.cs": {
-    "mtime": 1783955299.339083,
-    "ast_hash": "cf434f248bb87f655b373b2b354dd4d9",
+    "mtime": 1787075308.1767304,
+    "ast_hash": "c60535f3d7008aa9b8de33930c7d7b25",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/RIIS.Academic.Domain.csproj": {
@@ -695,8 +690,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Referentiels/AnneeAcademique.cs": {
-    "mtime": 1786642723.374445,
-    "ast_hash": "c017f8711222b2dc632a860b4dd57627",
+    "mtime": 1787075959.9704866,
+    "ast_hash": "0e49c24ed09bcf160ebf3b9a059ab6a2",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Referentiels/CycleFormation.cs": {
@@ -760,8 +755,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Scolarite/TarifScolarite.cs": {
-    "mtime": 1786633075.0383403,
-    "ast_hash": "7ec8820f22fe227b830fc9e94c2635f4",
+    "mtime": 1787094247.2928517,
+    "ast_hash": "0dd5b43e696fb31bd814482840e7139a",
     "semantic_hash": ""
   },
   "RIIS.Academic.Domain/Scolarite/TypeElementScolarite.cs": {
@@ -825,8 +820,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Inscriptions/InscriptionConfiguration.cs": {
-    "mtime": 1786642685.9233136,
-    "ast_hash": "0ffc74b719d8dc1674abafab3c407d1d",
+    "mtime": 1787075977.5445151,
+    "ast_hash": "1a7732fbf08381de0c373b119a210982",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Inscriptions/ValidationInscriptionConfiguration.cs": {
@@ -835,13 +830,13 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ClassePedagogiqueConfiguration.cs": {
-    "mtime": 1786642685.924307,
-    "ast_hash": "9bbdbda82c6c3d55246ae02b3baba30e",
+    "mtime": 1787075977.2183623,
+    "ast_hash": "773009c2780770dfbbf5248220992f3d",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/EvaluationAcademiqueConfiguration.cs": {
-    "mtime": 1783955299.348351,
-    "ast_hash": "ef54f9c0d24fc2cff4e55e354e64cd34",
+    "mtime": 1787072069.585148,
+    "ast_hash": "38ce8c4fc7d1a615f5a656909089c5e8",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/NoteEvaluationConfiguration.cs": {
@@ -855,8 +850,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatElementConstitutifConfiguration.cs": {
-    "mtime": 1783955299.3488526,
-    "ast_hash": "ef18bace5db53c0552a040d2230b4c91",
+    "mtime": 1787072069.4368212,
+    "ast_hash": "68a008e7566e4546d1d3fcf39de30bfd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatSemestreConfiguration.cs": {
@@ -865,8 +860,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Notes/ResultatUniteEnseignementConfiguration.cs": {
-    "mtime": 1783955299.349612,
-    "ast_hash": "62ac7f6a7f73883faae6b12969364022",
+    "mtime": 1787072069.2880948,
+    "ast_hash": "d2e630ee441c105644f3bc66799a82cf",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Parcours/ParcoursAcademiqueConfiguration.cs": {
@@ -875,8 +870,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/ProcesVerbaux/ProcesVerbalConfiguration.cs": {
-    "mtime": 1786643087.4578197,
-    "ast_hash": "a5a36b0aa7955e5605514ad57d7a9d76",
+    "mtime": 1787075959.9731362,
+    "ast_hash": "c503a8d87653c45fb1fcba020a18c2a1",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/ProcesVerbaux/ProcesVerbalLigneConfiguration.cs": {
@@ -885,23 +880,23 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/ElementConstitutifConfiguration.cs": {
-    "mtime": 1783955299.3478496,
-    "ast_hash": "4b1b1421578cf4caf2103dea896ecbd8",
+    "mtime": 1787072068.8546534,
+    "ast_hash": "b6531a7980a04f8e5352bef81dac57bd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/MaquettePedagogiqueConfiguration.cs": {
-    "mtime": 1786642736.3374574,
-    "ast_hash": "5936df645ecb1bce61cfe0cdd2979148",
+    "mtime": 1787071872.7321196,
+    "ast_hash": "6615bae80c4e68a733a983535d8bf9de",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/SemestrePedagogiqueConfiguration.cs": {
-    "mtime": 1783955299.3465858,
-    "ast_hash": "7adbf7d6ac527adfaae92883237fe99a",
+    "mtime": 1787072068.5597327,
+    "ast_hash": "4679bbbdfe9a78f755fb4c307d02e579",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/UniteEnseignementConfiguration.cs": {
-    "mtime": 1783955299.3473456,
-    "ast_hash": "17c6f77f489554523ab7896b0f0afa90",
+    "mtime": 1787072068.7100422,
+    "ast_hash": "c47e4d5ca7825672948964305be1b6ae",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Referentiels/AnneeAcademiqueConfiguration.cs": {
@@ -970,8 +965,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/TarifScolariteConfiguration.cs": {
-    "mtime": 1786633077.6225102,
-    "ast_hash": "e1bd2cc61e7fb6f6a4ad3b0cbf2636c4",
+    "mtime": 1787093140.5797284,
+    "ast_hash": "ccd098b3c334759ed0dca6e1fd9d1bce",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Configurations/Scolarite/TypeElementScolariteConfiguration.cs": {
@@ -985,8 +980,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/DatabaseInitializer.cs": {
-    "mtime": 1786667979.5417252,
-    "ast_hash": "c9de95a28cb64a8362066946c435d303",
+    "mtime": 1787054231.2287002,
+    "ast_hash": "f1e92dfd66f6ce5ca746bf04ae784484",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Migrations/20260814000042_InitialCreate.Designer.cs": {
@@ -1000,8 +995,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Migrations/RiisAcademicDbContextModelSnapshot.cs": {
-    "mtime": 1786665642.6707406,
-    "ast_hash": "455782835368cb00110c91510b917b69",
+    "mtime": 1787094227.7445774,
+    "ast_hash": "3acaa74652d0c15914b78c7a2e651e57",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Repositories/EfRepository.cs": {
@@ -1015,8 +1010,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/RiisAcademicDbContext.cs": {
-    "mtime": 1786642685.9520428,
-    "ast_hash": "d886495e60ab960e0aa929f21c852a68",
+    "mtime": 1787074492.0410223,
+    "ast_hash": "b98ca55d6ed3f8e0789e21e05c8c9bdf",
     "semantic_hash": ""
   },
   "RIIS.Academic.Infrastructure/Persistence/Seeders/ParcoursAcademiqueSeeder.cs": {
@@ -1045,8 +1040,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/ClassesPedagogiques.razor": {
-    "mtime": 1786642685.9627223,
-    "ast_hash": "c7d86322143ed5a48e7d71be7c115607",
+    "mtime": 1787076048.7836337,
+    "ast_hash": "9fce2ee6d295784d1aebd9ad14ec556b",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Dashboard.razor": {
@@ -1065,8 +1060,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Evaluations.razor": {
-    "mtime": 1784468372.5165691,
-    "ast_hash": "f5dd186d75d9065893fd7e8e5f5a2dd8",
+    "mtime": 1787073269.2239325,
+    "ast_hash": "fa1ff0e4e21dded959a8fabbc414becd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Inscriptions.razor": {
@@ -1090,8 +1085,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Programme/ElementsConstitutifs.razor": {
-    "mtime": 1784311611.828804,
-    "ast_hash": "93acd233b1617090e1d12debb6c7a367",
+    "mtime": 1787075307.4831953,
+    "ast_hash": "aebb22a934da05c1007ed4a7567fea4a",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Programme/Maquettes.razor": {
@@ -1100,13 +1095,13 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Programme/Semestres.razor": {
-    "mtime": 1784298757.8153229,
-    "ast_hash": "20e184406ab7891af1b261a34739efc5",
+    "mtime": 1787073205.1849923,
+    "ast_hash": "a1410b0bab814b05309f9e44ca11cbb9",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Programme/UnitesEnseignement.razor": {
-    "mtime": 1786642685.9575367,
-    "ast_hash": "3b35947716a0c4a591cefef3203ebf70",
+    "mtime": 1787073205.3530793,
+    "ast_hash": "09bd4e9b95ffd84899ddc105b0e667dd",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Referentiels/AnneesAcademiques.razor": {
@@ -1150,8 +1145,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/SaisieNotes.razor": {
-    "mtime": 1784402590.174584,
-    "ast_hash": "92eb60c0ea678cd865f96ffebc415181",
+    "mtime": 1787076217.3620484,
+    "ast_hash": "4dbe3d7111b29aabd503ec4161e4772b",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Scolarite/DossiersScolarite.razor": {
@@ -1170,8 +1165,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Scolarite/TarifsScolarite.razor": {
-    "mtime": 1786633224.2617133,
-    "ast_hash": "1b1c6f93f318f71a702d412872813189",
+    "mtime": 1787094248.5269434,
+    "ast_hash": "0fa795fec329718f30814d4483c9c8cb",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Pages/Scolarite/TypesElementsScolarite.razor": {
@@ -1180,8 +1175,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/Routes.razor": {
-    "mtime": 1784203524.030033,
-    "ast_hash": "f062a0a483743c7dbc9195f671131581",
+    "mtime": 1787090787.248206,
+    "ast_hash": "32e8e68de124a909eef0dc834a428810",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Components/_Imports.razor": {
@@ -1195,8 +1190,8 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Program.cs": {
-    "mtime": 1786654918.5150397,
-    "ast_hash": "3624a288ed1bfd922edc135d51f735b5",
+    "mtime": 1786710389.7361438,
+    "ast_hash": "391f5c9a434736c8cf81835917e4aac7",
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/Properties/launchSettings.json": {
@@ -1210,8 +1205,648 @@
     "semantic_hash": ""
   },
   "RIIS.Academic.Web/appsettings.json": {
-    "mtime": 1786665704.563338,
-    "ast_hash": "65d71eef702c9ca19d50712aa5780d7e",
+    "mtime": 1786710366.2807696,
+    "ast_hash": "3f6298d5aa82a897681e9b12fd35df1e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/meta/repowiki-metadata.json": {
+    "mtime": 1787051716.0946834,
+    "ast_hash": "9a1430790ce3e064682bf64794535feb",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Domain/Programmes/MaquetteElementConstitutif.cs": {
+    "mtime": 1787071759.1569753,
+    "ast_hash": "79d0b013e2c602e3c1eb4e75a17749db",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Configurations/Programmes/MaquetteElementConstitutifConfiguration.cs": {
+    "mtime": 1787072068.9948025,
+    "ast_hash": "77265c9a23007c0ac69d021b0c63ecd4",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818172534_AddRefonteQoder.Designer.cs": {
+    "mtime": 1787073934.4590783,
+    "ast_hash": "c5ff979b0459ee5fe61f851264dad9f7",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818172534_AddRefonteQoder.cs": {
+    "mtime": 1787073934.4590783,
+    "ast_hash": "0cd7b4d97cb5e63a693c32ec4d2e4f16",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818221616_RefactorClassePedagogique.Designer.cs": {
+    "mtime": 1787091376.6052997,
+    "ast_hash": "27affb3b6657af9ee08439e1a90415ce",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818221616_RefactorClassePedagogique.cs": {
+    "mtime": 1787091376.6041577,
+    "ast_hash": "17209aa51a5281cef80307f5b00c53ad",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818224753_RefactorTarifScolariteParcours.Designer.cs": {
+    "mtime": 1787093273.204541,
+    "ast_hash": "b3b7bf1beb63c730cbfa60991ccfabe1",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818224753_RefactorTarifScolariteParcours.cs": {
+    "mtime": 1787093273.2035425,
+    "ast_hash": "e3a0fb10662919fb0b8ace4ad612ccd7",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818230347_RemoveTarifValiditeDates.Designer.cs": {
+    "mtime": 1787094227.7434988,
+    "ast_hash": "52c7f01ced4c83b693acc35e261f573b",
+    "semantic_hash": ""
+  },
+  "RIIS.Academic.Infrastructure/Persistence/Migrations/20260818230347_RemoveTarifValiditeDates.cs": {
+    "mtime": 1787094227.7434988,
+    "ast_hash": "5d69257c261bb1a0efd800cd76ff5ca4",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/API Layer.md": {
+    "mtime": 1787051716.0198977,
+    "ast_hash": "ed6cc75d53cd1e168892f07e78096cd4",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Enrollment APIs.md": {
+    "mtime": 1787051716.0301297,
+    "ast_hash": "371e21afaa6dd9609d0886e509266cdb",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Export and Document Generation APIs.md": {
+    "mtime": 1787051716.0371177,
+    "ast_hash": "b83bbe276d86fb2ffc89e0894d0ff606",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Financial Administration APIs.md": {
+    "mtime": 1787051716.0350397,
+    "ast_hash": "7dbdaaf6466f088d016b8c0b416b890b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Grade Management APIs.md": {
+    "mtime": 1787051716.0324495,
+    "ast_hash": "067fcc2a63d580fad0f0e37410a8c86a",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Program Management APIs.md": {
+    "mtime": 1787051716.027519,
+    "ast_hash": "40695febce62af9478e3af1079e8a754",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/API Layer/Student Management APIs.md": {
+    "mtime": 1787051716.0249393,
+    "ast_hash": "9675d458c992912647135a5bed5f3b23",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Academic Program Services.md": {
+    "mtime": 1787051716.025967,
+    "ast_hash": "a5056b72f1caa3ee084bceaa26c9e756",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Application Layer.md": {
+    "mtime": 1787051716.0188842,
+    "ast_hash": "4dc4f1a1eae0a107baebcebfd41a5e1f",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Dashboard & Analytics Services.md": {
+    "mtime": 1787051716.0371177,
+    "ast_hash": "f3928e65a22a670f1a7752e4087ef316",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Document Generation Services.md": {
+    "mtime": 1787051716.04027,
+    "ast_hash": "ff793ef83c31ce6d50048e54db7d37da",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Enrollment Services.md": {
+    "mtime": 1787051716.0290504,
+    "ast_hash": "7fdebf248fa81cd300debd05329d3711",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Financial Administration Services.md": {
+    "mtime": 1787051716.033471,
+    "ast_hash": "95724b7c0ce74dbb1526a88c78fa5e5e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Grade Calculation Services.md": {
+    "mtime": 1787051716.0314271,
+    "ast_hash": "d2002911528f2de515c33696631f64a7",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Reference Data Services.md": {
+    "mtime": 1787051716.0412877,
+    "ast_hash": "ee7a762ed2d755330e71d39bc14d1156",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Application Layer/Student Management Services.md": {
+    "mtime": 1787051716.02344,
+    "ast_hash": "1d100b4ff8e7951ee893f627b8acac15",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Academic Program Services.md": {
+    "mtime": 1787051716.0536702,
+    "ast_hash": "541407ff156e7ca9f51f0f60fdbfdee1",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Application Layer.md": {
+    "mtime": 1787051716.025967,
+    "ast_hash": "b04933b93900ec709f85e7f995fba9a6",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Dashboard & Analytics Services.md": {
+    "mtime": 1787051716.0608654,
+    "ast_hash": "296d880e17760ac5f74037fd0084d58d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Document Generation Services.md": {
+    "mtime": 1787051716.0603273,
+    "ast_hash": "ec2d8e365a2e96c0cc24f31fa8015134",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Enrollment & Registration Services.md": {
+    "mtime": 1787051716.0557215,
+    "ast_hash": "54a92e2ecd99cf1b734e080f4d1bdbcb",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Financial Administration Services.md": {
+    "mtime": 1787051716.059301,
+    "ast_hash": "3b047e6c147b4323223ee4f51bed22c5",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Grade & Evaluation Services.md": {
+    "mtime": 1787051716.058279,
+    "ast_hash": "562e6928c1eec4c5d754ffa18fbda07a",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Reference Data Services.md": {
+    "mtime": 1787051716.0618818,
+    "ast_hash": "0bcd41adadc4d99a4dd1dc641fb8cb14",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Service Architecture & Patterns.md": {
+    "mtime": 1787051716.0428233,
+    "ast_hash": "c167ec5f5707bfa8bc19393094b13e33",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Application Layer/Student Management Services.md": {
+    "mtime": 1787051716.0480464,
+    "ast_hash": "ba38f8027b1c4defa350416b8fb62a82",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Architecture Guide.md": {
+    "mtime": 1787051716.0173814,
+    "ast_hash": "3c4657f3a71281628080c0793e83058c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Academic Programs Domain.md": {
+    "mtime": 1787051716.0521364,
+    "ast_hash": "a477d69d16f302e1fe94124278e77558",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Core Entities & Base Classes.md": {
+    "mtime": 1787051716.0417976,
+    "ast_hash": "fa14cd0071eebcc274c0d1f571e5b109",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Domain Enums & Constants.md": {
+    "mtime": 1787051716.0613725,
+    "ast_hash": "e5f02b586e3ba082d12fdedcc568a618",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Domain Layer.md": {
+    "mtime": 1787051716.02344,
+    "ast_hash": "36252442730b4404feadd48ceee97873",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Enrollment System Domain.md": {
+    "mtime": 1787051716.0552108,
+    "ast_hash": "29365386e45c172875d035010afefe07",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Financial Administration Domain.md": {
+    "mtime": 1787051716.058279,
+    "ast_hash": "6133c62a04376a8ceb2ff0d527c21cc4",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Grade & Evaluation Domain.md": {
+    "mtime": 1787051716.0572574,
+    "ast_hash": "bb491f62041ef76c83ff84de279fb5bb",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Reference Data Domain.md": {
+    "mtime": 1787051716.0598142,
+    "ast_hash": "dab02798b8afccfc3e8a56e24670e4f2",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Student Management Domain.md": {
+    "mtime": 1787051716.0475292,
+    "ast_hash": "e43325da2139aa46b0b2caedcb43aef2",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Domain Layer/Supporting Entities.md": {
+    "mtime": 1787051716.0608654,
+    "ast_hash": "19489e845ffe2ec9dff2c5aff5414d93",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Database Persistence/Database Migrations.md": {
+    "mtime": 1787051716.063943,
+    "ast_hash": "5c008d7e49c0d83e8ee1103f6f5bd59f",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Database Persistence/Database Persistence.md": {
+    "mtime": 1787051716.0433543,
+    "ast_hash": "b9b963296be52080af3ae05ef35e33e2",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Database Persistence/Entity Configurations.md": {
+    "mtime": 1787051716.0634317,
+    "ast_hash": "5d6a80b4836d16a2f88a07ec177e1a9c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Database Persistence/Entity Framework Context.md": {
+    "mtime": 1787051716.0618818,
+    "ast_hash": "79bb2bed095dea66c1241e8589212c4c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Database Persistence/Repository Pattern Implementation.md": {
+    "mtime": 1787051716.0629165,
+    "ast_hash": "dc9fdd34a3cea202ce8b62abdef47358",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Dependency Injection & Service Registration.md": {
+    "mtime": 1787051716.05316,
+    "ast_hash": "aaeffb0efe7c8367ebf76626ec5d4544",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Document Generation Services.md": {
+    "mtime": 1787051716.0485601,
+    "ast_hash": "50163fc15da1d66590bbde9b21e88904",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/External Integrations & Abstractions.md": {
+    "mtime": 1787051716.0562344,
+    "ast_hash": "41ef1fe6b95bc822be0582edb15e6b8d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Infrastructure Layer/Infrastructure Layer.md": {
+    "mtime": 1787051716.0285404,
+    "ast_hash": "9f9eeeb328a5a135c2fabaf77b913a79",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Architecture Guide/Web & API Layer.md": {
+    "mtime": 1787051716.0309224,
+    "ast_hash": "d0576de8abd66e6a2a494a195645e614",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Configuration & Deployment.md": {
+    "mtime": 1787051716.0214002,
+    "ast_hash": "c861227276ad1a20a74b0ded79aada10",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Database Schema.md": {
+    "mtime": 1787051716.0214002,
+    "ast_hash": "1e48bffdfcabb725754796b15f33750f",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Developer Guide.md": {
+    "mtime": 1787051716.0224118,
+    "ast_hash": "acd97065fbcb547cfa5c36c2af844c60",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Academic Programs/Academic Programs.md": {
+    "mtime": 1787051716.0309224,
+    "ast_hash": "8bf134db278ba93563eb24a32cc966f5",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Academic Programs/Program Hierarchy.md": {
+    "mtime": 1787051716.045933,
+    "ast_hash": "6392f40df10a91138f880ca121a2b95b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Academic Programs/Semester and Course Structure.md": {
+    "mtime": 1787051716.0506089,
+    "ast_hash": "8c443f343c95fd98d34245b7a944941e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Core Entities.md": {
+    "mtime": 1787051716.0249393,
+    "ast_hash": "b4ec03f8a92d353647948a3140f66737",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Domain Layer.md": {
+    "mtime": 1787051716.0188842,
+    "ast_hash": "f505e0a5b03e3d049a964b0d9489f153",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Enrollment System/Admission Process.md": {
+    "mtime": 1787051716.046463,
+    "ast_hash": "0a222a346d5bc9bdd91cef2c83cb2d6c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Enrollment System/Enrollment System.md": {
+    "mtime": 1787051716.0329604,
+    "ast_hash": "8e18cb172f8f701aba894c5683e4969f",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Enrollment System/Registration and Validation.md": {
+    "mtime": 1787051716.0506089,
+    "ast_hash": "8bbe417c44c33c87b789471990bd02b7",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Enumerations and Constants.md": {
+    "mtime": 1787051716.0423107,
+    "ast_hash": "7a29460316ccafe62a7df9990a512f12",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Financial Administration/Fee Structures and Calculations.md": {
+    "mtime": 1787051716.0546927,
+    "ast_hash": "b65fe91cc713b009d0eb7e470c297e72",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Financial Administration/Financial Administration.md": {
+    "mtime": 1787051716.0392277,
+    "ast_hash": "8386ccc1acb1a5d440b98269ac4ab41e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Financial Administration/Payment Methods and Handling.md": {
+    "mtime": 1787051716.057767,
+    "ast_hash": "ece90ee152afb7ad3dbdf232080a8d27",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Financial Administration/Payment Scheduling and Installments.md": {
+    "mtime": 1787051716.0526466,
+    "ast_hash": "2d33181a14bef028a1df3ac1ec75a4a1",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Financial Administration/Student Financial Dossiers.md": {
+    "mtime": 1787051716.0469773,
+    "ast_hash": "dd28849f8b8a5861d2dcf8710f9b0045",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Grade and Evaluation System/Evaluation Management.md": {
+    "mtime": 1787051716.046463,
+    "ast_hash": "b0626ae51114035abe26f3ace8fe6f55",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Grade and Evaluation System/Grade and Evaluation System.md": {
+    "mtime": 1787051716.0360806,
+    "ast_hash": "c11c22f495c4f7ab50730f1a6ad90861",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Grade and Evaluation System/Result Aggregation.md": {
+    "mtime": 1787051716.0521364,
+    "ast_hash": "34ff4f6082fe116e1ab2aaa7d72c6c8e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Reference Data.md": {
+    "mtime": 1787051716.040779,
+    "ast_hash": "15ad04e5bf0a5ad5ff1fd5f8ae7215dd",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Domain Layer/Student Management.md": {
+    "mtime": 1787051716.028027,
+    "ast_hash": "746155b796d3eabc2a2b77cdf0771b77",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Academic Programs.md": {
+    "mtime": 1787051716.028027,
+    "ast_hash": "d76af3d4250f3e25eb37c8ea940faf0b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Document Generation.md": {
+    "mtime": 1787051716.039754,
+    "ast_hash": "02a659a8b7cd43dfaf67a9d89b3e971b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Enrollment System.md": {
+    "mtime": 1787051716.0314271,
+    "ast_hash": "70adfd3cca27cea903bb9dcc3490188d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Feature Modules.md": {
+    "mtime": 1787051716.0198977,
+    "ast_hash": "3d14436a7125f1ae49c2fbf1df9e293e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Financial Administration.md": {
+    "mtime": 1787051716.0365918,
+    "ast_hash": "d39d1bda62b94ac19c270925274cd093",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Grade Management.md": {
+    "mtime": 1787051716.0329604,
+    "ast_hash": "1e9a61226aa3aea83978ba291af86624",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Feature Modules/Student Management.md": {
+    "mtime": 1787051716.0254564,
+    "ast_hash": "420aea49075998739b3eb341b4dc05f5",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Getting Started.md": {
+    "mtime": 1787051716.0173814,
+    "ast_hash": "7efecfd3df8a616a72ee3bcf8341570e",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Database Persistence/Data Seeding and Initialization.md": {
+    "mtime": 1787051716.0562344,
+    "ast_hash": "ec34f4de4ea851d7b3aef0d407240ab4",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Database Persistence/Database Migrations.md": {
+    "mtime": 1787051716.05316,
+    "ast_hash": "13a5581167bc8079dd42ac4b372f7dd7",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Database Persistence/Database Persistence.md": {
+    "mtime": 1787051716.02344,
+    "ast_hash": "c249b7dea8852b9c72c8791a337bdd29",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Database Persistence/Entity Framework Context.md": {
+    "mtime": 1787051716.0438626,
+    "ast_hash": "391b9e2d0ca84c0a87820ef8f51acfef",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Database Persistence/Repository Pattern Implementation.md": {
+    "mtime": 1787051716.0490701,
+    "ast_hash": "e59118876e22ce58eab78d9cfae7f190",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Dependency Injection & Configuration.md": {
+    "mtime": 1787051716.0290504,
+    "ast_hash": "8ed0dc3b0bedb2db6727960e3aca62b9",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Document Generation/Document Generation APIs.md": {
+    "mtime": 1787051716.0567439,
+    "ast_hash": "1f4d10a043e220132fe303fbd3d29642",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Document Generation/Document Generation.md": {
+    "mtime": 1787051716.027007,
+    "ast_hash": "e54ca6bf639d14b24f16c885f4adf15d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Document Generation/Excel Export Generation.md": {
+    "mtime": 1787051716.0490701,
+    "ast_hash": "55ad340afd6ed323105cd826bfcec4a3",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Document Generation/Template Management.md": {
+    "mtime": 1787051716.0536702,
+    "ast_hash": "5bdb9b5a49546aa1c5474661d45367ef",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Document Generation/Word Document Generation.md": {
+    "mtime": 1787051716.0438626,
+    "ast_hash": "7c0df33401516e0d3d37bf6feef113ca",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Infrastructure Layer/Infrastructure Layer.md": {
+    "mtime": 1787051716.0198977,
+    "ast_hash": "67edf8db35857cf8192399ab7a223dcb",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Project Overview.md": {
+    "mtime": 1787051716.0173814,
+    "ast_hash": "cf76d431e60ae07dc9c3779b7390233c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Testing Strategy.md": {
+    "mtime": 1787051716.0224118,
+    "ast_hash": "a3f30ac99c169ad6fe9e2c2a0b89d199",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Troubleshooting.md": {
+    "mtime": 1787051716.0224118,
+    "ast_hash": "336d199b5e3e96282866338a11405b99",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Academic Programs UI/Academic Programs UI.md": {
+    "mtime": 1787051716.0301297,
+    "ast_hash": "0d7f2037a248f47f1346ae9e7d3b1552",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Academic Programs UI/Constituent Elements Management.md": {
+    "mtime": 1787051716.0567439,
+    "ast_hash": "4d04a65cd5b989ec58f1e8bdc541a15c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Academic Programs UI/Course Units Management.md": {
+    "mtime": 1787051716.0541832,
+    "ast_hash": "fb58d5ff40e6ce7d4c003ab898a99bf8",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Academic Programs UI/Program Maquettes Management.md": {
+    "mtime": 1787051716.0443728,
+    "ast_hash": "68d481ec7153acb337bbdb486cadd819",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Academic Programs UI/Semester Management.md": {
+    "mtime": 1787051716.0495837,
+    "ast_hash": "c43ae1f376a8b62706d10d781267bb1d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Class Management UI.md": {
+    "mtime": 1787051716.0417976,
+    "ast_hash": "acadf80cf98305820aae851cc015f385",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Dashboard & Analytics.md": {
+    "mtime": 1787051716.0244367,
+    "ast_hash": "ff731641d6e872c06f4e10fdf5a595c2",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Document Generation UI/Document Generation UI.md": {
+    "mtime": 1787051716.040779,
+    "ast_hash": "88e256f2a300d92788d1657b81a4a3c8",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Document Generation UI/Meeting Minutes Management.md": {
+    "mtime": 1787051716.0454242,
+    "ast_hash": "f24ca52a6ab581f4e351578c0f889aac",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Document Generation UI/Transcript Generation.md": {
+    "mtime": 1787051716.051608,
+    "ast_hash": "16bec3da48d5e9353317dc699005d5d6",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Enrollment System UI.md": {
+    "mtime": 1787051716.0319397,
+    "ast_hash": "b7592dd43b481227296eb88cb3f862a4",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Financial Administration UI.md": {
+    "mtime": 1787051716.0386992,
+    "ast_hash": "3ff46fad0fe7a0c2ee52fc49778682f1",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Financial Elements Types.md": {
+    "mtime": 1787051716.059301,
+    "ast_hash": "b6d78249a696cd0a3e722d8ab4d1cb9d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Financial Overview Dashboard.md": {
+    "mtime": 1787051716.0506089,
+    "ast_hash": "4ddc2c1d5d6af6c0ea4370c075a3354d",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Payment Methods Configuration.md": {
+    "mtime": 1787051716.0572574,
+    "ast_hash": "265127d12268dd2599ebc0f6ec3bc87c",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Student Dossier Management/Administrative Document Management.md": {
+    "mtime": 1787051716.0634317,
+    "ast_hash": "2fc8eb49532f4bf9ed40192765681a8b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Student Dossier Management/Dossier Creation Workflow.md": {
+    "mtime": 1787051716.0623941,
+    "ast_hash": "a82e8091943ca6796490759719940ee8",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Student Dossier Management/Financial Status Tracking.md": {
+    "mtime": 1787051716.063943,
+    "ast_hash": "b4f6dfc13104213957fada4458ad8c05",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Student Dossier Management/Student Dossier Management.md": {
+    "mtime": 1787051716.044884,
+    "ast_hash": "edf53759d31b6f32a0e96a7fd10a7e80",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Financial Administration UI/Tuition Fee Management.md": {
+    "mtime": 1787051716.0541832,
+    "ast_hash": "97601dc04125446d7c093d42fff3bfc1",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Grade Management UI/Evaluations Management.md": {
+    "mtime": 1787051716.0443728,
+    "ast_hash": "fa7a2f5401071217566fd01d16fcd229",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Grade Management UI/Grade Entry Interface.md": {
+    "mtime": 1787051716.0500948,
+    "ast_hash": "5af6970a43be43931891b32d0cf1532b",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Grade Management UI/Grade Management UI.md": {
+    "mtime": 1787051716.0350397,
+    "ast_hash": "f2f0fa89c494f914172e1d1193b9f361",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Student Management UI.md": {
+    "mtime": 1787051716.0264823,
+    "ast_hash": "8f5c67c28fc7812d0b456ad912597145",
+    "semantic_hash": ""
+  },
+  ".qoder/repowiki/en/content/Web Application/Web Application.md": {
+    "mtime": 1787051716.0198977,
+    "ast_hash": "c28a0f31d1245255f27f0e366a6018f6",
     "semantic_hash": ""
   }
 }

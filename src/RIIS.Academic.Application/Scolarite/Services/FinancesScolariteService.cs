@@ -12,6 +12,7 @@ public class FinancesScolariteService(
     IRepository<PaiementScolarite> paiementsScolarite,
     IRepository<ModePaiementScolarite> modesPaiementScolarite,
     IRepository<AffectationPaiementEcheance> affectationsPaiementsEcheances,
+    IRepository<Inscription> inscriptions,
     ITarifsScolariteService tarifsScolariteService) : IFinancesScolariteService
 {
     public async Task<FinanceDossierScolariteDto?> GetFinanceDossierScolariteAsync(
@@ -265,18 +266,15 @@ public class FinancesScolariteService(
         DossierScolarite dossier,
         long typeElementScolariteId,
         CancellationToken cancellationToken)
-        => await tarifsScolariteService.ResolveTarifScolariteAsync(
+    {
+        var inscription = await inscriptions.GetByIdAsync(dossier.InscriptionId, cancellationToken)
+            ?? throw new InvalidOperationException("L'inscription associée au dossier est introuvable.");
+
+        return await tarifsScolariteService.ResolveTarifScolariteAsync(
             typeElementScolariteId,
-            new TarifScolariteContexteDto
-            {
-                AnneeAcademiqueCode = dossier.AnneeAcademiqueCode,
-                CycleCode = dossier.CycleCode,
-                NiveauNumero = dossier.NiveauNumero,
-                FiliereCode = dossier.FiliereCode,
-                SpecialiteCode = dossier.SpecialiteCode,
-                DateReference = DateOnly.FromDateTime(DateTime.Today)
-            },
+            inscription.ParcoursAcademiqueId,
             cancellationToken);
+    }
 
     private async Task<List<TarifScolariteDto>> GetTarifsForPaiementsAsync(
         IReadOnlyCollection<PaiementScolarite> paiements,

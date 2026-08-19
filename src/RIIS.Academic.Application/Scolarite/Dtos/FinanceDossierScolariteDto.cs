@@ -66,7 +66,7 @@ public class PaiementTypeElementTarifOptionDto
     public string TypeElementScolariteLibelle { get; set; } = string.Empty;
     public long TarifScolariteId { get; set; }
     public decimal TarifMontant { get; set; }
-    public string Devise { get; set; } = "XOF";
+    public string Devise { get; set; } = "XAF";
     public string Libelle => $"{TypeElementScolariteLibelle} - {TarifMontant:N0} {Devise}";
 }
 

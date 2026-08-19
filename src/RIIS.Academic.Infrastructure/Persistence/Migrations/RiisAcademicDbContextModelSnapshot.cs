@@ -103,40 +103,20 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<long>("AnneeAcademiqueId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("EstActive")
-                        .HasColumnType("bit");
+                    b.Property<int>("Effectif")
+                        .HasColumnType("int");
 
                     b.Property<string>("Libelle")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<long?>("MaquettePedagogiqueId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("NiveauEtudeId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("ParcoursAcademiqueId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MaquettePedagogiqueId");
-
-                    b.HasIndex("NiveauEtudeId");
-
-                    b.HasIndex("ParcoursAcademiqueId");
-
-                    b.HasIndex("AnneeAcademiqueId", "ParcoursAcademiqueId", "NiveauEtudeId", "Code")
+                    b.HasIndex("ParcoursAcademiqueId", "Libelle")
                         .IsUnique();
 
                     b.ToTable("ClassesPedagogiques", (string)null);
@@ -1861,25 +1841,10 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<string>("AnneeAcademiqueCode")
-                        .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<string>("Code")
                         .IsRequired()
                         .HasMaxLength(80)
                         .HasColumnType("nvarchar(80)");
-
-                    b.Property<string>("CycleCode")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<DateOnly>("DateDebutValidite")
-                        .HasColumnType("date");
-
-                    b.Property<DateOnly?>("DateFinValidite")
-                        .HasColumnType("date");
 
                     b.Property<string>("Devise")
                         .IsRequired()
@@ -1889,23 +1854,15 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
                     b.Property<bool>("EstActif")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FiliereCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<decimal>("Montant")
                         .HasPrecision(18, 2)
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int?>("NiveauNumero")
-                        .HasColumnType("int");
+                    b.Property<long>("ParcoursAcademiqueId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Priorite")
                         .HasColumnType("int");
-
-                    b.Property<string>("SpecialiteCode")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
 
                     b.Property<long>("TypeElementScolariteId")
                         .HasColumnType("bigint");
@@ -1914,7 +1871,9 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("Code");
 
-                    b.HasIndex("TypeElementScolariteId", "AnneeAcademiqueCode", "CycleCode", "NiveauNumero", "FiliereCode", "SpecialiteCode");
+                    b.HasIndex("ParcoursAcademiqueId");
+
+                    b.HasIndex("TypeElementScolariteId", "ParcoursAcademiqueId");
 
                     b.ToTable("TarifsScolarite", null, t =>
                         {
@@ -2108,40 +2067,6 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
                     b.Navigation("PaiementScolarite");
                 });
 
-            modelBuilder.Entity("RIIS.Academic.Domain.ClassePedagogique", b =>
-                {
-                    b.HasOne("RIIS.Academic.Domain.AnneeAcademique", "AnneeAcademique")
-                        .WithMany("ClassesPedagogiques")
-                        .HasForeignKey("AnneeAcademiqueId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RIIS.Academic.Domain.MaquettePedagogique", "MaquettePedagogique")
-                        .WithMany()
-                        .HasForeignKey("MaquettePedagogiqueId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
-                    b.HasOne("RIIS.Academic.Domain.NiveauEtude", "NiveauEtude")
-                        .WithMany()
-                        .HasForeignKey("NiveauEtudeId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("RIIS.Academic.Domain.ParcoursAcademique", "ParcoursAcademique")
-                        .WithMany("ClassesPedagogiques")
-                        .HasForeignKey("ParcoursAcademiqueId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("AnneeAcademique");
-
-                    b.Navigation("MaquettePedagogique");
-
-                    b.Navigation("NiveauEtude");
-
-                    b.Navigation("ParcoursAcademique");
-                });
-
             modelBuilder.Entity("RIIS.Academic.Domain.ContactUrgence", b =>
                 {
                     b.HasOne("RIIS.Academic.Domain.Etudiant", "Etudiant")
@@ -2262,7 +2187,7 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("RIIS.Academic.Domain.ClassePedagogique", "ClassePedagogique")
-                        .WithMany("Inscriptions")
+                        .WithMany()
                         .HasForeignKey("ClassePedagogiqueId")
                         .OnDelete(DeleteBehavior.Restrict);
 
@@ -2467,7 +2392,7 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.HasOne("RIIS.Academic.Domain.ClassePedagogique", "ClassePedagogique")
-                        .WithMany("ProcesVerbaux")
+                        .WithMany()
                         .HasForeignKey("ClassePedagogiqueId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -2631,11 +2556,19 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RIIS.Academic.Domain.TarifScolarite", b =>
                 {
+                    b.HasOne("RIIS.Academic.Domain.ParcoursAcademique", "ParcoursAcademique")
+                        .WithMany()
+                        .HasForeignKey("ParcoursAcademiqueId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("RIIS.Academic.Domain.TypeElementScolarite", "TypeElementScolarite")
                         .WithMany("Tarifs")
                         .HasForeignKey("TypeElementScolariteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ParcoursAcademique");
 
                     b.Navigation("TypeElementScolarite");
                 });
@@ -2664,18 +2597,9 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RIIS.Academic.Domain.AnneeAcademique", b =>
                 {
-                    b.Navigation("ClassesPedagogiques");
-
                     b.Navigation("Inscriptions");
 
                     b.Navigation("ParcoursAcademiques");
-                });
-
-            modelBuilder.Entity("RIIS.Academic.Domain.ClassePedagogique", b =>
-                {
-                    b.Navigation("Inscriptions");
-
-                    b.Navigation("ProcesVerbaux");
                 });
 
             modelBuilder.Entity("RIIS.Academic.Domain.CycleFormation", b =>
@@ -2789,8 +2713,6 @@ namespace RIIS.Academic.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("RIIS.Academic.Domain.ParcoursAcademique", b =>
                 {
-                    b.Navigation("ClassesPedagogiques");
-
                     b.Navigation("Inscriptions");
 
                     b.Navigation("MaquettesPedagogiques");

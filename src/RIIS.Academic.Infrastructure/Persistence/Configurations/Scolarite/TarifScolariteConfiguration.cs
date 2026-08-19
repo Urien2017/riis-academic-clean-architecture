@@ -12,26 +12,19 @@ public class TarifScolariteConfiguration : IEntityTypeConfiguration<TarifScolari
             table.HasCheckConstraint("CK_TarifsScolarite_Montant", "[Montant] >= 0"));
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Code).IsRequired().HasMaxLength(80);
-        builder.Property(x => x.AnneeAcademiqueCode).HasMaxLength(30);
-        builder.Property(x => x.CycleCode).HasMaxLength(30);
-        builder.Property(x => x.FiliereCode).HasMaxLength(50);
-        builder.Property(x => x.SpecialiteCode).HasMaxLength(50);
         builder.Property(x => x.Montant).HasPrecision(18, 2);
         builder.Property(x => x.Devise).HasMaxLength(10);
         builder.HasIndex(x => x.Code);
-        builder.HasIndex(x => new
-        {
-            x.TypeElementScolariteId,
-            x.AnneeAcademiqueCode,
-            x.CycleCode,
-            x.NiveauNumero,
-            x.FiliereCode,
-            x.SpecialiteCode
-        });
+        builder.HasIndex(x => new { x.TypeElementScolariteId, x.ParcoursAcademiqueId });
 
         builder.HasOne(x => x.TypeElementScolarite)
             .WithMany(x => x.Tarifs)
             .HasForeignKey(x => x.TypeElementScolariteId)
             .OnDelete(DeleteBehavior.Cascade);
+
+        builder.HasOne(x => x.ParcoursAcademique)
+            .WithMany()
+            .HasForeignKey(x => x.ParcoursAcademiqueId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }
